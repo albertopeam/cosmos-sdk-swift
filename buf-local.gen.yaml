@@ -1,0 +1,8 @@
+version: v1
+plugins:  
+  - plugin: swift
+    out: gen
+    opt: Visibility=Public
+  - plugin: grpc-swift
+    out: gen
+    opt: Visibility=Public,Client=true,Server=false,TestClient=true,FileNaming=FullPath,KeepMethodCasing=false
