@@ -32,16 +32,28 @@ This step is optional and depends if you want to use remote plugins(Check Remote
                 * Export a specific version of a remote module to a local directory. `buf export buf.build/cosmos/cosmos-sdk:${commit} --output .`            
                 * For Cosmos v0.46.x `buf export buf.build/cosmos/cosmos-sdk:8cb30a2c4de74dc9bd8d260b1e75e176 --output .`
             * Create a yaml named `buf-local.gen.yaml` and configure it to generate the swift code for protos and gRPC.
+                * Check that the swift-protobuf and grpc-swift versions installed are the same than the libraries that the CosmosSDK package depends on.
+                    * `protoc-gen-swift --version`
+                    * `protoc-gen-grpc-swift --version`
                 * Configure yaml to run `swift-protobuf` and `grpc-swift`. Checkout [Buf generate](https://docs.buf.build/reference/cli/buf/generate) for more info
             * [Buf generate](https://docs.buf.build/reference/cli/buf/generate)
                 * Generate code with local plugins `buf generate --template buf-local.gen.yaml --verbose .`            
         * Remote tools:
             * [Buf generate](https://docs.buf.build/reference/cli/buf/generate)
-                * Create a yaml named `buf-remote.gen.yaml` and configure it to generate the swift code for protos and gRPC.
+                * Create a yaml named `buf-remote.gen.yaml` and configure it to generate the swift code for protos and gRPC.                    
                 * Configure yaml to run `swift-protobuf` and `grpc-swift`
+                    * Check that the swift-protobuf and grpc-swift versions defined in the yaml are the same than the libraries that the CosmosSDK package depends on.
+                        * [BSR swift-protobuf versions](https://buf.build/apple/swift)
+                        * [BSR grpc-swift versions](https://buf.build/grpc/swift)
                     * Use [Remote BSR Plugins](https://buf.build/plugins) to avoid install local tools.
                         * [BSR gRPC swift plugin doc](https://buf.build/grpc/swift)
                         * [BSR swift plugin doc](https://buf.build/apple/swift)
                 * Generate code with remote plugins `buf generate --template buf-remote.gen.yaml buf.build/cosmos/cosmos-sdk:8cb30a2c4de74dc9bd8d260b1e75e176` 
 4. TODO: CREATE SWIFT PACKAGE
+    package resolved -> out of repo
+    create project and add code + package
+    min iOS/macOS/tvOS/watchOS versions?
+    how to deal with binaries?
+    extra example https://github.com/albertopeam/cosmos-sdk-swift in readme
 5. TODO: GITHUB ACTIONS?
+6. TODO: review input params for the plugins. async+callback? another tool but maybe useful https://connect.build/docs/swift/getting-started/#generate-code
