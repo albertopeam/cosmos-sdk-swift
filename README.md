@@ -28,6 +28,7 @@ This step is optional and depends if you want to use remote plugins(Check Remote
         * [0.46.x commit](https://buf.build/cosmos/cosmos-sdk/commits/8cb30a2c4de74dc9bd8d260b1e75e176)
     * Code generation can be done with local protoc tools or with remote protoc tools:
         * Local tools:
+            * Install optional tools
             * [Buf export](https://docs.buf.build/reference/cli/buf/export) + [Buf generate](https://docs.buf.build/reference/cli/buf/generate)
                 * Export a specific version of a remote module to a local directory. `buf export buf.build/cosmos/cosmos-sdk:${commit} --output .`            
                 * For Cosmos v0.46.x `buf export buf.build/cosmos/cosmos-sdk:8cb30a2c4de74dc9bd8d260b1e75e176 --output .`
