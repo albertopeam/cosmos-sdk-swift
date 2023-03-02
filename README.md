@@ -11,9 +11,13 @@ Package | cosmos-sdk | Commit hash                      | protoc-gen-swift| prot
 --------|------------|----------------------------------|-----------------|-----------------------
 0.46.0  | 0.46.0     | 8cb30a2c4de74dc9bd8d260b1e75e176 | 1.21.0          | 1.14.0
 
-## Building
+## Code generation
 
-### Tools(Optional)
+### Custom generation
+The script `generate-buf-local.sh` is ready to make code generation using `buf`. It downloads and generates code into Sources/CosmosSDK. To regenerate the cosmos-sdk for a custom version, update the property `cosmos_commit_hash` with the target cosmos-sdk commit hash and run the script.
+
+### How code generation works
+#### Tools(Optional)
 This step is optional and depends if you want to use remote plugins(Check Remote BSR Plugins)
 1. Protobuf compiler `brew install protobuf` [Github](https://github.com/protocolbuffers/protobuf)
     * Make sure that protobuf is on the system path `protoc --version`
@@ -22,7 +26,7 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 3. Swift gRPC plugin `brew install grpc-swift`. [Github](https://github.com/grpc/grpc-swift)
     * Make sure that gRPC swift protobuf plugin is on the system path `protoc-gen-grpc-swift --version`
 
-### Code generation procedure
+#### Code generation procedure
 1. [COSMOS-SDK PROTO DOC](https://github.com/cosmos/cosmos-sdk/tree/main/proto). Cosmos uses BSR to manage their API.
 2. BSR: Buf Schema Registry
     * [INTRODUCTION](https://docs.buf.build/bsr/introduction)
@@ -59,10 +63,6 @@ This step is optional and depends if you want to use remote plugins(Check Remote
                         * [BSR gRPC swift plugin doc](https://buf.build/grpc/swift)
                         * [BSR swift plugin doc](https://buf.build/apple/swift)
                 * Generate code with remote plugins `buf generate --template buf-remote.gen.yaml buf.build/cosmos/cosmos-sdk:8cb30a2c4de74dc9bd8d260b1e75e176` 
-
-### Local generation
-
-The script `generate-buf-local.sh` is able makes code generation easy. It downloads and generates code into Sources/CosmosSDK. To regenerate the cosmos-sdk for a custom version, update the property `cosmos_commit_hash` with the target cosmos-sdk commit hash and run the script.
 
 --------------------------------------------------------------------------------
 4. TODO: CREATE SWIFT PACKAGE    
