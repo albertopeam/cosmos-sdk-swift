@@ -25,7 +25,7 @@ verify_installation grpc-swift
 echo "$(protoc-gen-grpc-swift --version)"
 
 echo "Code generation started..."
-cosmos_commit_hash=8cb30a2c4de74dc9bd8d260b1e75e176 # 
+cosmos_commit_hash=8cb30a2c4de74dc9bd8d260b1e75e176 # 0.46.0 -> https://github.com/cosmos/cosmos-sdk/tree/main/proto
 cosmos_code=./Sources/CosmosSDK/
 cosmos_code_output=./Sources/CosmosSDK/protobufs
 swift_code_output=./Sources/CosmosSDK/
