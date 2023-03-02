@@ -1,4 +1,4 @@
-# COSMOS SDK SWIFT
+# Cosmos SDK Swift
 
 [Cosmos SDK](https://github.com/cosmos/cosmos-sdk) makes usage of protobuf and gRPC to define its APIs.
 
