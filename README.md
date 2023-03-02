@@ -51,10 +51,10 @@ This step is optional and depends if you want to use remote plugins(Check Remote
                         * [BSR swift plugin doc](https://buf.build/apple/swift)
                 * Generate code with remote plugins `buf generate --template buf-remote.gen.yaml buf.build/cosmos/cosmos-sdk:8cb30a2c4de74dc9bd8d260b1e75e176` 
 4. TODO: CREATE SWIFT PACKAGE
-    package resolved -> out of repo
-    create project and add code + package
+    TODO: no compila, duplicados + error
     min iOS/macOS/tvOS/watchOS versions?
     how to deal with binaries?
     extra example https://github.com/albertopeam/cosmos-sdk-swift in readme
+    table with versions
 5. TODO: GITHUB ACTIONS?
 6. TODO: review input params for the plugins. async+callback? another tool but maybe useful https://connect.build/docs/swift/getting-started/#generate-code
