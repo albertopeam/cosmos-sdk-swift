@@ -2,7 +2,7 @@ version: v1
 plugins:  
   - plugin: swift
     out: gen
-    opt: Visibility=Public
+    opt: Visibility=Public,FileNaming=PathToUnderscores
   - plugin: grpc-swift
     out: gen
-    opt: Visibility=Public,Client=true,Server=false,TestClient=true,FileNaming=FullPath,KeepMethodCasing=false
+    opt: Visibility=Public,Client=true,Server=false,TestClient=true,FileNaming=PathToUnderscores,KeepMethodCasing=false

@@ -11,15 +11,21 @@ verify_installation() {
 }
 
 echo "Verifying dependencies..."
-verify_installation go
+verify_installation go 
+echo "$(go version)"
 verify_installation git
+echo "$(git --version)"
 verify_installation buf
+echo "$(buf --version)"
 verify_installation protobuf
+echo "$(protoc --version)"
 verify_installation swift-protobuf
+echo "$(protoc-gen-swift --version)"
 verify_installation grpc-swift
+echo "$(protoc-gen-grpc-swift --version)"
 
 echo "Code generation started..."
-cosmos_commit_hash=8cb30a2c4de74dc9bd8d260b1e75e176
+cosmos_commit_hash=8cb30a2c4de74dc9bd8d260b1e75e176 # 
 cosmos_code=./Sources/CosmosSDK/
 cosmos_code_output=./Sources/CosmosSDK/protobufs
 swift_code_output=./Sources/CosmosSDK/

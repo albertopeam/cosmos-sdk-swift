@@ -12,8 +12,8 @@ let package = Package(
             targets: ["CosmosSDK"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-protobuf", from: "1.21.0"),
-        .package(url: "https://github.com/grpc/grpc-swift.git", from: "1.14.0")
+        .package(url: "https://github.com/apple/swift-protobuf", exact: "1.21.0"),
+        .package(url: "https://github.com/grpc/grpc-swift.git", exact: "1.14.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

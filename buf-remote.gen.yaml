@@ -4,7 +4,7 @@ managed:
 plugins:
   - plugin: buf.build/grpc/swift
     out: gen
-    opt: Visibility=Public,Client=true,Server=false,TestClient=true,FileNaming=FullPath,KeepMethodCasing=false
+    opt: Visibility=Public,Client=true,Server=false,TestClient=true,FileNaming=PathToUnderscores,KeepMethodCasing=false
   - plugin: buf.build/apple/swift
     out: gen
-    opt: Visibility=Public
+    opt: Visibility=Public,FileNaming=PathToUnderscores
