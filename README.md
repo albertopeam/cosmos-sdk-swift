@@ -68,13 +68,13 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 * List available grpc enpoints `grpcurl -plaintext cosmos-grpc.polkachu.com:14990 list`
 
 --------------------------------------------------------------------------------
-4. TODO: CREATE SWIFT PACKAGE    
-    min iOS/macOS/tvOS/watchOS versions?
-    how to deal with binaries?
+1. TODO:   
     extra example https://github.com/albertopeam/cosmos-sdk-swift in readme
-    table with versions
-    PACKAGE Version 0.46.0 how to set it? TAG
-5. TODO: GITHUB ACTIONS? to run tests
-6. TODO: recipes
-7. TODO: swiftlint, precommit
-8. TODO: review input params for the plugins. async+callback? another tool but maybe useful https://connect.build/docs/swift/getting-started/#generate-code
+    PACKAGE Version 0.46.0 how to set it? TAG 
+    doc chain registry in tests https://github.com/cosmos/chain-registry/blob/master/cosmoshub/chain.json
+2. TODO: GITHUB ACTIONS? to run tests
+3. TODO: recipes
+4. TODO: buf studio. like postman 
+    https://studio.buf.build/cosmos/cosmos-sdk?serviceDialog=open
+    https://docs.buf.build/bsr/studio
+
