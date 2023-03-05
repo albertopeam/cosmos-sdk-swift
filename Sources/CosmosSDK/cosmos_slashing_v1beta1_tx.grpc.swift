@@ -37,6 +37,11 @@ public protocol Cosmos_Slashing_V1beta1_MsgClientProtocol: GRPCClient {
     _ request: Cosmos_Slashing_V1beta1_MsgUnjail,
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Slashing_V1beta1_MsgUnjail, Cosmos_Slashing_V1beta1_MsgUnjailResponse>
+
+  func updateParams(
+    _ request: Cosmos_Slashing_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Slashing_V1beta1_MsgUpdateParams, Cosmos_Slashing_V1beta1_MsgUpdateParamsResponse>
 }
 
 extension Cosmos_Slashing_V1beta1_MsgClientProtocol {
@@ -61,6 +66,27 @@ extension Cosmos_Slashing_V1beta1_MsgClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeUnjailInterceptors() ?? []
+    )
+  }
+
+  /// UpdateParams defines a governance operation for updating the x/slashing module
+  /// parameters. The authority defaults to the x/gov module account.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to UpdateParams.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func updateParams(
+    _ request: Cosmos_Slashing_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Slashing_V1beta1_MsgUpdateParams, Cosmos_Slashing_V1beta1_MsgUpdateParamsResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Slashing_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
     )
   }
 }
@@ -135,6 +161,11 @@ public protocol Cosmos_Slashing_V1beta1_MsgAsyncClientProtocol: GRPCClient {
     _ request: Cosmos_Slashing_V1beta1_MsgUnjail,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Slashing_V1beta1_MsgUnjail, Cosmos_Slashing_V1beta1_MsgUnjailResponse>
+
+  func makeUpdateParamsCall(
+    _ request: Cosmos_Slashing_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Slashing_V1beta1_MsgUpdateParams, Cosmos_Slashing_V1beta1_MsgUpdateParamsResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -158,6 +189,18 @@ extension Cosmos_Slashing_V1beta1_MsgAsyncClientProtocol {
       interceptors: self.interceptors?.makeUnjailInterceptors() ?? []
     )
   }
+
+  public func makeUpdateParamsCall(
+    _ request: Cosmos_Slashing_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Slashing_V1beta1_MsgUpdateParams, Cosmos_Slashing_V1beta1_MsgUpdateParamsResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Slashing_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -171,6 +214,18 @@ extension Cosmos_Slashing_V1beta1_MsgAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeUnjailInterceptors() ?? []
+    )
+  }
+
+  public func updateParams(
+    _ request: Cosmos_Slashing_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Slashing_V1beta1_MsgUpdateParamsResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Slashing_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
     )
   }
 }
@@ -198,6 +253,9 @@ public protocol Cosmos_Slashing_V1beta1_MsgClientInterceptorFactoryProtocol: GRP
 
   /// - Returns: Interceptors to use when invoking 'unjail'.
   func makeUnjailInterceptors() -> [ClientInterceptor<Cosmos_Slashing_V1beta1_MsgUnjail, Cosmos_Slashing_V1beta1_MsgUnjailResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'updateParams'.
+  func makeUpdateParamsInterceptors() -> [ClientInterceptor<Cosmos_Slashing_V1beta1_MsgUpdateParams, Cosmos_Slashing_V1beta1_MsgUpdateParamsResponse>]
 }
 
 public enum Cosmos_Slashing_V1beta1_MsgClientMetadata {
@@ -206,6 +264,7 @@ public enum Cosmos_Slashing_V1beta1_MsgClientMetadata {
     fullName: "cosmos.slashing.v1beta1.Msg",
     methods: [
       Cosmos_Slashing_V1beta1_MsgClientMetadata.Methods.unjail,
+      Cosmos_Slashing_V1beta1_MsgClientMetadata.Methods.updateParams,
     ]
   )
 
@@ -213,6 +272,12 @@ public enum Cosmos_Slashing_V1beta1_MsgClientMetadata {
     public static let unjail = GRPCMethodDescriptor(
       name: "Unjail",
       path: "/cosmos.slashing.v1beta1.Msg/Unjail",
+      type: GRPCCallType.unary
+    )
+
+    public static let updateParams = GRPCMethodDescriptor(
+      name: "UpdateParams",
+      path: "/cosmos.slashing.v1beta1.Msg/UpdateParams",
       type: GRPCCallType.unary
     )
   }
@@ -265,6 +330,30 @@ public final class Cosmos_Slashing_V1beta1_MsgTestClient: Cosmos_Slashing_V1beta
   /// Returns true if there are response streams enqueued for 'Unjail'
   public var hasUnjailResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Slashing_V1beta1_MsgClientMetadata.Methods.unjail.path)
+  }
+
+  /// Make a unary response for the UpdateParams RPC. This must be called
+  /// before calling 'updateParams'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeUpdateParamsResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Slashing_V1beta1_MsgUpdateParams>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Slashing_V1beta1_MsgUpdateParams, Cosmos_Slashing_V1beta1_MsgUpdateParamsResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Slashing_V1beta1_MsgClientMetadata.Methods.updateParams.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueUpdateParamsResponse(
+    _ response: Cosmos_Slashing_V1beta1_MsgUpdateParamsResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Slashing_V1beta1_MsgUpdateParams>) -> () = { _ in }
+  ) {
+    let stream = self.makeUpdateParamsResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'UpdateParams'
+  public var hasUpdateParamsResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Slashing_V1beta1_MsgClientMetadata.Methods.updateParams.path)
   }
 }
 

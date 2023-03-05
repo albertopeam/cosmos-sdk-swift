@@ -33,6 +33,11 @@ public protocol Cosmos_Gov_V1_QueryClientProtocol: GRPCClient {
   var serviceName: String { get }
   var interceptors: Cosmos_Gov_V1_QueryClientInterceptorFactoryProtocol? { get }
 
+  func constitution(
+    _ request: Cosmos_Gov_V1_QueryConstitutionRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Gov_V1_QueryConstitutionRequest, Cosmos_Gov_V1_QueryConstitutionResponse>
+
   func proposal(
     _ request: Cosmos_Gov_V1_QueryProposalRequest,
     callOptions: CallOptions?
@@ -77,6 +82,24 @@ public protocol Cosmos_Gov_V1_QueryClientProtocol: GRPCClient {
 extension Cosmos_Gov_V1_QueryClientProtocol {
   public var serviceName: String {
     return "cosmos.gov.v1.Query"
+  }
+
+  /// Constitution queries the chain's constitution.
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to Constitution.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func constitution(
+    _ request: Cosmos_Gov_V1_QueryConstitutionRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Gov_V1_QueryConstitutionRequest, Cosmos_Gov_V1_QueryConstitutionResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Gov_V1_QueryClientMetadata.Methods.constitution.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeConstitutionInterceptors() ?? []
+    )
   }
 
   /// Proposal queries proposal details based on ProposalID.
@@ -290,6 +313,11 @@ public protocol Cosmos_Gov_V1_QueryAsyncClientProtocol: GRPCClient {
   static var serviceDescriptor: GRPCServiceDescriptor { get }
   var interceptors: Cosmos_Gov_V1_QueryClientInterceptorFactoryProtocol? { get }
 
+  func makeConstitutionCall(
+    _ request: Cosmos_Gov_V1_QueryConstitutionRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Gov_V1_QueryConstitutionRequest, Cosmos_Gov_V1_QueryConstitutionResponse>
+
   func makeProposalCall(
     _ request: Cosmos_Gov_V1_QueryProposalRequest,
     callOptions: CallOptions?
@@ -339,6 +367,18 @@ extension Cosmos_Gov_V1_QueryAsyncClientProtocol {
 
   public var interceptors: Cosmos_Gov_V1_QueryClientInterceptorFactoryProtocol? {
     return nil
+  }
+
+  public func makeConstitutionCall(
+    _ request: Cosmos_Gov_V1_QueryConstitutionRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Gov_V1_QueryConstitutionRequest, Cosmos_Gov_V1_QueryConstitutionResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Gov_V1_QueryClientMetadata.Methods.constitution.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeConstitutionInterceptors() ?? []
+    )
   }
 
   public func makeProposalCall(
@@ -440,6 +480,18 @@ extension Cosmos_Gov_V1_QueryAsyncClientProtocol {
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
 extension Cosmos_Gov_V1_QueryAsyncClientProtocol {
+  public func constitution(
+    _ request: Cosmos_Gov_V1_QueryConstitutionRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Gov_V1_QueryConstitutionResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Gov_V1_QueryClientMetadata.Methods.constitution.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeConstitutionInterceptors() ?? []
+    )
+  }
+
   public func proposal(
     _ request: Cosmos_Gov_V1_QueryProposalRequest,
     callOptions: CallOptions? = nil
@@ -558,6 +610,9 @@ public struct Cosmos_Gov_V1_QueryAsyncClient: Cosmos_Gov_V1_QueryAsyncClientProt
 
 public protocol Cosmos_Gov_V1_QueryClientInterceptorFactoryProtocol: GRPCSendable {
 
+  /// - Returns: Interceptors to use when invoking 'constitution'.
+  func makeConstitutionInterceptors() -> [ClientInterceptor<Cosmos_Gov_V1_QueryConstitutionRequest, Cosmos_Gov_V1_QueryConstitutionResponse>]
+
   /// - Returns: Interceptors to use when invoking 'proposal'.
   func makeProposalInterceptors() -> [ClientInterceptor<Cosmos_Gov_V1_QueryProposalRequest, Cosmos_Gov_V1_QueryProposalResponse>]
 
@@ -588,6 +643,7 @@ public enum Cosmos_Gov_V1_QueryClientMetadata {
     name: "Query",
     fullName: "cosmos.gov.v1.Query",
     methods: [
+      Cosmos_Gov_V1_QueryClientMetadata.Methods.constitution,
       Cosmos_Gov_V1_QueryClientMetadata.Methods.proposal,
       Cosmos_Gov_V1_QueryClientMetadata.Methods.proposals,
       Cosmos_Gov_V1_QueryClientMetadata.Methods.vote,
@@ -600,6 +656,12 @@ public enum Cosmos_Gov_V1_QueryClientMetadata {
   )
 
   public enum Methods {
+    public static let constitution = GRPCMethodDescriptor(
+      name: "Constitution",
+      path: "/cosmos.gov.v1.Query/Constitution",
+      type: GRPCCallType.unary
+    )
+
     public static let proposal = GRPCMethodDescriptor(
       name: "Proposal",
       path: "/cosmos.gov.v1.Query/Proposal",
@@ -673,6 +735,30 @@ public final class Cosmos_Gov_V1_QueryTestClient: Cosmos_Gov_V1_QueryClientProto
     self.fakeChannel = fakeChannel
     self.defaultCallOptions = callOptions
     self.interceptors = interceptors
+  }
+
+  /// Make a unary response for the Constitution RPC. This must be called
+  /// before calling 'constitution'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeConstitutionResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Gov_V1_QueryConstitutionRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Gov_V1_QueryConstitutionRequest, Cosmos_Gov_V1_QueryConstitutionResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Gov_V1_QueryClientMetadata.Methods.constitution.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueConstitutionResponse(
+    _ response: Cosmos_Gov_V1_QueryConstitutionResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Gov_V1_QueryConstitutionRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeConstitutionResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'Constitution'
+  public var hasConstitutionResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Gov_V1_QueryClientMetadata.Methods.constitution.path)
   }
 
   /// Make a unary response for the Proposal RPC. This must be called

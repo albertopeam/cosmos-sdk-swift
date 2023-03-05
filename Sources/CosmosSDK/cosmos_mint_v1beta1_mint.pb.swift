@@ -37,7 +37,7 @@ public struct Cosmos_Mint_V1beta1_Minter {
   public init() {}
 }
 
-/// Params holds parameters for the mint module.
+/// Params defines the parameters for the x/mint module.
 public struct Cosmos_Mint_V1beta1_Params {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for

@@ -27,6 +27,7 @@ public struct Cosmos_Gov_V1beta1_MsgSubmitProposal {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// content is the proposal's content.
   public var content: SwiftProtobuf.Google_Protobuf_Any {
     get {return _content ?? SwiftProtobuf.Google_Protobuf_Any()}
     set {_content = newValue}
@@ -36,8 +37,10 @@ public struct Cosmos_Gov_V1beta1_MsgSubmitProposal {
   /// Clears the value of `content`. Subsequent reads from it will return its default value.
   public mutating func clearContent() {self._content = nil}
 
+  /// initial_deposit is the deposit value that must be paid at proposal submission.
   public var initialDeposit: [Cosmos_Base_V1beta1_Coin] = []
 
+  /// proposer is the account address of the proposer.
   public var proposer: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -53,6 +56,7 @@ public struct Cosmos_Gov_V1beta1_MsgSubmitProposalResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// proposal_id defines the unique id of the proposal.
   public var proposalID: UInt64 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -66,10 +70,13 @@ public struct Cosmos_Gov_V1beta1_MsgVote {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// proposal_id defines the unique id of the proposal.
   public var proposalID: UInt64 = 0
 
+  /// voter is the voter address for the proposal.
   public var voter: String = String()
 
+  /// option defines the vote option.
   public var option: Cosmos_Gov_V1beta1_VoteOption = .unspecified
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -96,10 +103,13 @@ public struct Cosmos_Gov_V1beta1_MsgVoteWeighted {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// proposal_id defines the unique id of the proposal.
   public var proposalID: UInt64 = 0
 
+  /// voter is the voter address for the proposal.
   public var voter: String = String()
 
+  /// options defines the weighted vote options.
   public var options: [Cosmos_Gov_V1beta1_WeightedVoteOption] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -126,10 +136,13 @@ public struct Cosmos_Gov_V1beta1_MsgDeposit {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// proposal_id defines the unique id of the proposal.
   public var proposalID: UInt64 = 0
 
+  /// depositor defines the deposit addresses from the proposals.
   public var depositor: String = String()
 
+  /// amount to be deposited by depositor.
   public var amount: [Cosmos_Base_V1beta1_Coin] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()

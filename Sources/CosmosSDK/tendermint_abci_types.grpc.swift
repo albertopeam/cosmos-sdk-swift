@@ -46,11 +46,6 @@ public protocol Tendermint_Abci_ABCIApplicationClientProtocol: GRPCClient {
     callOptions: CallOptions?
   ) -> UnaryCall<Tendermint_Abci_RequestInfo, Tendermint_Abci_ResponseInfo>
 
-  func setOption(
-    _ request: Tendermint_Abci_RequestSetOption,
-    callOptions: CallOptions?
-  ) -> UnaryCall<Tendermint_Abci_RequestSetOption, Tendermint_Abci_ResponseSetOption>
-
   func deliverTx(
     _ request: Tendermint_Abci_RequestDeliverTx,
     callOptions: CallOptions?
@@ -105,6 +100,16 @@ public protocol Tendermint_Abci_ABCIApplicationClientProtocol: GRPCClient {
     _ request: Tendermint_Abci_RequestApplySnapshotChunk,
     callOptions: CallOptions?
   ) -> UnaryCall<Tendermint_Abci_RequestApplySnapshotChunk, Tendermint_Abci_ResponseApplySnapshotChunk>
+
+  func prepareProposal(
+    _ request: Tendermint_Abci_RequestPrepareProposal,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Tendermint_Abci_RequestPrepareProposal, Tendermint_Abci_ResponsePrepareProposal>
+
+  func processProposal(
+    _ request: Tendermint_Abci_RequestProcessProposal,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Tendermint_Abci_RequestProcessProposal, Tendermint_Abci_ResponseProcessProposal>
 }
 
 extension Tendermint_Abci_ABCIApplicationClientProtocol {
@@ -163,24 +168,6 @@ extension Tendermint_Abci_ABCIApplicationClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeInfoInterceptors() ?? []
-    )
-  }
-
-  /// Unary call to SetOption
-  ///
-  /// - Parameters:
-  ///   - request: Request to send to SetOption.
-  ///   - callOptions: Call options.
-  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func setOption(
-    _ request: Tendermint_Abci_RequestSetOption,
-    callOptions: CallOptions? = nil
-  ) -> UnaryCall<Tendermint_Abci_RequestSetOption, Tendermint_Abci_ResponseSetOption> {
-    return self.makeUnaryCall(
-      path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.setOption.path,
-      request: request,
-      callOptions: callOptions ?? self.defaultCallOptions,
-      interceptors: self.interceptors?.makeSetOptionInterceptors() ?? []
     )
   }
 
@@ -381,6 +368,42 @@ extension Tendermint_Abci_ABCIApplicationClientProtocol {
       interceptors: self.interceptors?.makeApplySnapshotChunkInterceptors() ?? []
     )
   }
+
+  /// Unary call to PrepareProposal
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to PrepareProposal.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func prepareProposal(
+    _ request: Tendermint_Abci_RequestPrepareProposal,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Tendermint_Abci_RequestPrepareProposal, Tendermint_Abci_ResponsePrepareProposal> {
+    return self.makeUnaryCall(
+      path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.prepareProposal.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePrepareProposalInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to ProcessProposal
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to ProcessProposal.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func processProposal(
+    _ request: Tendermint_Abci_RequestProcessProposal,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Tendermint_Abci_RequestProcessProposal, Tendermint_Abci_ResponseProcessProposal> {
+    return self.makeUnaryCall(
+      path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.processProposal.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeProcessProposalInterceptors() ?? []
+    )
+  }
 }
 
 #if compiler(>=5.6)
@@ -463,11 +486,6 @@ public protocol Tendermint_Abci_ABCIApplicationAsyncClientProtocol: GRPCClient {
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Tendermint_Abci_RequestInfo, Tendermint_Abci_ResponseInfo>
 
-  func makeSetOptionCall(
-    _ request: Tendermint_Abci_RequestSetOption,
-    callOptions: CallOptions?
-  ) -> GRPCAsyncUnaryCall<Tendermint_Abci_RequestSetOption, Tendermint_Abci_ResponseSetOption>
-
   func makeDeliverTxCall(
     _ request: Tendermint_Abci_RequestDeliverTx,
     callOptions: CallOptions?
@@ -522,6 +540,16 @@ public protocol Tendermint_Abci_ABCIApplicationAsyncClientProtocol: GRPCClient {
     _ request: Tendermint_Abci_RequestApplySnapshotChunk,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Tendermint_Abci_RequestApplySnapshotChunk, Tendermint_Abci_ResponseApplySnapshotChunk>
+
+  func makePrepareProposalCall(
+    _ request: Tendermint_Abci_RequestPrepareProposal,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Tendermint_Abci_RequestPrepareProposal, Tendermint_Abci_ResponsePrepareProposal>
+
+  func makeProcessProposalCall(
+    _ request: Tendermint_Abci_RequestProcessProposal,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Tendermint_Abci_RequestProcessProposal, Tendermint_Abci_ResponseProcessProposal>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -567,18 +595,6 @@ extension Tendermint_Abci_ABCIApplicationAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeInfoInterceptors() ?? []
-    )
-  }
-
-  public func makeSetOptionCall(
-    _ request: Tendermint_Abci_RequestSetOption,
-    callOptions: CallOptions? = nil
-  ) -> GRPCAsyncUnaryCall<Tendermint_Abci_RequestSetOption, Tendermint_Abci_ResponseSetOption> {
-    return self.makeAsyncUnaryCall(
-      path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.setOption.path,
-      request: request,
-      callOptions: callOptions ?? self.defaultCallOptions,
-      interceptors: self.interceptors?.makeSetOptionInterceptors() ?? []
     )
   }
 
@@ -713,6 +729,30 @@ extension Tendermint_Abci_ABCIApplicationAsyncClientProtocol {
       interceptors: self.interceptors?.makeApplySnapshotChunkInterceptors() ?? []
     )
   }
+
+  public func makePrepareProposalCall(
+    _ request: Tendermint_Abci_RequestPrepareProposal,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Tendermint_Abci_RequestPrepareProposal, Tendermint_Abci_ResponsePrepareProposal> {
+    return self.makeAsyncUnaryCall(
+      path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.prepareProposal.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePrepareProposalInterceptors() ?? []
+    )
+  }
+
+  public func makeProcessProposalCall(
+    _ request: Tendermint_Abci_RequestProcessProposal,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Tendermint_Abci_RequestProcessProposal, Tendermint_Abci_ResponseProcessProposal> {
+    return self.makeAsyncUnaryCall(
+      path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.processProposal.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeProcessProposalInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -750,18 +790,6 @@ extension Tendermint_Abci_ABCIApplicationAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeInfoInterceptors() ?? []
-    )
-  }
-
-  public func setOption(
-    _ request: Tendermint_Abci_RequestSetOption,
-    callOptions: CallOptions? = nil
-  ) async throws -> Tendermint_Abci_ResponseSetOption {
-    return try await self.performAsyncUnaryCall(
-      path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.setOption.path,
-      request: request,
-      callOptions: callOptions ?? self.defaultCallOptions,
-      interceptors: self.interceptors?.makeSetOptionInterceptors() ?? []
     )
   }
 
@@ -896,6 +924,30 @@ extension Tendermint_Abci_ABCIApplicationAsyncClientProtocol {
       interceptors: self.interceptors?.makeApplySnapshotChunkInterceptors() ?? []
     )
   }
+
+  public func prepareProposal(
+    _ request: Tendermint_Abci_RequestPrepareProposal,
+    callOptions: CallOptions? = nil
+  ) async throws -> Tendermint_Abci_ResponsePrepareProposal {
+    return try await self.performAsyncUnaryCall(
+      path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.prepareProposal.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePrepareProposalInterceptors() ?? []
+    )
+  }
+
+  public func processProposal(
+    _ request: Tendermint_Abci_RequestProcessProposal,
+    callOptions: CallOptions? = nil
+  ) async throws -> Tendermint_Abci_ResponseProcessProposal {
+    return try await self.performAsyncUnaryCall(
+      path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.processProposal.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeProcessProposalInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -927,9 +979,6 @@ public protocol Tendermint_Abci_ABCIApplicationClientInterceptorFactoryProtocol:
 
   /// - Returns: Interceptors to use when invoking 'info'.
   func makeInfoInterceptors() -> [ClientInterceptor<Tendermint_Abci_RequestInfo, Tendermint_Abci_ResponseInfo>]
-
-  /// - Returns: Interceptors to use when invoking 'setOption'.
-  func makeSetOptionInterceptors() -> [ClientInterceptor<Tendermint_Abci_RequestSetOption, Tendermint_Abci_ResponseSetOption>]
 
   /// - Returns: Interceptors to use when invoking 'deliverTx'.
   func makeDeliverTxInterceptors() -> [ClientInterceptor<Tendermint_Abci_RequestDeliverTx, Tendermint_Abci_ResponseDeliverTx>]
@@ -963,6 +1012,12 @@ public protocol Tendermint_Abci_ABCIApplicationClientInterceptorFactoryProtocol:
 
   /// - Returns: Interceptors to use when invoking 'applySnapshotChunk'.
   func makeApplySnapshotChunkInterceptors() -> [ClientInterceptor<Tendermint_Abci_RequestApplySnapshotChunk, Tendermint_Abci_ResponseApplySnapshotChunk>]
+
+  /// - Returns: Interceptors to use when invoking 'prepareProposal'.
+  func makePrepareProposalInterceptors() -> [ClientInterceptor<Tendermint_Abci_RequestPrepareProposal, Tendermint_Abci_ResponsePrepareProposal>]
+
+  /// - Returns: Interceptors to use when invoking 'processProposal'.
+  func makeProcessProposalInterceptors() -> [ClientInterceptor<Tendermint_Abci_RequestProcessProposal, Tendermint_Abci_ResponseProcessProposal>]
 }
 
 public enum Tendermint_Abci_ABCIApplicationClientMetadata {
@@ -973,7 +1028,6 @@ public enum Tendermint_Abci_ABCIApplicationClientMetadata {
       Tendermint_Abci_ABCIApplicationClientMetadata.Methods.echo,
       Tendermint_Abci_ABCIApplicationClientMetadata.Methods.flush,
       Tendermint_Abci_ABCIApplicationClientMetadata.Methods.info,
-      Tendermint_Abci_ABCIApplicationClientMetadata.Methods.setOption,
       Tendermint_Abci_ABCIApplicationClientMetadata.Methods.deliverTx,
       Tendermint_Abci_ABCIApplicationClientMetadata.Methods.checkTx,
       Tendermint_Abci_ABCIApplicationClientMetadata.Methods.query,
@@ -985,6 +1039,8 @@ public enum Tendermint_Abci_ABCIApplicationClientMetadata {
       Tendermint_Abci_ABCIApplicationClientMetadata.Methods.offerSnapshot,
       Tendermint_Abci_ABCIApplicationClientMetadata.Methods.loadSnapshotChunk,
       Tendermint_Abci_ABCIApplicationClientMetadata.Methods.applySnapshotChunk,
+      Tendermint_Abci_ABCIApplicationClientMetadata.Methods.prepareProposal,
+      Tendermint_Abci_ABCIApplicationClientMetadata.Methods.processProposal,
     ]
   )
 
@@ -1004,12 +1060,6 @@ public enum Tendermint_Abci_ABCIApplicationClientMetadata {
     public static let info = GRPCMethodDescriptor(
       name: "Info",
       path: "/tendermint.abci.ABCIApplication/Info",
-      type: GRPCCallType.unary
-    )
-
-    public static let setOption = GRPCMethodDescriptor(
-      name: "SetOption",
-      path: "/tendermint.abci.ABCIApplication/SetOption",
       type: GRPCCallType.unary
     )
 
@@ -1076,6 +1126,18 @@ public enum Tendermint_Abci_ABCIApplicationClientMetadata {
     public static let applySnapshotChunk = GRPCMethodDescriptor(
       name: "ApplySnapshotChunk",
       path: "/tendermint.abci.ABCIApplication/ApplySnapshotChunk",
+      type: GRPCCallType.unary
+    )
+
+    public static let prepareProposal = GRPCMethodDescriptor(
+      name: "PrepareProposal",
+      path: "/tendermint.abci.ABCIApplication/PrepareProposal",
+      type: GRPCCallType.unary
+    )
+
+    public static let processProposal = GRPCMethodDescriptor(
+      name: "ProcessProposal",
+      path: "/tendermint.abci.ABCIApplication/ProcessProposal",
       type: GRPCCallType.unary
     )
   }
@@ -1176,30 +1238,6 @@ public final class Tendermint_Abci_ABCIApplicationTestClient: Tendermint_Abci_AB
   /// Returns true if there are response streams enqueued for 'Info'
   public var hasInfoResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.info.path)
-  }
-
-  /// Make a unary response for the SetOption RPC. This must be called
-  /// before calling 'setOption'. See also 'FakeUnaryResponse'.
-  ///
-  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
-  public func makeSetOptionResponseStream(
-    _ requestHandler: @escaping (FakeRequestPart<Tendermint_Abci_RequestSetOption>) -> () = { _ in }
-  ) -> FakeUnaryResponse<Tendermint_Abci_RequestSetOption, Tendermint_Abci_ResponseSetOption> {
-    return self.fakeChannel.makeFakeUnaryResponse(path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.setOption.path, requestHandler: requestHandler)
-  }
-
-  public func enqueueSetOptionResponse(
-    _ response: Tendermint_Abci_ResponseSetOption,
-    _ requestHandler: @escaping (FakeRequestPart<Tendermint_Abci_RequestSetOption>) -> () = { _ in }
-  ) {
-    let stream = self.makeSetOptionResponseStream(requestHandler)
-    // This is the only operation on the stream; try! is fine.
-    try! stream.sendMessage(response)
-  }
-
-  /// Returns true if there are response streams enqueued for 'SetOption'
-  public var hasSetOptionResponsesRemaining: Bool {
-    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.setOption.path)
   }
 
   /// Make a unary response for the DeliverTx RPC. This must be called
@@ -1464,6 +1502,54 @@ public final class Tendermint_Abci_ABCIApplicationTestClient: Tendermint_Abci_AB
   /// Returns true if there are response streams enqueued for 'ApplySnapshotChunk'
   public var hasApplySnapshotChunkResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.applySnapshotChunk.path)
+  }
+
+  /// Make a unary response for the PrepareProposal RPC. This must be called
+  /// before calling 'prepareProposal'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makePrepareProposalResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Tendermint_Abci_RequestPrepareProposal>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Tendermint_Abci_RequestPrepareProposal, Tendermint_Abci_ResponsePrepareProposal> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.prepareProposal.path, requestHandler: requestHandler)
+  }
+
+  public func enqueuePrepareProposalResponse(
+    _ response: Tendermint_Abci_ResponsePrepareProposal,
+    _ requestHandler: @escaping (FakeRequestPart<Tendermint_Abci_RequestPrepareProposal>) -> () = { _ in }
+  ) {
+    let stream = self.makePrepareProposalResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'PrepareProposal'
+  public var hasPrepareProposalResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.prepareProposal.path)
+  }
+
+  /// Make a unary response for the ProcessProposal RPC. This must be called
+  /// before calling 'processProposal'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeProcessProposalResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Tendermint_Abci_RequestProcessProposal>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Tendermint_Abci_RequestProcessProposal, Tendermint_Abci_ResponseProcessProposal> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.processProposal.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueProcessProposalResponse(
+    _ response: Tendermint_Abci_ResponseProcessProposal,
+    _ requestHandler: @escaping (FakeRequestPart<Tendermint_Abci_RequestProcessProposal>) -> () = { _ in }
+  ) {
+    let stream = self.makeProcessProposalResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'ProcessProposal'
+  public var hasProcessProposalResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Tendermint_Abci_ABCIApplicationClientMetadata.Methods.processProposal.path)
   }
 }
 

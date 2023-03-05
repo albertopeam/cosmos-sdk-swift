@@ -21,8 +21,8 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 }
 
 /// Module defines the ORM module which adds providers to the app container for
-/// module-scoped DB's. In the future it may provide gRPC services for interacting
-/// with ORM data.
+/// ORM ModuleDB's and in the future will automatically register query
+/// services for modules that use the ORM.
 public struct Cosmos_Orm_Module_V1alpha1_Module {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for

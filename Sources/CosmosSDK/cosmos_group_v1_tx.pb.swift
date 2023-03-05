@@ -265,6 +265,17 @@ public struct Cosmos_Group_V1_MsgUpdateGroupPolicyAdmin {
   public init() {}
 }
 
+/// MsgUpdateGroupPolicyAdminResponse is the Msg/UpdateGroupPolicyAdmin response type.
+public struct Cosmos_Group_V1_MsgUpdateGroupPolicyAdminResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 /// MsgCreateGroupWithPolicy is the Msg/CreateGroupWithPolicy request type.
 public struct Cosmos_Group_V1_MsgCreateGroupWithPolicy {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -315,17 +326,6 @@ public struct Cosmos_Group_V1_MsgCreateGroupWithPolicyResponse {
 
   /// group_policy_address is the account address of the newly created group policy.
   public var groupPolicyAddress: String = String()
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-/// MsgUpdateGroupPolicyAdminResponse is the Msg/UpdateGroupPolicyAdmin response type.
-public struct Cosmos_Group_V1_MsgUpdateGroupPolicyAdminResponse {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -384,7 +384,7 @@ public struct Cosmos_Group_V1_MsgUpdateGroupPolicyMetadata {
   /// group_policy_address is the account address of group policy.
   public var groupPolicyAddress: String = String()
 
-  /// metadata is the updated group policy metadata.
+  /// metadata is the group policy metadata to be updated.
   public var metadata: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -416,7 +416,7 @@ public struct Cosmos_Group_V1_MsgSubmitProposal {
   /// Proposers signatures will be counted as yes votes.
   public var proposers: [String] = []
 
-  /// metadata is any arbitrary metadata to attached to the proposal.
+  /// metadata is any arbitrary metadata attached to the proposal.
   public var metadata: String = String()
 
   /// messages is a list of `sdk.Msg`s that will be executed if the proposal passes.
@@ -426,6 +426,16 @@ public struct Cosmos_Group_V1_MsgSubmitProposal {
   /// whether it should be executed immediately on creation or not.
   /// If so, proposers signatures are considered as Yes votes.
   public var exec: Cosmos_Group_V1_Exec = .unspecified
+
+  /// title is the title of the proposal.
+  ///
+  /// Since: cosmos-sdk 0.47
+  public var title: String = String()
+
+  /// summary is the summary of the proposal.
+  ///
+  /// Since: cosmos-sdk 0.47
+  public var summary: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -489,7 +499,7 @@ public struct Cosmos_Group_V1_MsgVote {
   /// option is the voter's choice on the proposal.
   public var option: Cosmos_Group_V1_VoteOption = .unspecified
 
-  /// metadata is any arbitrary metadata to attached to the vote.
+  /// metadata is any arbitrary metadata attached to the vote.
   public var metadata: String = String()
 
   /// exec defines whether the proposal should be executed
@@ -584,9 +594,9 @@ extension Cosmos_Group_V1_MsgUpdateGroupMetadataResponse: @unchecked Sendable {}
 extension Cosmos_Group_V1_MsgCreateGroupPolicy: @unchecked Sendable {}
 extension Cosmos_Group_V1_MsgCreateGroupPolicyResponse: @unchecked Sendable {}
 extension Cosmos_Group_V1_MsgUpdateGroupPolicyAdmin: @unchecked Sendable {}
+extension Cosmos_Group_V1_MsgUpdateGroupPolicyAdminResponse: @unchecked Sendable {}
 extension Cosmos_Group_V1_MsgCreateGroupWithPolicy: @unchecked Sendable {}
 extension Cosmos_Group_V1_MsgCreateGroupWithPolicyResponse: @unchecked Sendable {}
-extension Cosmos_Group_V1_MsgUpdateGroupPolicyAdminResponse: @unchecked Sendable {}
 extension Cosmos_Group_V1_MsgUpdateGroupPolicyDecisionPolicy: @unchecked Sendable {}
 extension Cosmos_Group_V1_MsgUpdateGroupPolicyDecisionPolicyResponse: @unchecked Sendable {}
 extension Cosmos_Group_V1_MsgUpdateGroupPolicyMetadata: @unchecked Sendable {}
@@ -1009,6 +1019,25 @@ extension Cosmos_Group_V1_MsgUpdateGroupPolicyAdmin: SwiftProtobuf.Message, Swif
   }
 }
 
+extension Cosmos_Group_V1_MsgUpdateGroupPolicyAdminResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MsgUpdateGroupPolicyAdminResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Group_V1_MsgUpdateGroupPolicyAdminResponse, rhs: Cosmos_Group_V1_MsgUpdateGroupPolicyAdminResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Cosmos_Group_V1_MsgCreateGroupWithPolicy: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".MsgCreateGroupWithPolicy"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1108,25 +1137,6 @@ extension Cosmos_Group_V1_MsgCreateGroupWithPolicyResponse: SwiftProtobuf.Messag
   public static func ==(lhs: Cosmos_Group_V1_MsgCreateGroupWithPolicyResponse, rhs: Cosmos_Group_V1_MsgCreateGroupWithPolicyResponse) -> Bool {
     if lhs.groupID != rhs.groupID {return false}
     if lhs.groupPolicyAddress != rhs.groupPolicyAddress {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Cosmos_Group_V1_MsgUpdateGroupPolicyAdminResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".MsgUpdateGroupPolicyAdminResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Cosmos_Group_V1_MsgUpdateGroupPolicyAdminResponse, rhs: Cosmos_Group_V1_MsgUpdateGroupPolicyAdminResponse) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1270,6 +1280,8 @@ extension Cosmos_Group_V1_MsgSubmitProposal: SwiftProtobuf.Message, SwiftProtobu
     3: .same(proto: "metadata"),
     4: .same(proto: "messages"),
     5: .same(proto: "exec"),
+    6: .same(proto: "title"),
+    7: .same(proto: "summary"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1283,6 +1295,8 @@ extension Cosmos_Group_V1_MsgSubmitProposal: SwiftProtobuf.Message, SwiftProtobu
       case 3: try { try decoder.decodeSingularStringField(value: &self.metadata) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.messages) }()
       case 5: try { try decoder.decodeSingularEnumField(value: &self.exec) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.summary) }()
       default: break
       }
     }
@@ -1304,6 +1318,12 @@ extension Cosmos_Group_V1_MsgSubmitProposal: SwiftProtobuf.Message, SwiftProtobu
     if self.exec != .unspecified {
       try visitor.visitSingularEnumField(value: self.exec, fieldNumber: 5)
     }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 6)
+    }
+    if !self.summary.isEmpty {
+      try visitor.visitSingularStringField(value: self.summary, fieldNumber: 7)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1313,6 +1333,8 @@ extension Cosmos_Group_V1_MsgSubmitProposal: SwiftProtobuf.Message, SwiftProtobu
     if lhs.metadata != rhs.metadata {return false}
     if lhs.messages != rhs.messages {return false}
     if lhs.exec != rhs.exec {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.summary != rhs.summary {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

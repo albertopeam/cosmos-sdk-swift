@@ -20,8 +20,7 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-/// GetValidatorSetByHeightRequest is the request type for the
-/// Query/GetValidatorSetByHeight RPC method.
+/// GetValidatorSetByHeightRequest is the request type for the Query/GetValidatorSetByHeight RPC method.
 public struct Cosmos_Base_Tendermint_V1beta1_GetValidatorSetByHeightRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -46,8 +45,7 @@ public struct Cosmos_Base_Tendermint_V1beta1_GetValidatorSetByHeightRequest {
   fileprivate var _pagination: Cosmos_Base_Query_V1beta1_PageRequest? = nil
 }
 
-/// GetValidatorSetByHeightResponse is the response type for the
-/// Query/GetValidatorSetByHeight RPC method.
+/// GetValidatorSetByHeightResponse is the response type for the Query/GetValidatorSetByHeight RPC method.
 public struct Cosmos_Base_Tendermint_V1beta1_GetValidatorSetByHeightResponse {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -74,8 +72,7 @@ public struct Cosmos_Base_Tendermint_V1beta1_GetValidatorSetByHeightResponse {
   fileprivate var _pagination: Cosmos_Base_Query_V1beta1_PageResponse? = nil
 }
 
-/// GetLatestValidatorSetRequest is the request type for the
-/// Query/GetValidatorSetByHeight RPC method.
+/// GetLatestValidatorSetRequest is the request type for the Query/GetValidatorSetByHeight RPC method.
 public struct Cosmos_Base_Tendermint_V1beta1_GetLatestValidatorSetRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -98,8 +95,7 @@ public struct Cosmos_Base_Tendermint_V1beta1_GetLatestValidatorSetRequest {
   fileprivate var _pagination: Cosmos_Base_Query_V1beta1_PageRequest? = nil
 }
 
-/// GetLatestValidatorSetResponse is the response type for the
-/// Query/GetValidatorSetByHeight RPC method.
+/// GetLatestValidatorSetResponse is the response type for the Query/GetValidatorSetByHeight RPC method.
 public struct Cosmos_Base_Tendermint_V1beta1_GetLatestValidatorSetResponse {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -154,8 +150,7 @@ public struct Cosmos_Base_Tendermint_V1beta1_Validator {
   fileprivate var _pubKey: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
-/// GetBlockByHeightRequest is the request type for the Query/GetBlockByHeight
-/// RPC method.
+/// GetBlockByHeightRequest is the request type for the Query/GetBlockByHeight RPC method.
 public struct Cosmos_Base_Tendermint_V1beta1_GetBlockByHeightRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -168,8 +163,7 @@ public struct Cosmos_Base_Tendermint_V1beta1_GetBlockByHeightRequest {
   public init() {}
 }
 
-/// GetBlockByHeightResponse is the response type for the Query/GetBlockByHeight
-/// RPC method.
+/// GetBlockByHeightResponse is the response type for the Query/GetBlockByHeight RPC method.
 public struct Cosmos_Base_Tendermint_V1beta1_GetBlockByHeightResponse {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -211,8 +205,7 @@ public struct Cosmos_Base_Tendermint_V1beta1_GetBlockByHeightResponse {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-/// GetLatestBlockRequest is the request type for the Query/GetLatestBlock RPC
-/// method.
+/// GetLatestBlockRequest is the request type for the Query/GetLatestBlock RPC method.
 public struct Cosmos_Base_Tendermint_V1beta1_GetLatestBlockRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -223,8 +216,7 @@ public struct Cosmos_Base_Tendermint_V1beta1_GetLatestBlockRequest {
   public init() {}
 }
 
-/// GetLatestBlockResponse is the response type for the Query/GetLatestBlock RPC
-/// method.
+/// GetLatestBlockResponse is the response type for the Query/GetLatestBlock RPC method.
 public struct Cosmos_Base_Tendermint_V1beta1_GetLatestBlockResponse {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -301,8 +293,7 @@ public struct Cosmos_Base_Tendermint_V1beta1_GetNodeInfoRequest {
   public init() {}
 }
 
-/// GetNodeInfoResponse is the response type for the Query/GetNodeInfo RPC
-/// method.
+/// GetNodeInfoResponse is the response type for the Query/GetNodeInfo RPC method.
 public struct Cosmos_Base_Tendermint_V1beta1_GetNodeInfoResponse {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -400,8 +391,7 @@ public struct Cosmos_Base_Tendermint_V1beta1_ABCIQueryRequest {
   public init() {}
 }
 
-/// ABCIQueryResponse defines the response structure for the ABCIQuery gRPC
-/// query.
+/// ABCIQueryResponse defines the response structure for the ABCIQuery gRPC query.
 ///
 /// Note: This type is a duplicate of the ResponseQuery proto type defined in
 /// Tendermint.
@@ -445,11 +435,10 @@ public struct Cosmos_Base_Tendermint_V1beta1_ABCIQueryResponse {
 }
 
 /// ProofOp defines an operation used for calculating Merkle root. The data could
-/// be arbitrary format, providing nessecary data for example neighbouring node
+/// be arbitrary format, providing necessary data for example neighbouring node
 /// hash.
 ///
-/// Note: This type is a duplicate of the ProofOp proto type defined in
-/// Tendermint.
+/// Note: This type is a duplicate of the ProofOp proto type defined in Tendermint.
 public struct Cosmos_Base_Tendermint_V1beta1_ProofOp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -468,8 +457,7 @@ public struct Cosmos_Base_Tendermint_V1beta1_ProofOp {
 
 /// ProofOps is Merkle proof defined by the list of ProofOps.
 ///
-/// Note: This type is a duplicate of the ProofOps proto type defined in
-/// Tendermint.
+/// Note: This type is a duplicate of the ProofOps proto type defined in Tendermint.
 public struct Cosmos_Base_Tendermint_V1beta1_ProofOps {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for

@@ -87,42 +87,6 @@ public struct Cosmos_Auth_V1beta1_QueryAccountRequest {
   public init() {}
 }
 
-/// QueryModuleAccountsRequest is the request type for the Query/ModuleAccounts RPC method.
-///
-/// Since: cosmos-sdk 0.46
-public struct Cosmos_Auth_V1beta1_QueryModuleAccountsRequest {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-/// QueryParamsResponse is the response type for the Query/Params RPC method.
-public struct Cosmos_Auth_V1beta1_QueryParamsResponse {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  /// params defines the parameters of the module.
-  public var params: Cosmos_Auth_V1beta1_Params {
-    get {return _params ?? Cosmos_Auth_V1beta1_Params()}
-    set {_params = newValue}
-  }
-  /// Returns true if `params` has been explicitly set.
-  public var hasParams: Bool {return self._params != nil}
-  /// Clears the value of `params`. Subsequent reads from it will return its default value.
-  public mutating func clearParams() {self._params = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _params: Cosmos_Auth_V1beta1_Params? = nil
-}
-
 /// QueryAccountResponse is the response type for the Query/Account RPC method.
 public struct Cosmos_Auth_V1beta1_QueryAccountResponse {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -157,6 +121,42 @@ public struct Cosmos_Auth_V1beta1_QueryParamsRequest {
   public init() {}
 }
 
+/// QueryParamsResponse is the response type for the Query/Params RPC method.
+public struct Cosmos_Auth_V1beta1_QueryParamsResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// params defines the parameters of the module.
+  public var params: Cosmos_Auth_V1beta1_Params {
+    get {return _params ?? Cosmos_Auth_V1beta1_Params()}
+    set {_params = newValue}
+  }
+  /// Returns true if `params` has been explicitly set.
+  public var hasParams: Bool {return self._params != nil}
+  /// Clears the value of `params`. Subsequent reads from it will return its default value.
+  public mutating func clearParams() {self._params = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _params: Cosmos_Auth_V1beta1_Params? = nil
+}
+
+/// QueryModuleAccountsRequest is the request type for the Query/ModuleAccounts RPC method.
+///
+/// Since: cosmos-sdk 0.46
+public struct Cosmos_Auth_V1beta1_QueryModuleAccountsRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 /// QueryModuleAccountsResponse is the response type for the Query/ModuleAccounts RPC method.
 ///
 /// Since: cosmos-sdk 0.46
@@ -170,6 +170,41 @@ public struct Cosmos_Auth_V1beta1_QueryModuleAccountsResponse {
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+}
+
+/// QueryModuleAccountByNameRequest is the request type for the Query/ModuleAccountByName RPC method.
+public struct Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var name: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// QueryModuleAccountByNameResponse is the response type for the Query/ModuleAccountByName RPC method.
+public struct Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var account: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _account ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_account = newValue}
+  }
+  /// Returns true if `account` has been explicitly set.
+  public var hasAccount: Bool {return self._account != nil}
+  /// Clears the value of `account`. Subsequent reads from it will return its default value.
+  public mutating func clearAccount() {self._account = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _account: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
 /// Bech32PrefixRequest is the request type for Bech32Prefix rpc method.
@@ -261,12 +296,24 @@ public struct Cosmos_Auth_V1beta1_AddressStringToBytesResponse {
 }
 
 /// QueryAccountAddressByIDRequest is the request type for AccountAddressByID rpc method
+///
+/// Since: cosmos-sdk 0.46.2
 public struct Cosmos_Auth_V1beta1_QueryAccountAddressByIDRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Deprecated, use account_id instead
+  ///
+  /// id is the account number of the address to be queried. This field
+  /// should have been an uint64 (like all account numbers), and will be
+  /// updated to uint64 in a future version of the auth query.
   public var id: Int64 = 0
+
+  /// account_id is the account number of the address to be queried.
+  ///
+  /// Since: cosmos-sdk 0.47
+  public var accountID: UInt64 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -274,6 +321,8 @@ public struct Cosmos_Auth_V1beta1_QueryAccountAddressByIDRequest {
 }
 
 /// QueryAccountAddressByIDResponse is the response type for AccountAddressByID rpc method
+///
+/// Since: cosmos-sdk 0.46.2
 public struct Cosmos_Auth_V1beta1_QueryAccountAddressByIDResponse {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -286,15 +335,58 @@ public struct Cosmos_Auth_V1beta1_QueryAccountAddressByIDResponse {
   public init() {}
 }
 
+/// QueryAccountInfoRequest is the Query/AccountInfo request type.
+///
+/// Since: cosmos-sdk 0.47
+public struct Cosmos_Auth_V1beta1_QueryAccountInfoRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// address is the account address string.
+  public var address: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// QueryAccountInfoResponse is the Query/AccountInfo response type.
+///
+/// Since: cosmos-sdk 0.47
+public struct Cosmos_Auth_V1beta1_QueryAccountInfoResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// info is the account info which is represented by BaseAccount.
+  public var info: Cosmos_Auth_V1beta1_BaseAccount {
+    get {return _info ?? Cosmos_Auth_V1beta1_BaseAccount()}
+    set {_info = newValue}
+  }
+  /// Returns true if `info` has been explicitly set.
+  public var hasInfo: Bool {return self._info != nil}
+  /// Clears the value of `info`. Subsequent reads from it will return its default value.
+  public mutating func clearInfo() {self._info = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _info: Cosmos_Auth_V1beta1_BaseAccount? = nil
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Cosmos_Auth_V1beta1_QueryAccountsRequest: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_QueryAccountsResponse: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_QueryAccountRequest: @unchecked Sendable {}
-extension Cosmos_Auth_V1beta1_QueryModuleAccountsRequest: @unchecked Sendable {}
-extension Cosmos_Auth_V1beta1_QueryParamsResponse: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_QueryAccountResponse: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_QueryParamsRequest: @unchecked Sendable {}
+extension Cosmos_Auth_V1beta1_QueryParamsResponse: @unchecked Sendable {}
+extension Cosmos_Auth_V1beta1_QueryModuleAccountsRequest: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_QueryModuleAccountsResponse: @unchecked Sendable {}
+extension Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest: @unchecked Sendable {}
+extension Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_Bech32PrefixRequest: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_Bech32PrefixResponse: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_AddressBytesToStringRequest: @unchecked Sendable {}
@@ -303,6 +395,8 @@ extension Cosmos_Auth_V1beta1_AddressStringToBytesRequest: @unchecked Sendable {
 extension Cosmos_Auth_V1beta1_AddressStringToBytesResponse: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_QueryAccountAddressByIDRequest: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_QueryAccountAddressByIDResponse: @unchecked Sendable {}
+extension Cosmos_Auth_V1beta1_QueryAccountInfoRequest: @unchecked Sendable {}
+extension Cosmos_Auth_V1beta1_QueryAccountInfoResponse: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -419,61 +513,6 @@ extension Cosmos_Auth_V1beta1_QueryAccountRequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-extension Cosmos_Auth_V1beta1_QueryModuleAccountsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".QueryModuleAccountsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Cosmos_Auth_V1beta1_QueryModuleAccountsRequest, rhs: Cosmos_Auth_V1beta1_QueryModuleAccountsRequest) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Cosmos_Auth_V1beta1_QueryParamsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".QueryParamsResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "params"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._params) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._params {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Cosmos_Auth_V1beta1_QueryParamsResponse, rhs: Cosmos_Auth_V1beta1_QueryParamsResponse) -> Bool {
-    if lhs._params != rhs._params {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension Cosmos_Auth_V1beta1_QueryAccountResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".QueryAccountResponse"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -529,6 +568,61 @@ extension Cosmos_Auth_V1beta1_QueryParamsRequest: SwiftProtobuf.Message, SwiftPr
   }
 }
 
+extension Cosmos_Auth_V1beta1_QueryParamsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryParamsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "params"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._params) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._params {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Auth_V1beta1_QueryParamsResponse, rhs: Cosmos_Auth_V1beta1_QueryParamsResponse) -> Bool {
+    if lhs._params != rhs._params {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Auth_V1beta1_QueryModuleAccountsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryModuleAccountsRequest"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Auth_V1beta1_QueryModuleAccountsRequest, rhs: Cosmos_Auth_V1beta1_QueryModuleAccountsRequest) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Cosmos_Auth_V1beta1_QueryModuleAccountsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".QueryModuleAccountsResponse"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -556,6 +650,74 @@ extension Cosmos_Auth_V1beta1_QueryModuleAccountsResponse: SwiftProtobuf.Message
 
   public static func ==(lhs: Cosmos_Auth_V1beta1_QueryModuleAccountsResponse, rhs: Cosmos_Auth_V1beta1_QueryModuleAccountsResponse) -> Bool {
     if lhs.accounts != rhs.accounts {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryModuleAccountByNameRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest, rhs: Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryModuleAccountByNameResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "account"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._account) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._account {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse, rhs: Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse) -> Bool {
+    if lhs._account != rhs._account {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -744,6 +906,7 @@ extension Cosmos_Auth_V1beta1_QueryAccountAddressByIDRequest: SwiftProtobuf.Mess
   public static let protoMessageName: String = _protobuf_package + ".QueryAccountAddressByIDRequest"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
+    2: .standard(proto: "account_id"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -753,6 +916,7 @@ extension Cosmos_Auth_V1beta1_QueryAccountAddressByIDRequest: SwiftProtobuf.Mess
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularInt64Field(value: &self.id) }()
+      case 2: try { try decoder.decodeSingularUInt64Field(value: &self.accountID) }()
       default: break
       }
     }
@@ -762,11 +926,15 @@ extension Cosmos_Auth_V1beta1_QueryAccountAddressByIDRequest: SwiftProtobuf.Mess
     if self.id != 0 {
       try visitor.visitSingularInt64Field(value: self.id, fieldNumber: 1)
     }
+    if self.accountID != 0 {
+      try visitor.visitSingularUInt64Field(value: self.accountID, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Cosmos_Auth_V1beta1_QueryAccountAddressByIDRequest, rhs: Cosmos_Auth_V1beta1_QueryAccountAddressByIDRequest) -> Bool {
     if lhs.id != rhs.id {return false}
+    if lhs.accountID != rhs.accountID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -799,6 +967,74 @@ extension Cosmos_Auth_V1beta1_QueryAccountAddressByIDResponse: SwiftProtobuf.Mes
 
   public static func ==(lhs: Cosmos_Auth_V1beta1_QueryAccountAddressByIDResponse, rhs: Cosmos_Auth_V1beta1_QueryAccountAddressByIDResponse) -> Bool {
     if lhs.accountAddress != rhs.accountAddress {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Auth_V1beta1_QueryAccountInfoRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryAccountInfoRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Auth_V1beta1_QueryAccountInfoRequest, rhs: Cosmos_Auth_V1beta1_QueryAccountInfoRequest) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Auth_V1beta1_QueryAccountInfoResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryAccountInfoResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "info"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._info) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._info {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Auth_V1beta1_QueryAccountInfoResponse, rhs: Cosmos_Auth_V1beta1_QueryAccountInfoResponse) -> Bool {
+    if lhs._info != rhs._info {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

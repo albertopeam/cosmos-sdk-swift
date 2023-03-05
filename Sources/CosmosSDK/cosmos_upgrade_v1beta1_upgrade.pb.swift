@@ -48,7 +48,6 @@ public struct Cosmos_Upgrade_V1beta1_Plan {
   public mutating func clearTime() {self._time = nil}
 
   /// The height at which the upgrade must be performed.
-  /// Only used if Time is not set.
   public var height: Int64 = 0
 
   /// Any application specific upgrade info to be included on-chain
@@ -84,10 +83,13 @@ public struct Cosmos_Upgrade_V1beta1_SoftwareUpgradeProposal {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// title of the proposal
   public var title: String = String()
 
+  /// description of the proposal
   public var description_p: String = String()
 
+  /// plan of the proposal
   public var plan: Cosmos_Upgrade_V1beta1_Plan {
     get {return _plan ?? Cosmos_Upgrade_V1beta1_Plan()}
     set {_plan = newValue}
@@ -113,8 +115,10 @@ public struct Cosmos_Upgrade_V1beta1_CancelSoftwareUpgradeProposal {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// title of the proposal
   public var title: String = String()
 
+  /// description of the proposal
   public var description_p: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()

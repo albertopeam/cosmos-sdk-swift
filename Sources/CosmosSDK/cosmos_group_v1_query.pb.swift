@@ -42,7 +42,7 @@ public struct Cosmos_Group_V1_QueryGroupInfoResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// info is the GroupInfo for the group.
+  /// info is the GroupInfo of the group.
   public var info: Cosmos_Group_V1_GroupInfo {
     get {return _info ?? Cosmos_Group_V1_GroupInfo()}
     set {_info = newValue}
@@ -79,7 +79,7 @@ public struct Cosmos_Group_V1_QueryGroupPolicyInfoResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// info is the GroupPolicyInfo for the group policy.
+  /// info is the GroupPolicyInfo of the group policy.
   public var info: Cosmos_Group_V1_GroupPolicyInfo {
     get {return _info ?? Cosmos_Group_V1_GroupPolicyInfo()}
     set {_info = newValue}
@@ -626,6 +626,59 @@ public struct Cosmos_Group_V1_QueryTallyResultResponse {
   fileprivate var _tally: Cosmos_Group_V1_TallyResult? = nil
 }
 
+/// QueryGroupsRequest is the Query/Groups request type.
+/// 
+/// Since: cosmos-sdk 0.47.1
+public struct Cosmos_Group_V1_QueryGroupsRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// pagination defines an optional pagination for the request.
+  public var pagination: Cosmos_Base_Query_V1beta1_PageRequest {
+    get {return _pagination ?? Cosmos_Base_Query_V1beta1_PageRequest()}
+    set {_pagination = newValue}
+  }
+  /// Returns true if `pagination` has been explicitly set.
+  public var hasPagination: Bool {return self._pagination != nil}
+  /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
+  public mutating func clearPagination() {self._pagination = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _pagination: Cosmos_Base_Query_V1beta1_PageRequest? = nil
+}
+
+/// QueryGroupsResponse is the Query/Groups response type.
+/// 
+/// Since: cosmos-sdk 0.47.1
+public struct Cosmos_Group_V1_QueryGroupsResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// `groups` is all the groups present in state.
+  public var groups: [Cosmos_Group_V1_GroupInfo] = []
+
+  /// pagination defines the pagination in the response.
+  public var pagination: Cosmos_Base_Query_V1beta1_PageResponse {
+    get {return _pagination ?? Cosmos_Base_Query_V1beta1_PageResponse()}
+    set {_pagination = newValue}
+  }
+  /// Returns true if `pagination` has been explicitly set.
+  public var hasPagination: Bool {return self._pagination != nil}
+  /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
+  public mutating func clearPagination() {self._pagination = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _pagination: Cosmos_Base_Query_V1beta1_PageResponse? = nil
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Cosmos_Group_V1_QueryGroupInfoRequest: @unchecked Sendable {}
 extension Cosmos_Group_V1_QueryGroupInfoResponse: @unchecked Sendable {}
@@ -653,6 +706,8 @@ extension Cosmos_Group_V1_QueryGroupsByMemberRequest: @unchecked Sendable {}
 extension Cosmos_Group_V1_QueryGroupsByMemberResponse: @unchecked Sendable {}
 extension Cosmos_Group_V1_QueryTallyResultRequest: @unchecked Sendable {}
 extension Cosmos_Group_V1_QueryTallyResultResponse: @unchecked Sendable {}
+extension Cosmos_Group_V1_QueryGroupsRequest: @unchecked Sendable {}
+extension Cosmos_Group_V1_QueryGroupsResponse: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -1672,6 +1727,84 @@ extension Cosmos_Group_V1_QueryTallyResultResponse: SwiftProtobuf.Message, Swift
 
   public static func ==(lhs: Cosmos_Group_V1_QueryTallyResultResponse, rhs: Cosmos_Group_V1_QueryTallyResultResponse) -> Bool {
     if lhs._tally != rhs._tally {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Group_V1_QueryGroupsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryGroupsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    2: .same(proto: "pagination"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._pagination) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._pagination {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Group_V1_QueryGroupsRequest, rhs: Cosmos_Group_V1_QueryGroupsRequest) -> Bool {
+    if lhs._pagination != rhs._pagination {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Group_V1_QueryGroupsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryGroupsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "groups"),
+    2: .same(proto: "pagination"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.groups) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._pagination) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.groups.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.groups, fieldNumber: 1)
+    }
+    try { if let v = self._pagination {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Group_V1_QueryGroupsResponse, rhs: Cosmos_Group_V1_QueryGroupsResponse) -> Bool {
+    if lhs.groups != rhs.groups {return false}
+    if lhs._pagination != rhs._pagination {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

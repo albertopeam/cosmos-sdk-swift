@@ -9,7 +9,7 @@ This repository contains only generated code.
 
 Package | cosmos-sdk | Commit hash                      | protoc-gen-swift| protoc-gen-grpc-swift
 --------|------------|----------------------------------|-----------------|-----------------------
-0.46.0  | 0.46.0     | 8cb30a2c4de74dc9bd8d260b1e75e176 | 1.21.0          | 1.14.0
+0.46.11 | 0.46.11    | 4074ba39c09e4b4799271a56a053227c | 1.21.0          | 1.14.0
 
 ## Code generation
 

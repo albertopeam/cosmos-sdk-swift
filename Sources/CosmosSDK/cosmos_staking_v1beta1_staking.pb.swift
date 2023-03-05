@@ -77,6 +77,57 @@ extension Cosmos_Staking_V1beta1_BondStatus: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+/// Infraction indicates the infraction a validator commited.
+public enum Cosmos_Staking_V1beta1_Infraction: SwiftProtobuf.Enum {
+  public typealias RawValue = Int
+
+  /// UNSPECIFIED defines an empty infraction.
+  case unspecified // = 0
+
+  /// DOUBLE_SIGN defines a validator that double-signs a block.
+  case doubleSign // = 1
+
+  /// DOWNTIME defines a validator that missed signing too many blocks.
+  case downtime // = 2
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .doubleSign
+    case 2: self = .downtime
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .doubleSign: return 1
+    case .downtime: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Cosmos_Staking_V1beta1_Infraction: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static var allCases: [Cosmos_Staking_V1beta1_Infraction] = [
+    .unspecified,
+    .doubleSign,
+    .downtime,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 /// HistoricalInfo contains header and validator information for a given block.
 /// It is stored as part of staking module's state, which persists the `n` most
 /// recent HistoricalInfo
@@ -282,6 +333,18 @@ public struct Cosmos_Staking_V1beta1_Validator {
     set {_uniqueStorage()._minSelfDelegation = newValue}
   }
 
+  /// strictly positive if this validator's unbonding has been stopped by external modules
+  public var unbondingOnHoldRefCount: Int64 {
+    get {return _storage._unbondingOnHoldRefCount}
+    set {_uniqueStorage()._unbondingOnHoldRefCount = newValue}
+  }
+
+  /// list of unbonding ids, each uniquely identifing an unbonding of this validator
+  public var unbondingIds: [UInt64] {
+    get {return _storage._unbondingIds}
+    set {_uniqueStorage()._unbondingIds = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -433,6 +496,12 @@ public struct Cosmos_Staking_V1beta1_UnbondingDelegationEntry {
   /// balance defines the tokens to receive at completion.
   public var balance: String = String()
 
+  /// Incrementing id that uniquely identifies this entry
+  public var unbondingID: UInt64 = 0
+
+  /// Strictly positive if this entry's unbonding has been stopped by external modules
+  public var unbondingOnHoldRefCount: Int64 = 0
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -465,6 +534,12 @@ public struct Cosmos_Staking_V1beta1_RedelegationEntry {
   /// shares_dst is the amount of destination-validator shares created by redelegation.
   public var sharesDst: String = String()
 
+  /// Incrementing id that uniquely identifies this entry
+  public var unbondingID: UInt64 = 0
+
+  /// Strictly positive if this entry's unbonding has been stopped by external modules
+  public var unbondingOnHoldRefCount: Int64 = 0
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -496,7 +571,7 @@ public struct Cosmos_Staking_V1beta1_Redelegation {
   public init() {}
 }
 
-/// Params defines the parameters for the staking module.
+/// Params defines the parameters for the x/staking module.
 public struct Cosmos_Staking_V1beta1_Params {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -635,8 +710,23 @@ public struct Cosmos_Staking_V1beta1_Pool {
   public init() {}
 }
 
+/// ValidatorUpdates defines an array of abci.ValidatorUpdate objects.
+/// TODO: explore moving this to proto/cosmos/base to separate modules from tendermint dependence
+public struct Cosmos_Staking_V1beta1_ValidatorUpdates {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var updates: [Tendermint_Abci_ValidatorUpdate] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Cosmos_Staking_V1beta1_BondStatus: @unchecked Sendable {}
+extension Cosmos_Staking_V1beta1_Infraction: @unchecked Sendable {}
 extension Cosmos_Staking_V1beta1_HistoricalInfo: @unchecked Sendable {}
 extension Cosmos_Staking_V1beta1_CommissionRates: @unchecked Sendable {}
 extension Cosmos_Staking_V1beta1_Commission: @unchecked Sendable {}
@@ -657,6 +747,7 @@ extension Cosmos_Staking_V1beta1_DelegationResponse: @unchecked Sendable {}
 extension Cosmos_Staking_V1beta1_RedelegationEntryResponse: @unchecked Sendable {}
 extension Cosmos_Staking_V1beta1_RedelegationResponse: @unchecked Sendable {}
 extension Cosmos_Staking_V1beta1_Pool: @unchecked Sendable {}
+extension Cosmos_Staking_V1beta1_ValidatorUpdates: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -669,6 +760,14 @@ extension Cosmos_Staking_V1beta1_BondStatus: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "BOND_STATUS_UNBONDED"),
     2: .same(proto: "BOND_STATUS_UNBONDING"),
     3: .same(proto: "BOND_STATUS_BONDED"),
+  ]
+}
+
+extension Cosmos_Staking_V1beta1_Infraction: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "INFRACTION_UNSPECIFIED"),
+    1: .same(proto: "INFRACTION_DOUBLE_SIGN"),
+    2: .same(proto: "INFRACTION_DOWNTIME"),
   ]
 }
 
@@ -870,6 +969,8 @@ extension Cosmos_Staking_V1beta1_Validator: SwiftProtobuf.Message, SwiftProtobuf
     9: .standard(proto: "unbonding_time"),
     10: .same(proto: "commission"),
     11: .standard(proto: "min_self_delegation"),
+    12: .standard(proto: "unbonding_on_hold_ref_count"),
+    13: .standard(proto: "unbonding_ids"),
   ]
 
   fileprivate class _StorageClass {
@@ -884,6 +985,8 @@ extension Cosmos_Staking_V1beta1_Validator: SwiftProtobuf.Message, SwiftProtobuf
     var _unbondingTime: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _commission: Cosmos_Staking_V1beta1_Commission? = nil
     var _minSelfDelegation: String = String()
+    var _unbondingOnHoldRefCount: Int64 = 0
+    var _unbondingIds: [UInt64] = []
 
     static let defaultInstance = _StorageClass()
 
@@ -901,6 +1004,8 @@ extension Cosmos_Staking_V1beta1_Validator: SwiftProtobuf.Message, SwiftProtobuf
       _unbondingTime = source._unbondingTime
       _commission = source._commission
       _minSelfDelegation = source._minSelfDelegation
+      _unbondingOnHoldRefCount = source._unbondingOnHoldRefCount
+      _unbondingIds = source._unbondingIds
     }
   }
 
@@ -930,6 +1035,8 @@ extension Cosmos_Staking_V1beta1_Validator: SwiftProtobuf.Message, SwiftProtobuf
         case 9: try { try decoder.decodeSingularMessageField(value: &_storage._unbondingTime) }()
         case 10: try { try decoder.decodeSingularMessageField(value: &_storage._commission) }()
         case 11: try { try decoder.decodeSingularStringField(value: &_storage._minSelfDelegation) }()
+        case 12: try { try decoder.decodeSingularInt64Field(value: &_storage._unbondingOnHoldRefCount) }()
+        case 13: try { try decoder.decodeRepeatedUInt64Field(value: &_storage._unbondingIds) }()
         default: break
         }
       }
@@ -975,6 +1082,12 @@ extension Cosmos_Staking_V1beta1_Validator: SwiftProtobuf.Message, SwiftProtobuf
       if !_storage._minSelfDelegation.isEmpty {
         try visitor.visitSingularStringField(value: _storage._minSelfDelegation, fieldNumber: 11)
       }
+      if _storage._unbondingOnHoldRefCount != 0 {
+        try visitor.visitSingularInt64Field(value: _storage._unbondingOnHoldRefCount, fieldNumber: 12)
+      }
+      if !_storage._unbondingIds.isEmpty {
+        try visitor.visitPackedUInt64Field(value: _storage._unbondingIds, fieldNumber: 13)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -995,6 +1108,8 @@ extension Cosmos_Staking_V1beta1_Validator: SwiftProtobuf.Message, SwiftProtobuf
         if _storage._unbondingTime != rhs_storage._unbondingTime {return false}
         if _storage._commission != rhs_storage._commission {return false}
         if _storage._minSelfDelegation != rhs_storage._minSelfDelegation {return false}
+        if _storage._unbondingOnHoldRefCount != rhs_storage._unbondingOnHoldRefCount {return false}
+        if _storage._unbondingIds != rhs_storage._unbondingIds {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -1277,6 +1392,8 @@ extension Cosmos_Staking_V1beta1_UnbondingDelegationEntry: SwiftProtobuf.Message
     2: .standard(proto: "completion_time"),
     3: .standard(proto: "initial_balance"),
     4: .same(proto: "balance"),
+    5: .standard(proto: "unbonding_id"),
+    6: .standard(proto: "unbonding_on_hold_ref_count"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1289,6 +1406,8 @@ extension Cosmos_Staking_V1beta1_UnbondingDelegationEntry: SwiftProtobuf.Message
       case 2: try { try decoder.decodeSingularMessageField(value: &self._completionTime) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.initialBalance) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.balance) }()
+      case 5: try { try decoder.decodeSingularUInt64Field(value: &self.unbondingID) }()
+      case 6: try { try decoder.decodeSingularInt64Field(value: &self.unbondingOnHoldRefCount) }()
       default: break
       }
     }
@@ -1311,6 +1430,12 @@ extension Cosmos_Staking_V1beta1_UnbondingDelegationEntry: SwiftProtobuf.Message
     if !self.balance.isEmpty {
       try visitor.visitSingularStringField(value: self.balance, fieldNumber: 4)
     }
+    if self.unbondingID != 0 {
+      try visitor.visitSingularUInt64Field(value: self.unbondingID, fieldNumber: 5)
+    }
+    if self.unbondingOnHoldRefCount != 0 {
+      try visitor.visitSingularInt64Field(value: self.unbondingOnHoldRefCount, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1319,6 +1444,8 @@ extension Cosmos_Staking_V1beta1_UnbondingDelegationEntry: SwiftProtobuf.Message
     if lhs._completionTime != rhs._completionTime {return false}
     if lhs.initialBalance != rhs.initialBalance {return false}
     if lhs.balance != rhs.balance {return false}
+    if lhs.unbondingID != rhs.unbondingID {return false}
+    if lhs.unbondingOnHoldRefCount != rhs.unbondingOnHoldRefCount {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1331,6 +1458,8 @@ extension Cosmos_Staking_V1beta1_RedelegationEntry: SwiftProtobuf.Message, Swift
     2: .standard(proto: "completion_time"),
     3: .standard(proto: "initial_balance"),
     4: .standard(proto: "shares_dst"),
+    5: .standard(proto: "unbonding_id"),
+    6: .standard(proto: "unbonding_on_hold_ref_count"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1343,6 +1472,8 @@ extension Cosmos_Staking_V1beta1_RedelegationEntry: SwiftProtobuf.Message, Swift
       case 2: try { try decoder.decodeSingularMessageField(value: &self._completionTime) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.initialBalance) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.sharesDst) }()
+      case 5: try { try decoder.decodeSingularUInt64Field(value: &self.unbondingID) }()
+      case 6: try { try decoder.decodeSingularInt64Field(value: &self.unbondingOnHoldRefCount) }()
       default: break
       }
     }
@@ -1365,6 +1496,12 @@ extension Cosmos_Staking_V1beta1_RedelegationEntry: SwiftProtobuf.Message, Swift
     if !self.sharesDst.isEmpty {
       try visitor.visitSingularStringField(value: self.sharesDst, fieldNumber: 4)
     }
+    if self.unbondingID != 0 {
+      try visitor.visitSingularUInt64Field(value: self.unbondingID, fieldNumber: 5)
+    }
+    if self.unbondingOnHoldRefCount != 0 {
+      try visitor.visitSingularInt64Field(value: self.unbondingOnHoldRefCount, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1373,6 +1510,8 @@ extension Cosmos_Staking_V1beta1_RedelegationEntry: SwiftProtobuf.Message, Swift
     if lhs._completionTime != rhs._completionTime {return false}
     if lhs.initialBalance != rhs.initialBalance {return false}
     if lhs.sharesDst != rhs.sharesDst {return false}
+    if lhs.unbondingID != rhs.unbondingID {return false}
+    if lhs.unbondingOnHoldRefCount != rhs.unbondingOnHoldRefCount {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1653,6 +1792,38 @@ extension Cosmos_Staking_V1beta1_Pool: SwiftProtobuf.Message, SwiftProtobuf._Mes
   public static func ==(lhs: Cosmos_Staking_V1beta1_Pool, rhs: Cosmos_Staking_V1beta1_Pool) -> Bool {
     if lhs.notBondedTokens != rhs.notBondedTokens {return false}
     if lhs.bondedTokens != rhs.bondedTokens {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Staking_V1beta1_ValidatorUpdates: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ValidatorUpdates"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "updates"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.updates) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.updates.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.updates, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Staking_V1beta1_ValidatorUpdates, rhs: Cosmos_Staking_V1beta1_ValidatorUpdates) -> Bool {
+    if lhs.updates != rhs.updates {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

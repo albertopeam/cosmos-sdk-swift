@@ -27,8 +27,10 @@ public struct Cosmos_Evidence_V1beta1_MsgSubmitEvidence {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// submitter is the signer account address of evidence.
   public var submitter: String = String()
 
+  /// evidence defines the evidence of misbehavior.
   public var evidence: SwiftProtobuf.Google_Protobuf_Any {
     get {return _evidence ?? SwiftProtobuf.Google_Protobuf_Any()}
     set {_evidence = newValue}

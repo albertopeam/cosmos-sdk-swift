@@ -26,7 +26,7 @@ public struct Cosmos_Staking_V1beta1_GenesisState {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// params defines all the paramaters of related to deposit.
+  /// params defines all the parameters of related to deposit.
   public var params: Cosmos_Staking_V1beta1_Params {
     get {return _params ?? Cosmos_Staking_V1beta1_Params()}
     set {_params = newValue}

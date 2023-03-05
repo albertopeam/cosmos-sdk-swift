@@ -165,8 +165,10 @@ public struct Cosmos_Gov_V1beta1_WeightedVoteOption {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// option defines the valid vote options, it must not contain duplicate vote options.
   public var option: Cosmos_Gov_V1beta1_VoteOption = .unspecified
 
+  /// weight is the vote weight associated with the vote option.
   public var weight: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -181,8 +183,10 @@ public struct Cosmos_Gov_V1beta1_TextProposal {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// title of the proposal.
   public var title: String = String()
 
+  /// description associated with the proposal.
   public var description_p: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -197,10 +201,13 @@ public struct Cosmos_Gov_V1beta1_Deposit {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// proposal_id defines the unique id of the proposal.
   public var proposalID: UInt64 = 0
 
+  /// depositor defines the deposit addresses from the proposals.
   public var depositor: String = String()
 
+  /// amount to be deposited by depositor.
   public var amount: [Cosmos_Base_V1beta1_Coin] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -214,8 +221,10 @@ public struct Cosmos_Gov_V1beta1_Proposal {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// proposal_id defines the unique id of the proposal.
   public var proposalID: UInt64 = 0
 
+  /// content is the proposal's content.
   public var content: SwiftProtobuf.Google_Protobuf_Any {
     get {return _content ?? SwiftProtobuf.Google_Protobuf_Any()}
     set {_content = newValue}
@@ -225,6 +234,7 @@ public struct Cosmos_Gov_V1beta1_Proposal {
   /// Clears the value of `content`. Subsequent reads from it will return its default value.
   public mutating func clearContent() {self._content = nil}
 
+  /// status defines the proposal status.
   public var status: Cosmos_Gov_V1beta1_ProposalStatus = .unspecified
 
   /// final_tally_result is the final tally result of the proposal. When
@@ -239,6 +249,7 @@ public struct Cosmos_Gov_V1beta1_Proposal {
   /// Clears the value of `finalTallyResult`. Subsequent reads from it will return its default value.
   public mutating func clearFinalTallyResult() {self._finalTallyResult = nil}
 
+  /// submit_time is the time of proposal submission.
   public var submitTime: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _submitTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_submitTime = newValue}
@@ -248,6 +259,7 @@ public struct Cosmos_Gov_V1beta1_Proposal {
   /// Clears the value of `submitTime`. Subsequent reads from it will return its default value.
   public mutating func clearSubmitTime() {self._submitTime = nil}
 
+  /// deposit_end_time is the end time for deposition.
   public var depositEndTime: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _depositEndTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_depositEndTime = newValue}
@@ -257,8 +269,10 @@ public struct Cosmos_Gov_V1beta1_Proposal {
   /// Clears the value of `depositEndTime`. Subsequent reads from it will return its default value.
   public mutating func clearDepositEndTime() {self._depositEndTime = nil}
 
+  /// total_deposit is the total deposit on the proposal.
   public var totalDeposit: [Cosmos_Base_V1beta1_Coin] = []
 
+  /// voting_start_time is the starting time to vote on a proposal.
   public var votingStartTime: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _votingStartTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_votingStartTime = newValue}
@@ -268,6 +282,7 @@ public struct Cosmos_Gov_V1beta1_Proposal {
   /// Clears the value of `votingStartTime`. Subsequent reads from it will return its default value.
   public mutating func clearVotingStartTime() {self._votingStartTime = nil}
 
+  /// voting_end_time is the end time of voting on a proposal.
   public var votingEndTime: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _votingEndTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_votingEndTime = newValue}
@@ -295,12 +310,16 @@ public struct Cosmos_Gov_V1beta1_TallyResult {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// yes is the number of yes votes on a proposal.
   public var yes: String = String()
 
+  /// abstain is the number of abstain votes on a proposal.
   public var abstain: String = String()
 
+  /// no is the number of no votes on a proposal.
   public var no: String = String()
 
+  /// no_with_veto is the number of no with veto votes on a proposal.
   public var noWithVeto: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -315,8 +334,10 @@ public struct Cosmos_Gov_V1beta1_Vote {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// proposal_id defines the unique id of the proposal.
   public var proposalID: UInt64 = 0
 
+  /// voter is the voter address of the proposal.
   public var voter: String = String()
 
   /// Deprecated: Prefer to use `options` instead. This field is set in queries
@@ -324,6 +345,8 @@ public struct Cosmos_Gov_V1beta1_Vote {
   /// other cases, this field will default to VOTE_OPTION_UNSPECIFIED.
   public var option: Cosmos_Gov_V1beta1_VoteOption = .unspecified
 
+  /// options is the weighted vote options.
+  ///
   /// Since: cosmos-sdk 0.43
   public var options: [Cosmos_Gov_V1beta1_WeightedVoteOption] = []
 
@@ -338,11 +361,11 @@ public struct Cosmos_Gov_V1beta1_DepositParams {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  ///  Minimum deposit for a proposal to enter voting period.
+  /// Minimum deposit for a proposal to enter voting period.
   public var minDeposit: [Cosmos_Base_V1beta1_Coin] = []
 
-  ///  Maximum period for Atom holders to deposit on a proposal. Initial value: 2
-  ///  months.
+  /// Maximum period for Atom holders to deposit on a proposal. Initial value: 2
+  /// months.
   public var maxDepositPeriod: SwiftProtobuf.Google_Protobuf_Duration {
     get {return _maxDepositPeriod ?? SwiftProtobuf.Google_Protobuf_Duration()}
     set {_maxDepositPeriod = newValue}
@@ -365,7 +388,7 @@ public struct Cosmos_Gov_V1beta1_VotingParams {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  ///  Length of the voting period.
+  /// Duration of the voting period.
   public var votingPeriod: SwiftProtobuf.Google_Protobuf_Duration {
     get {return _votingPeriod ?? SwiftProtobuf.Google_Protobuf_Duration()}
     set {_votingPeriod = newValue}
@@ -388,15 +411,15 @@ public struct Cosmos_Gov_V1beta1_TallyParams {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  ///  Minimum percentage of total stake needed to vote for a result to be
-  ///  considered valid.
+  /// Minimum percentage of total stake needed to vote for a result to be
+  /// considered valid.
   public var quorum: Data = Data()
 
-  ///  Minimum proportion of Yes votes for proposal to pass. Default value: 0.5.
+  /// Minimum proportion of Yes votes for proposal to pass. Default value: 0.5.
   public var threshold: Data = Data()
 
-  ///  Minimum value of Veto votes to Total votes ratio for proposal to be
-  ///  vetoed. Default value: 1/3.
+  /// Minimum value of Veto votes to Total votes ratio for proposal to be
+  /// vetoed. Default value: 1/3.
   public var vetoThreshold: Data = Data()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()

@@ -37,6 +37,11 @@ public protocol Cosmos_Crisis_V1beta1_MsgClientProtocol: GRPCClient {
     _ request: Cosmos_Crisis_V1beta1_MsgVerifyInvariant,
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Crisis_V1beta1_MsgVerifyInvariant, Cosmos_Crisis_V1beta1_MsgVerifyInvariantResponse>
+
+  func updateParams(
+    _ request: Cosmos_Crisis_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Crisis_V1beta1_MsgUpdateParams, Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse>
 }
 
 extension Cosmos_Crisis_V1beta1_MsgClientProtocol {
@@ -44,7 +49,7 @@ extension Cosmos_Crisis_V1beta1_MsgClientProtocol {
     return "cosmos.crisis.v1beta1.Msg"
   }
 
-  /// VerifyInvariant defines a method to verify a particular invariance.
+  /// VerifyInvariant defines a method to verify a particular invariant.
   ///
   /// - Parameters:
   ///   - request: Request to send to VerifyInvariant.
@@ -59,6 +64,27 @@ extension Cosmos_Crisis_V1beta1_MsgClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeVerifyInvariantInterceptors() ?? []
+    )
+  }
+
+  /// UpdateParams defines a governance operation for updating the x/crisis module
+  /// parameters. The authority is defined in the keeper.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to UpdateParams.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func updateParams(
+    _ request: Cosmos_Crisis_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Crisis_V1beta1_MsgUpdateParams, Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Crisis_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
     )
   }
 }
@@ -133,6 +159,11 @@ public protocol Cosmos_Crisis_V1beta1_MsgAsyncClientProtocol: GRPCClient {
     _ request: Cosmos_Crisis_V1beta1_MsgVerifyInvariant,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Crisis_V1beta1_MsgVerifyInvariant, Cosmos_Crisis_V1beta1_MsgVerifyInvariantResponse>
+
+  func makeUpdateParamsCall(
+    _ request: Cosmos_Crisis_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Crisis_V1beta1_MsgUpdateParams, Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -156,6 +187,18 @@ extension Cosmos_Crisis_V1beta1_MsgAsyncClientProtocol {
       interceptors: self.interceptors?.makeVerifyInvariantInterceptors() ?? []
     )
   }
+
+  public func makeUpdateParamsCall(
+    _ request: Cosmos_Crisis_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Crisis_V1beta1_MsgUpdateParams, Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Crisis_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -169,6 +212,18 @@ extension Cosmos_Crisis_V1beta1_MsgAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeVerifyInvariantInterceptors() ?? []
+    )
+  }
+
+  public func updateParams(
+    _ request: Cosmos_Crisis_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Crisis_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
     )
   }
 }
@@ -196,6 +251,9 @@ public protocol Cosmos_Crisis_V1beta1_MsgClientInterceptorFactoryProtocol: GRPCS
 
   /// - Returns: Interceptors to use when invoking 'verifyInvariant'.
   func makeVerifyInvariantInterceptors() -> [ClientInterceptor<Cosmos_Crisis_V1beta1_MsgVerifyInvariant, Cosmos_Crisis_V1beta1_MsgVerifyInvariantResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'updateParams'.
+  func makeUpdateParamsInterceptors() -> [ClientInterceptor<Cosmos_Crisis_V1beta1_MsgUpdateParams, Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse>]
 }
 
 public enum Cosmos_Crisis_V1beta1_MsgClientMetadata {
@@ -204,6 +262,7 @@ public enum Cosmos_Crisis_V1beta1_MsgClientMetadata {
     fullName: "cosmos.crisis.v1beta1.Msg",
     methods: [
       Cosmos_Crisis_V1beta1_MsgClientMetadata.Methods.verifyInvariant,
+      Cosmos_Crisis_V1beta1_MsgClientMetadata.Methods.updateParams,
     ]
   )
 
@@ -211,6 +270,12 @@ public enum Cosmos_Crisis_V1beta1_MsgClientMetadata {
     public static let verifyInvariant = GRPCMethodDescriptor(
       name: "VerifyInvariant",
       path: "/cosmos.crisis.v1beta1.Msg/VerifyInvariant",
+      type: GRPCCallType.unary
+    )
+
+    public static let updateParams = GRPCMethodDescriptor(
+      name: "UpdateParams",
+      path: "/cosmos.crisis.v1beta1.Msg/UpdateParams",
       type: GRPCCallType.unary
     )
   }
@@ -263,6 +328,30 @@ public final class Cosmos_Crisis_V1beta1_MsgTestClient: Cosmos_Crisis_V1beta1_Ms
   /// Returns true if there are response streams enqueued for 'VerifyInvariant'
   public var hasVerifyInvariantResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Crisis_V1beta1_MsgClientMetadata.Methods.verifyInvariant.path)
+  }
+
+  /// Make a unary response for the UpdateParams RPC. This must be called
+  /// before calling 'updateParams'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeUpdateParamsResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Crisis_V1beta1_MsgUpdateParams>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Crisis_V1beta1_MsgUpdateParams, Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Crisis_V1beta1_MsgClientMetadata.Methods.updateParams.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueUpdateParamsResponse(
+    _ response: Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Crisis_V1beta1_MsgUpdateParams>) -> () = { _ in }
+  ) {
+    let stream = self.makeUpdateParamsResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'UpdateParams'
+  public var hasUpdateParamsResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Crisis_V1beta1_MsgClientMetadata.Methods.updateParams.path)
   }
 }
 

@@ -54,6 +54,28 @@ extension SwiftProtobuf.Google_Protobuf_MessageOptions {
   public mutating func clearCosmos_Msg_V1_signer() {
     clearExtensionValue(ext: Cosmos_Msg_V1_Extensions_signer)
   }
+}
+
+extension SwiftProtobuf.Google_Protobuf_ServiceOptions {
+
+  /// service indicates that the service is a Msg service and that requests
+  /// must be transported via blockchain transactions rather than gRPC.
+  /// Tooling can use this annotation to distinguish between Msg services and
+  /// other types of services via reflection.
+  public var Cosmos_Msg_V1_service: Bool {
+    get {return getExtensionValue(ext: Cosmos_Msg_V1_Extensions_service) ?? false}
+    set {setExtensionValue(ext: Cosmos_Msg_V1_Extensions_service, value: newValue)}
+  }
+  /// Returns true if extension `Cosmos_Msg_V1_Extensions_service`
+  /// has been explicitly set.
+  public var hasCosmos_Msg_V1_service: Bool {
+    return hasExtensionValue(ext: Cosmos_Msg_V1_Extensions_service)
+  }
+  /// Clears the value of extension `Cosmos_Msg_V1_Extensions_service`.
+  /// Subsequent reads from it will return its default value.
+  public mutating func clearCosmos_Msg_V1_service() {
+    clearExtensionValue(ext: Cosmos_Msg_V1_Extensions_service)
+  }
 
 }
 
@@ -64,12 +86,22 @@ extension SwiftProtobuf.Google_Protobuf_MessageOptions {
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
 public let Cosmos_Msg_V1_Msg_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+  Cosmos_Msg_V1_Extensions_service,
   Cosmos_Msg_V1_Extensions_signer
 ]
 
 // Extension Objects - The only reason these might be needed is when manually
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
+
+/// service indicates that the service is a Msg service and that requests
+/// must be transported via blockchain transactions rather than gRPC.
+/// Tooling can use this annotation to distinguish between Msg services and
+/// other types of services via reflection.
+public let Cosmos_Msg_V1_Extensions_service = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalExtensionField<SwiftProtobuf.ProtobufBool>, SwiftProtobuf.Google_Protobuf_ServiceOptions>(
+  _protobuf_fieldNumber: 11110000,
+  fieldName: "cosmos.msg.v1.service"
+)
 
 /// signer must be used in cosmos messages in order
 /// to signal to external clients which fields in a

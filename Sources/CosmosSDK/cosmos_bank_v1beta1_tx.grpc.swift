@@ -42,6 +42,16 @@ public protocol Cosmos_Bank_V1beta1_MsgClientProtocol: GRPCClient {
     _ request: Cosmos_Bank_V1beta1_MsgMultiSend,
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Bank_V1beta1_MsgMultiSend, Cosmos_Bank_V1beta1_MsgMultiSendResponse>
+
+  func updateParams(
+    _ request: Cosmos_Bank_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Bank_V1beta1_MsgUpdateParams, Cosmos_Bank_V1beta1_MsgUpdateParamsResponse>
+
+  func setSendEnabled(
+    _ request: Cosmos_Bank_V1beta1_MsgSetSendEnabled,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Bank_V1beta1_MsgSetSendEnabled, Cosmos_Bank_V1beta1_MsgSetSendEnabledResponse>
 }
 
 extension Cosmos_Bank_V1beta1_MsgClientProtocol {
@@ -82,6 +92,50 @@ extension Cosmos_Bank_V1beta1_MsgClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeMultiSendInterceptors() ?? []
+    )
+  }
+
+  /// UpdateParams defines a governance operation for updating the x/bank module parameters.
+  /// The authority is defined in the keeper.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to UpdateParams.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func updateParams(
+    _ request: Cosmos_Bank_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Bank_V1beta1_MsgUpdateParams, Cosmos_Bank_V1beta1_MsgUpdateParamsResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
+
+  /// SetSendEnabled is a governance operation for setting the SendEnabled flag
+  /// on any number of Denoms. Only the entries to add or update should be
+  /// included. Entries that already exist in the store, but that aren't
+  /// included in this message, will be left unchanged.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to SetSendEnabled.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func setSendEnabled(
+    _ request: Cosmos_Bank_V1beta1_MsgSetSendEnabled,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Bank_V1beta1_MsgSetSendEnabled, Cosmos_Bank_V1beta1_MsgSetSendEnabledResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.setSendEnabled.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeSetSendEnabledInterceptors() ?? []
     )
   }
 }
@@ -161,6 +215,16 @@ public protocol Cosmos_Bank_V1beta1_MsgAsyncClientProtocol: GRPCClient {
     _ request: Cosmos_Bank_V1beta1_MsgMultiSend,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_MsgMultiSend, Cosmos_Bank_V1beta1_MsgMultiSendResponse>
+
+  func makeUpdateParamsCall(
+    _ request: Cosmos_Bank_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_MsgUpdateParams, Cosmos_Bank_V1beta1_MsgUpdateParamsResponse>
+
+  func makeSetSendEnabledCall(
+    _ request: Cosmos_Bank_V1beta1_MsgSetSendEnabled,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_MsgSetSendEnabled, Cosmos_Bank_V1beta1_MsgSetSendEnabledResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -196,6 +260,30 @@ extension Cosmos_Bank_V1beta1_MsgAsyncClientProtocol {
       interceptors: self.interceptors?.makeMultiSendInterceptors() ?? []
     )
   }
+
+  public func makeUpdateParamsCall(
+    _ request: Cosmos_Bank_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_MsgUpdateParams, Cosmos_Bank_V1beta1_MsgUpdateParamsResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
+
+  public func makeSetSendEnabledCall(
+    _ request: Cosmos_Bank_V1beta1_MsgSetSendEnabled,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_MsgSetSendEnabled, Cosmos_Bank_V1beta1_MsgSetSendEnabledResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.setSendEnabled.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeSetSendEnabledInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -221,6 +309,30 @@ extension Cosmos_Bank_V1beta1_MsgAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeMultiSendInterceptors() ?? []
+    )
+  }
+
+  public func updateParams(
+    _ request: Cosmos_Bank_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Bank_V1beta1_MsgUpdateParamsResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
+
+  public func setSendEnabled(
+    _ request: Cosmos_Bank_V1beta1_MsgSetSendEnabled,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Bank_V1beta1_MsgSetSendEnabledResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.setSendEnabled.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeSetSendEnabledInterceptors() ?? []
     )
   }
 }
@@ -251,6 +363,12 @@ public protocol Cosmos_Bank_V1beta1_MsgClientInterceptorFactoryProtocol: GRPCSen
 
   /// - Returns: Interceptors to use when invoking 'multiSend'.
   func makeMultiSendInterceptors() -> [ClientInterceptor<Cosmos_Bank_V1beta1_MsgMultiSend, Cosmos_Bank_V1beta1_MsgMultiSendResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'updateParams'.
+  func makeUpdateParamsInterceptors() -> [ClientInterceptor<Cosmos_Bank_V1beta1_MsgUpdateParams, Cosmos_Bank_V1beta1_MsgUpdateParamsResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'setSendEnabled'.
+  func makeSetSendEnabledInterceptors() -> [ClientInterceptor<Cosmos_Bank_V1beta1_MsgSetSendEnabled, Cosmos_Bank_V1beta1_MsgSetSendEnabledResponse>]
 }
 
 public enum Cosmos_Bank_V1beta1_MsgClientMetadata {
@@ -260,6 +378,8 @@ public enum Cosmos_Bank_V1beta1_MsgClientMetadata {
     methods: [
       Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.send,
       Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.multiSend,
+      Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.updateParams,
+      Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.setSendEnabled,
     ]
   )
 
@@ -273,6 +393,18 @@ public enum Cosmos_Bank_V1beta1_MsgClientMetadata {
     public static let multiSend = GRPCMethodDescriptor(
       name: "MultiSend",
       path: "/cosmos.bank.v1beta1.Msg/MultiSend",
+      type: GRPCCallType.unary
+    )
+
+    public static let updateParams = GRPCMethodDescriptor(
+      name: "UpdateParams",
+      path: "/cosmos.bank.v1beta1.Msg/UpdateParams",
+      type: GRPCCallType.unary
+    )
+
+    public static let setSendEnabled = GRPCMethodDescriptor(
+      name: "SetSendEnabled",
+      path: "/cosmos.bank.v1beta1.Msg/SetSendEnabled",
       type: GRPCCallType.unary
     )
   }
@@ -349,6 +481,54 @@ public final class Cosmos_Bank_V1beta1_MsgTestClient: Cosmos_Bank_V1beta1_MsgCli
   /// Returns true if there are response streams enqueued for 'MultiSend'
   public var hasMultiSendResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.multiSend.path)
+  }
+
+  /// Make a unary response for the UpdateParams RPC. This must be called
+  /// before calling 'updateParams'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeUpdateParamsResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Bank_V1beta1_MsgUpdateParams>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Bank_V1beta1_MsgUpdateParams, Cosmos_Bank_V1beta1_MsgUpdateParamsResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.updateParams.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueUpdateParamsResponse(
+    _ response: Cosmos_Bank_V1beta1_MsgUpdateParamsResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Bank_V1beta1_MsgUpdateParams>) -> () = { _ in }
+  ) {
+    let stream = self.makeUpdateParamsResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'UpdateParams'
+  public var hasUpdateParamsResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.updateParams.path)
+  }
+
+  /// Make a unary response for the SetSendEnabled RPC. This must be called
+  /// before calling 'setSendEnabled'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeSetSendEnabledResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Bank_V1beta1_MsgSetSendEnabled>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Bank_V1beta1_MsgSetSendEnabled, Cosmos_Bank_V1beta1_MsgSetSendEnabledResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.setSendEnabled.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueSetSendEnabledResponse(
+    _ response: Cosmos_Bank_V1beta1_MsgSetSendEnabledResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Bank_V1beta1_MsgSetSendEnabled>) -> () = { _ in }
+  ) {
+    let stream = self.makeSetSendEnabledResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'SetSendEnabled'
+  public var hasSetSendEnabledResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Bank_V1beta1_MsgClientMetadata.Methods.setSendEnabled.path)
   }
 }
 

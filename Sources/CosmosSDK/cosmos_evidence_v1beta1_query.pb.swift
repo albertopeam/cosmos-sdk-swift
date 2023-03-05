@@ -27,7 +27,13 @@ public struct Cosmos_Evidence_V1beta1_QueryEvidenceRequest {
   // methods supported on all messages.
 
   /// evidence_hash defines the hash of the requested evidence.
+  /// Deprecated: Use hash, a HEX encoded string, instead.
   public var evidenceHash: Data = Data()
+
+  /// hash defines the evidence hash of the requested evidence.
+  ///
+  /// Since: cosmos-sdk 0.47
+  public var hash: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -123,6 +129,7 @@ extension Cosmos_Evidence_V1beta1_QueryEvidenceRequest: SwiftProtobuf.Message, S
   public static let protoMessageName: String = _protobuf_package + ".QueryEvidenceRequest"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "evidence_hash"),
+    2: .same(proto: "hash"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -132,6 +139,7 @@ extension Cosmos_Evidence_V1beta1_QueryEvidenceRequest: SwiftProtobuf.Message, S
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularBytesField(value: &self.evidenceHash) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.hash) }()
       default: break
       }
     }
@@ -141,11 +149,15 @@ extension Cosmos_Evidence_V1beta1_QueryEvidenceRequest: SwiftProtobuf.Message, S
     if !self.evidenceHash.isEmpty {
       try visitor.visitSingularBytesField(value: self.evidenceHash, fieldNumber: 1)
     }
+    if !self.hash.isEmpty {
+      try visitor.visitSingularStringField(value: self.hash, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Cosmos_Evidence_V1beta1_QueryEvidenceRequest, rhs: Cosmos_Evidence_V1beta1_QueryEvidenceRequest) -> Bool {
     if lhs.evidenceHash != rhs.evidenceHash {return false}
+    if lhs.hash != rhs.hash {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

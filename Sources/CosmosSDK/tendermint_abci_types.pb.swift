@@ -60,7 +60,7 @@ extension Tendermint_Abci_CheckTxType: CaseIterable {
 
 #endif  // swift(>=4.2)
 
-public enum Tendermint_Abci_EvidenceType: SwiftProtobuf.Enum {
+public enum Tendermint_Abci_MisbehaviorType: SwiftProtobuf.Enum {
   public typealias RawValue = Int
   case unknown // = 0
   case duplicateVote // = 1
@@ -93,9 +93,9 @@ public enum Tendermint_Abci_EvidenceType: SwiftProtobuf.Enum {
 
 #if swift(>=4.2)
 
-extension Tendermint_Abci_EvidenceType: CaseIterable {
+extension Tendermint_Abci_MisbehaviorType: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
-  public static var allCases: [Tendermint_Abci_EvidenceType] = [
+  public static var allCases: [Tendermint_Abci_MisbehaviorType] = [
     .unknown,
     .duplicateVote,
     .lightClientAttack,
@@ -133,14 +133,6 @@ public struct Tendermint_Abci_Request {
       return Tendermint_Abci_RequestInfo()
     }
     set {value = .info(newValue)}
-  }
-
-  public var setOption: Tendermint_Abci_RequestSetOption {
-    get {
-      if case .setOption(let v)? = value {return v}
-      return Tendermint_Abci_RequestSetOption()
-    }
-    set {value = .setOption(newValue)}
   }
 
   public var initChain: Tendermint_Abci_RequestInitChain {
@@ -231,13 +223,28 @@ public struct Tendermint_Abci_Request {
     set {value = .applySnapshotChunk(newValue)}
   }
 
+  public var prepareProposal: Tendermint_Abci_RequestPrepareProposal {
+    get {
+      if case .prepareProposal(let v)? = value {return v}
+      return Tendermint_Abci_RequestPrepareProposal()
+    }
+    set {value = .prepareProposal(newValue)}
+  }
+
+  public var processProposal: Tendermint_Abci_RequestProcessProposal {
+    get {
+      if case .processProposal(let v)? = value {return v}
+      return Tendermint_Abci_RequestProcessProposal()
+    }
+    set {value = .processProposal(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Value: Equatable {
     case echo(Tendermint_Abci_RequestEcho)
     case flush(Tendermint_Abci_RequestFlush)
     case info(Tendermint_Abci_RequestInfo)
-    case setOption(Tendermint_Abci_RequestSetOption)
     case initChain(Tendermint_Abci_RequestInitChain)
     case query(Tendermint_Abci_RequestQuery)
     case beginBlock(Tendermint_Abci_RequestBeginBlock)
@@ -249,6 +256,8 @@ public struct Tendermint_Abci_Request {
     case offerSnapshot(Tendermint_Abci_RequestOfferSnapshot)
     case loadSnapshotChunk(Tendermint_Abci_RequestLoadSnapshotChunk)
     case applySnapshotChunk(Tendermint_Abci_RequestApplySnapshotChunk)
+    case prepareProposal(Tendermint_Abci_RequestPrepareProposal)
+    case processProposal(Tendermint_Abci_RequestProcessProposal)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Tendermint_Abci_Request.OneOf_Value, rhs: Tendermint_Abci_Request.OneOf_Value) -> Bool {
@@ -266,10 +275,6 @@ public struct Tendermint_Abci_Request {
       }()
       case (.info, .info): return {
         guard case .info(let l) = lhs, case .info(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.setOption, .setOption): return {
-        guard case .setOption(let l) = lhs, case .setOption(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.initChain, .initChain): return {
@@ -316,6 +321,14 @@ public struct Tendermint_Abci_Request {
         guard case .applySnapshotChunk(let l) = lhs, case .applySnapshotChunk(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
+      case (.prepareProposal, .prepareProposal): return {
+        guard case .prepareProposal(let l) = lhs, case .prepareProposal(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.processProposal, .processProposal): return {
+        guard case .processProposal(let l) = lhs, case .processProposal(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
       default: return false
       }
     }
@@ -358,20 +371,7 @@ public struct Tendermint_Abci_RequestInfo {
 
   public var p2PVersion: UInt64 = 0
 
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-/// nondeterministic
-public struct Tendermint_Abci_RequestSetOption {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var key: String = String()
-
-  public var value: String = String()
+  public var abciVersion: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -394,8 +394,8 @@ public struct Tendermint_Abci_RequestInitChain {
 
   public var chainID: String = String()
 
-  public var consensusParams: Tendermint_Abci_ConsensusParams {
-    get {return _consensusParams ?? Tendermint_Abci_ConsensusParams()}
+  public var consensusParams: Tendermint_Types_ConsensusParams {
+    get {return _consensusParams ?? Tendermint_Types_ConsensusParams()}
     set {_consensusParams = newValue}
   }
   /// Returns true if `consensusParams` has been explicitly set.
@@ -414,7 +414,7 @@ public struct Tendermint_Abci_RequestInitChain {
   public init() {}
 
   fileprivate var _time: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _consensusParams: Tendermint_Abci_ConsensusParams? = nil
+  fileprivate var _consensusParams: Tendermint_Types_ConsensusParams? = nil
 }
 
 public struct Tendermint_Abci_RequestQuery {
@@ -451,8 +451,8 @@ public struct Tendermint_Abci_RequestBeginBlock {
   /// Clears the value of `header`. Subsequent reads from it will return its default value.
   public mutating func clearHeader() {self._header = nil}
 
-  public var lastCommitInfo: Tendermint_Abci_LastCommitInfo {
-    get {return _lastCommitInfo ?? Tendermint_Abci_LastCommitInfo()}
+  public var lastCommitInfo: Tendermint_Abci_CommitInfo {
+    get {return _lastCommitInfo ?? Tendermint_Abci_CommitInfo()}
     set {_lastCommitInfo = newValue}
   }
   /// Returns true if `lastCommitInfo` has been explicitly set.
@@ -460,14 +460,14 @@ public struct Tendermint_Abci_RequestBeginBlock {
   /// Clears the value of `lastCommitInfo`. Subsequent reads from it will return its default value.
   public mutating func clearLastCommitInfo() {self._lastCommitInfo = nil}
 
-  public var byzantineValidators: [Tendermint_Abci_Evidence] = []
+  public var byzantineValidators: [Tendermint_Abci_Misbehavior] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _header: Tendermint_Types_Header? = nil
-  fileprivate var _lastCommitInfo: Tendermint_Abci_LastCommitInfo? = nil
+  fileprivate var _lastCommitInfo: Tendermint_Abci_CommitInfo? = nil
 }
 
 public struct Tendermint_Abci_RequestCheckTx {
@@ -589,6 +589,98 @@ public struct Tendermint_Abci_RequestApplySnapshotChunk {
   public init() {}
 }
 
+public struct Tendermint_Abci_RequestPrepareProposal {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// the modified transactions cannot exceed this size.
+  public var maxTxBytes: Int64 = 0
+
+  /// txs is an array of transactions that will be included in a block,
+  /// sent to the app for possible modifications.
+  public var txs: [Data] = []
+
+  public var localLastCommit: Tendermint_Abci_ExtendedCommitInfo {
+    get {return _localLastCommit ?? Tendermint_Abci_ExtendedCommitInfo()}
+    set {_localLastCommit = newValue}
+  }
+  /// Returns true if `localLastCommit` has been explicitly set.
+  public var hasLocalLastCommit: Bool {return self._localLastCommit != nil}
+  /// Clears the value of `localLastCommit`. Subsequent reads from it will return its default value.
+  public mutating func clearLocalLastCommit() {self._localLastCommit = nil}
+
+  public var misbehavior: [Tendermint_Abci_Misbehavior] = []
+
+  public var height: Int64 = 0
+
+  public var time: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _time ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_time = newValue}
+  }
+  /// Returns true if `time` has been explicitly set.
+  public var hasTime: Bool {return self._time != nil}
+  /// Clears the value of `time`. Subsequent reads from it will return its default value.
+  public mutating func clearTime() {self._time = nil}
+
+  public var nextValidatorsHash: Data = Data()
+
+  /// address of the public key of the validator proposing the block.
+  public var proposerAddress: Data = Data()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _localLastCommit: Tendermint_Abci_ExtendedCommitInfo? = nil
+  fileprivate var _time: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Tendermint_Abci_RequestProcessProposal {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var txs: [Data] = []
+
+  public var proposedLastCommit: Tendermint_Abci_CommitInfo {
+    get {return _proposedLastCommit ?? Tendermint_Abci_CommitInfo()}
+    set {_proposedLastCommit = newValue}
+  }
+  /// Returns true if `proposedLastCommit` has been explicitly set.
+  public var hasProposedLastCommit: Bool {return self._proposedLastCommit != nil}
+  /// Clears the value of `proposedLastCommit`. Subsequent reads from it will return its default value.
+  public mutating func clearProposedLastCommit() {self._proposedLastCommit = nil}
+
+  public var misbehavior: [Tendermint_Abci_Misbehavior] = []
+
+  /// hash is the merkle root hash of the fields of the proposed block.
+  public var hash: Data = Data()
+
+  public var height: Int64 = 0
+
+  public var time: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _time ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_time = newValue}
+  }
+  /// Returns true if `time` has been explicitly set.
+  public var hasTime: Bool {return self._time != nil}
+  /// Clears the value of `time`. Subsequent reads from it will return its default value.
+  public mutating func clearTime() {self._time = nil}
+
+  public var nextValidatorsHash: Data = Data()
+
+  /// address of the public key of the original proposer of the block.
+  public var proposerAddress: Data = Data()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _proposedLastCommit: Tendermint_Abci_CommitInfo? = nil
+  fileprivate var _time: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
 public struct Tendermint_Abci_Response {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -626,14 +718,6 @@ public struct Tendermint_Abci_Response {
       return Tendermint_Abci_ResponseInfo()
     }
     set {value = .info(newValue)}
-  }
-
-  public var setOption: Tendermint_Abci_ResponseSetOption {
-    get {
-      if case .setOption(let v)? = value {return v}
-      return Tendermint_Abci_ResponseSetOption()
-    }
-    set {value = .setOption(newValue)}
   }
 
   public var initChain: Tendermint_Abci_ResponseInitChain {
@@ -724,6 +808,22 @@ public struct Tendermint_Abci_Response {
     set {value = .applySnapshotChunk(newValue)}
   }
 
+  public var prepareProposal: Tendermint_Abci_ResponsePrepareProposal {
+    get {
+      if case .prepareProposal(let v)? = value {return v}
+      return Tendermint_Abci_ResponsePrepareProposal()
+    }
+    set {value = .prepareProposal(newValue)}
+  }
+
+  public var processProposal: Tendermint_Abci_ResponseProcessProposal {
+    get {
+      if case .processProposal(let v)? = value {return v}
+      return Tendermint_Abci_ResponseProcessProposal()
+    }
+    set {value = .processProposal(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Value: Equatable {
@@ -731,7 +831,6 @@ public struct Tendermint_Abci_Response {
     case echo(Tendermint_Abci_ResponseEcho)
     case flush(Tendermint_Abci_ResponseFlush)
     case info(Tendermint_Abci_ResponseInfo)
-    case setOption(Tendermint_Abci_ResponseSetOption)
     case initChain(Tendermint_Abci_ResponseInitChain)
     case query(Tendermint_Abci_ResponseQuery)
     case beginBlock(Tendermint_Abci_ResponseBeginBlock)
@@ -743,6 +842,8 @@ public struct Tendermint_Abci_Response {
     case offerSnapshot(Tendermint_Abci_ResponseOfferSnapshot)
     case loadSnapshotChunk(Tendermint_Abci_ResponseLoadSnapshotChunk)
     case applySnapshotChunk(Tendermint_Abci_ResponseApplySnapshotChunk)
+    case prepareProposal(Tendermint_Abci_ResponsePrepareProposal)
+    case processProposal(Tendermint_Abci_ResponseProcessProposal)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Tendermint_Abci_Response.OneOf_Value, rhs: Tendermint_Abci_Response.OneOf_Value) -> Bool {
@@ -764,10 +865,6 @@ public struct Tendermint_Abci_Response {
       }()
       case (.info, .info): return {
         guard case .info(let l) = lhs, case .info(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.setOption, .setOption): return {
-        guard case .setOption(let l) = lhs, case .setOption(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.initChain, .initChain): return {
@@ -812,6 +909,14 @@ public struct Tendermint_Abci_Response {
       }()
       case (.applySnapshotChunk, .applySnapshotChunk): return {
         guard case .applySnapshotChunk(let l) = lhs, case .applySnapshotChunk(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.prepareProposal, .prepareProposal): return {
+        guard case .prepareProposal(let l) = lhs, case .prepareProposal(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.processProposal, .processProposal): return {
+        guard case .processProposal(let l) = lhs, case .processProposal(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -878,31 +983,13 @@ public struct Tendermint_Abci_ResponseInfo {
   public init() {}
 }
 
-/// nondeterministic
-public struct Tendermint_Abci_ResponseSetOption {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var code: UInt32 = 0
-
-  /// bytes data = 2;
-  public var log: String = String()
-
-  public var info: String = String()
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
 public struct Tendermint_Abci_ResponseInitChain {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var consensusParams: Tendermint_Abci_ConsensusParams {
-    get {return _consensusParams ?? Tendermint_Abci_ConsensusParams()}
+  public var consensusParams: Tendermint_Types_ConsensusParams {
+    get {return _consensusParams ?? Tendermint_Types_ConsensusParams()}
     set {_consensusParams = newValue}
   }
   /// Returns true if `consensusParams` has been explicitly set.
@@ -918,7 +1005,7 @@ public struct Tendermint_Abci_ResponseInitChain {
 
   public init() {}
 
-  fileprivate var _consensusParams: Tendermint_Abci_ConsensusParams? = nil
+  fileprivate var _consensusParams: Tendermint_Types_ConsensusParams? = nil
 }
 
 public struct Tendermint_Abci_ResponseQuery {
@@ -999,7 +1086,7 @@ public struct Tendermint_Abci_ResponseCheckTx {
 
   public var priority: Int64 = 0
 
-  /// mempool_error is set by Tendermint.
+  /// mempool_error is set by CometBFT.
   /// ABCI applictions creating a ResponseCheckTX should not set mempool_error.
   public var mempoolError: String = String()
 
@@ -1044,8 +1131,8 @@ public struct Tendermint_Abci_ResponseEndBlock {
 
   public var validatorUpdates: [Tendermint_Abci_ValidatorUpdate] = []
 
-  public var consensusParamUpdates: Tendermint_Abci_ConsensusParams {
-    get {return _consensusParamUpdates ?? Tendermint_Abci_ConsensusParams()}
+  public var consensusParamUpdates: Tendermint_Types_ConsensusParams {
+    get {return _consensusParamUpdates ?? Tendermint_Types_ConsensusParams()}
     set {_consensusParamUpdates = newValue}
   }
   /// Returns true if `consensusParamUpdates` has been explicitly set.
@@ -1059,7 +1146,7 @@ public struct Tendermint_Abci_ResponseEndBlock {
 
   public init() {}
 
-  fileprivate var _consensusParamUpdates: Tendermint_Abci_ConsensusParams? = nil
+  fileprivate var _consensusParamUpdates: Tendermint_Types_ConsensusParams? = nil
 }
 
 public struct Tendermint_Abci_ResponseCommit {
@@ -1267,77 +1354,75 @@ extension Tendermint_Abci_ResponseApplySnapshotChunk.Result: CaseIterable {
 
 #endif  // swift(>=4.2)
 
-/// ConsensusParams contains all consensus-relevant parameters
-/// that can be adjusted by the abci app
-public struct Tendermint_Abci_ConsensusParams {
+public struct Tendermint_Abci_ResponsePrepareProposal {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var block: Tendermint_Abci_BlockParams {
-    get {return _block ?? Tendermint_Abci_BlockParams()}
-    set {_block = newValue}
-  }
-  /// Returns true if `block` has been explicitly set.
-  public var hasBlock: Bool {return self._block != nil}
-  /// Clears the value of `block`. Subsequent reads from it will return its default value.
-  public mutating func clearBlock() {self._block = nil}
-
-  public var evidence: Tendermint_Types_EvidenceParams {
-    get {return _evidence ?? Tendermint_Types_EvidenceParams()}
-    set {_evidence = newValue}
-  }
-  /// Returns true if `evidence` has been explicitly set.
-  public var hasEvidence: Bool {return self._evidence != nil}
-  /// Clears the value of `evidence`. Subsequent reads from it will return its default value.
-  public mutating func clearEvidence() {self._evidence = nil}
-
-  public var validator: Tendermint_Types_ValidatorParams {
-    get {return _validator ?? Tendermint_Types_ValidatorParams()}
-    set {_validator = newValue}
-  }
-  /// Returns true if `validator` has been explicitly set.
-  public var hasValidator: Bool {return self._validator != nil}
-  /// Clears the value of `validator`. Subsequent reads from it will return its default value.
-  public mutating func clearValidator() {self._validator = nil}
-
-  public var version: Tendermint_Types_VersionParams {
-    get {return _version ?? Tendermint_Types_VersionParams()}
-    set {_version = newValue}
-  }
-  /// Returns true if `version` has been explicitly set.
-  public var hasVersion: Bool {return self._version != nil}
-  /// Clears the value of `version`. Subsequent reads from it will return its default value.
-  public mutating func clearVersion() {self._version = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _block: Tendermint_Abci_BlockParams? = nil
-  fileprivate var _evidence: Tendermint_Types_EvidenceParams? = nil
-  fileprivate var _validator: Tendermint_Types_ValidatorParams? = nil
-  fileprivate var _version: Tendermint_Types_VersionParams? = nil
-}
-
-/// BlockParams contains limits on the block size.
-public struct Tendermint_Abci_BlockParams {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  /// Note: must be greater than 0
-  public var maxBytes: Int64 = 0
-
-  /// Note: must be greater or equal to -1
-  public var maxGas: Int64 = 0
+  public var txs: [Data] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 }
 
-public struct Tendermint_Abci_LastCommitInfo {
+public struct Tendermint_Abci_ResponseProcessProposal {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var status: Tendermint_Abci_ResponseProcessProposal.ProposalStatus = .unknown
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public enum ProposalStatus: SwiftProtobuf.Enum {
+    public typealias RawValue = Int
+    case unknown // = 0
+    case accept // = 1
+    case reject // = 2
+    case UNRECOGNIZED(Int)
+
+    public init() {
+      self = .unknown
+    }
+
+    public init?(rawValue: Int) {
+      switch rawValue {
+      case 0: self = .unknown
+      case 1: self = .accept
+      case 2: self = .reject
+      default: self = .UNRECOGNIZED(rawValue)
+      }
+    }
+
+    public var rawValue: Int {
+      switch self {
+      case .unknown: return 0
+      case .accept: return 1
+      case .reject: return 2
+      case .UNRECOGNIZED(let i): return i
+      }
+    }
+
+  }
+
+  public init() {}
+}
+
+#if swift(>=4.2)
+
+extension Tendermint_Abci_ResponseProcessProposal.ProposalStatus: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static var allCases: [Tendermint_Abci_ResponseProcessProposal.ProposalStatus] = [
+    .unknown,
+    .accept,
+    .reject,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+public struct Tendermint_Abci_CommitInfo {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1345,6 +1430,23 @@ public struct Tendermint_Abci_LastCommitInfo {
   public var round: Int32 = 0
 
   public var votes: [Tendermint_Abci_VoteInfo] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Tendermint_Abci_ExtendedCommitInfo {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The round at which the block proposer decided in the previous height.
+  public var round: Int32 = 0
+
+  /// List of validators' addresses in the last validator set with their voting
+  /// information, including vote extensions.
+  public var votes: [Tendermint_Abci_ExtendedVoteInfo] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1374,9 +1476,9 @@ public struct Tendermint_Abci_EventAttribute {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var key: Data = Data()
+  public var key: String = String()
 
-  public var value: Data = Data()
+  public var value: String = String()
 
   /// nondeterministic
   public var index: Bool = false
@@ -1481,12 +1583,38 @@ public struct Tendermint_Abci_VoteInfo {
   fileprivate var _validator: Tendermint_Abci_Validator? = nil
 }
 
-public struct Tendermint_Abci_Evidence {
+public struct Tendermint_Abci_ExtendedVoteInfo {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var type: Tendermint_Abci_EvidenceType = .unknown
+  public var validator: Tendermint_Abci_Validator {
+    get {return _validator ?? Tendermint_Abci_Validator()}
+    set {_validator = newValue}
+  }
+  /// Returns true if `validator` has been explicitly set.
+  public var hasValidator: Bool {return self._validator != nil}
+  /// Clears the value of `validator`. Subsequent reads from it will return its default value.
+  public mutating func clearValidator() {self._validator = nil}
+
+  public var signedLastBlock: Bool = false
+
+  /// Reserved for future use
+  public var voteExtension: Data = Data()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _validator: Tendermint_Abci_Validator? = nil
+}
+
+public struct Tendermint_Abci_Misbehavior {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var type: Tendermint_Abci_MisbehaviorType = .unknown
 
   /// The offending validator
   public var validator: Tendermint_Abci_Validator {
@@ -1551,13 +1679,12 @@ public struct Tendermint_Abci_Snapshot {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Tendermint_Abci_CheckTxType: @unchecked Sendable {}
-extension Tendermint_Abci_EvidenceType: @unchecked Sendable {}
+extension Tendermint_Abci_MisbehaviorType: @unchecked Sendable {}
 extension Tendermint_Abci_Request: @unchecked Sendable {}
 extension Tendermint_Abci_Request.OneOf_Value: @unchecked Sendable {}
 extension Tendermint_Abci_RequestEcho: @unchecked Sendable {}
 extension Tendermint_Abci_RequestFlush: @unchecked Sendable {}
 extension Tendermint_Abci_RequestInfo: @unchecked Sendable {}
-extension Tendermint_Abci_RequestSetOption: @unchecked Sendable {}
 extension Tendermint_Abci_RequestInitChain: @unchecked Sendable {}
 extension Tendermint_Abci_RequestQuery: @unchecked Sendable {}
 extension Tendermint_Abci_RequestBeginBlock: @unchecked Sendable {}
@@ -1569,13 +1696,14 @@ extension Tendermint_Abci_RequestListSnapshots: @unchecked Sendable {}
 extension Tendermint_Abci_RequestOfferSnapshot: @unchecked Sendable {}
 extension Tendermint_Abci_RequestLoadSnapshotChunk: @unchecked Sendable {}
 extension Tendermint_Abci_RequestApplySnapshotChunk: @unchecked Sendable {}
+extension Tendermint_Abci_RequestPrepareProposal: @unchecked Sendable {}
+extension Tendermint_Abci_RequestProcessProposal: @unchecked Sendable {}
 extension Tendermint_Abci_Response: @unchecked Sendable {}
 extension Tendermint_Abci_Response.OneOf_Value: @unchecked Sendable {}
 extension Tendermint_Abci_ResponseException: @unchecked Sendable {}
 extension Tendermint_Abci_ResponseEcho: @unchecked Sendable {}
 extension Tendermint_Abci_ResponseFlush: @unchecked Sendable {}
 extension Tendermint_Abci_ResponseInfo: @unchecked Sendable {}
-extension Tendermint_Abci_ResponseSetOption: @unchecked Sendable {}
 extension Tendermint_Abci_ResponseInitChain: @unchecked Sendable {}
 extension Tendermint_Abci_ResponseQuery: @unchecked Sendable {}
 extension Tendermint_Abci_ResponseBeginBlock: @unchecked Sendable {}
@@ -1589,16 +1717,19 @@ extension Tendermint_Abci_ResponseOfferSnapshot.Result: @unchecked Sendable {}
 extension Tendermint_Abci_ResponseLoadSnapshotChunk: @unchecked Sendable {}
 extension Tendermint_Abci_ResponseApplySnapshotChunk: @unchecked Sendable {}
 extension Tendermint_Abci_ResponseApplySnapshotChunk.Result: @unchecked Sendable {}
-extension Tendermint_Abci_ConsensusParams: @unchecked Sendable {}
-extension Tendermint_Abci_BlockParams: @unchecked Sendable {}
-extension Tendermint_Abci_LastCommitInfo: @unchecked Sendable {}
+extension Tendermint_Abci_ResponsePrepareProposal: @unchecked Sendable {}
+extension Tendermint_Abci_ResponseProcessProposal: @unchecked Sendable {}
+extension Tendermint_Abci_ResponseProcessProposal.ProposalStatus: @unchecked Sendable {}
+extension Tendermint_Abci_CommitInfo: @unchecked Sendable {}
+extension Tendermint_Abci_ExtendedCommitInfo: @unchecked Sendable {}
 extension Tendermint_Abci_Event: @unchecked Sendable {}
 extension Tendermint_Abci_EventAttribute: @unchecked Sendable {}
 extension Tendermint_Abci_TxResult: @unchecked Sendable {}
 extension Tendermint_Abci_Validator: @unchecked Sendable {}
 extension Tendermint_Abci_ValidatorUpdate: @unchecked Sendable {}
 extension Tendermint_Abci_VoteInfo: @unchecked Sendable {}
-extension Tendermint_Abci_Evidence: @unchecked Sendable {}
+extension Tendermint_Abci_ExtendedVoteInfo: @unchecked Sendable {}
+extension Tendermint_Abci_Misbehavior: @unchecked Sendable {}
 extension Tendermint_Abci_Snapshot: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
@@ -1613,7 +1744,7 @@ extension Tendermint_Abci_CheckTxType: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
-extension Tendermint_Abci_EvidenceType: SwiftProtobuf._ProtoNameProviding {
+extension Tendermint_Abci_MisbehaviorType: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "UNKNOWN"),
     1: .same(proto: "DUPLICATE_VOTE"),
@@ -1627,7 +1758,6 @@ extension Tendermint_Abci_Request: SwiftProtobuf.Message, SwiftProtobuf._Message
     1: .same(proto: "echo"),
     2: .same(proto: "flush"),
     3: .same(proto: "info"),
-    4: .standard(proto: "set_option"),
     5: .standard(proto: "init_chain"),
     6: .same(proto: "query"),
     7: .standard(proto: "begin_block"),
@@ -1639,6 +1769,8 @@ extension Tendermint_Abci_Request: SwiftProtobuf.Message, SwiftProtobuf._Message
     13: .standard(proto: "offer_snapshot"),
     14: .standard(proto: "load_snapshot_chunk"),
     15: .standard(proto: "apply_snapshot_chunk"),
+    16: .standard(proto: "prepare_proposal"),
+    17: .standard(proto: "process_proposal"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1684,19 +1816,6 @@ extension Tendermint_Abci_Request: SwiftProtobuf.Message, SwiftProtobuf._Message
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
           self.value = .info(v)
-        }
-      }()
-      case 4: try {
-        var v: Tendermint_Abci_RequestSetOption?
-        var hadOneofValue = false
-        if let current = self.value {
-          hadOneofValue = true
-          if case .setOption(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.value = .setOption(v)
         }
       }()
       case 5: try {
@@ -1842,6 +1961,32 @@ extension Tendermint_Abci_Request: SwiftProtobuf.Message, SwiftProtobuf._Message
           self.value = .applySnapshotChunk(v)
         }
       }()
+      case 16: try {
+        var v: Tendermint_Abci_RequestPrepareProposal?
+        var hadOneofValue = false
+        if let current = self.value {
+          hadOneofValue = true
+          if case .prepareProposal(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .prepareProposal(v)
+        }
+      }()
+      case 17: try {
+        var v: Tendermint_Abci_RequestProcessProposal?
+        var hadOneofValue = false
+        if let current = self.value {
+          hadOneofValue = true
+          if case .processProposal(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .processProposal(v)
+        }
+      }()
       default: break
       }
     }
@@ -1864,10 +2009,6 @@ extension Tendermint_Abci_Request: SwiftProtobuf.Message, SwiftProtobuf._Message
     case .info?: try {
       guard case .info(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }()
-    case .setOption?: try {
-      guard case .setOption(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case .initChain?: try {
       guard case .initChain(let v)? = self.value else { preconditionFailure() }
@@ -1912,6 +2053,14 @@ extension Tendermint_Abci_Request: SwiftProtobuf.Message, SwiftProtobuf._Message
     case .applySnapshotChunk?: try {
       guard case .applySnapshotChunk(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+    }()
+    case .prepareProposal?: try {
+      guard case .prepareProposal(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+    }()
+    case .processProposal?: try {
+      guard case .processProposal(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
     }()
     case nil: break
     }
@@ -1982,6 +2131,7 @@ extension Tendermint_Abci_RequestInfo: SwiftProtobuf.Message, SwiftProtobuf._Mes
     1: .same(proto: "version"),
     2: .standard(proto: "block_version"),
     3: .standard(proto: "p2p_version"),
+    4: .standard(proto: "abci_version"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1993,6 +2143,7 @@ extension Tendermint_Abci_RequestInfo: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 1: try { try decoder.decodeSingularStringField(value: &self.version) }()
       case 2: try { try decoder.decodeSingularUInt64Field(value: &self.blockVersion) }()
       case 3: try { try decoder.decodeSingularUInt64Field(value: &self.p2PVersion) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.abciVersion) }()
       default: break
       }
     }
@@ -2008,6 +2159,9 @@ extension Tendermint_Abci_RequestInfo: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if self.p2PVersion != 0 {
       try visitor.visitSingularUInt64Field(value: self.p2PVersion, fieldNumber: 3)
     }
+    if !self.abciVersion.isEmpty {
+      try visitor.visitSingularStringField(value: self.abciVersion, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2015,44 +2169,7 @@ extension Tendermint_Abci_RequestInfo: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.version != rhs.version {return false}
     if lhs.blockVersion != rhs.blockVersion {return false}
     if lhs.p2PVersion != rhs.p2PVersion {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Tendermint_Abci_RequestSetOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".RequestSetOption"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "key"),
-    2: .same(proto: "value"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.key) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.value) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.key.isEmpty {
-      try visitor.visitSingularStringField(value: self.key, fieldNumber: 1)
-    }
-    if !self.value.isEmpty {
-      try visitor.visitSingularStringField(value: self.value, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Tendermint_Abci_RequestSetOption, rhs: Tendermint_Abci_RequestSetOption) -> Bool {
-    if lhs.key != rhs.key {return false}
-    if lhs.value != rhs.value {return false}
+    if lhs.abciVersion != rhs.abciVersion {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2498,6 +2615,162 @@ extension Tendermint_Abci_RequestApplySnapshotChunk: SwiftProtobuf.Message, Swif
   }
 }
 
+extension Tendermint_Abci_RequestPrepareProposal: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestPrepareProposal"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "max_tx_bytes"),
+    2: .same(proto: "txs"),
+    3: .standard(proto: "local_last_commit"),
+    4: .same(proto: "misbehavior"),
+    5: .same(proto: "height"),
+    6: .same(proto: "time"),
+    7: .standard(proto: "next_validators_hash"),
+    8: .standard(proto: "proposer_address"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt64Field(value: &self.maxTxBytes) }()
+      case 2: try { try decoder.decodeRepeatedBytesField(value: &self.txs) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._localLastCommit) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.misbehavior) }()
+      case 5: try { try decoder.decodeSingularInt64Field(value: &self.height) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._time) }()
+      case 7: try { try decoder.decodeSingularBytesField(value: &self.nextValidatorsHash) }()
+      case 8: try { try decoder.decodeSingularBytesField(value: &self.proposerAddress) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.maxTxBytes != 0 {
+      try visitor.visitSingularInt64Field(value: self.maxTxBytes, fieldNumber: 1)
+    }
+    if !self.txs.isEmpty {
+      try visitor.visitRepeatedBytesField(value: self.txs, fieldNumber: 2)
+    }
+    try { if let v = self._localLastCommit {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if !self.misbehavior.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.misbehavior, fieldNumber: 4)
+    }
+    if self.height != 0 {
+      try visitor.visitSingularInt64Field(value: self.height, fieldNumber: 5)
+    }
+    try { if let v = self._time {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    if !self.nextValidatorsHash.isEmpty {
+      try visitor.visitSingularBytesField(value: self.nextValidatorsHash, fieldNumber: 7)
+    }
+    if !self.proposerAddress.isEmpty {
+      try visitor.visitSingularBytesField(value: self.proposerAddress, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Tendermint_Abci_RequestPrepareProposal, rhs: Tendermint_Abci_RequestPrepareProposal) -> Bool {
+    if lhs.maxTxBytes != rhs.maxTxBytes {return false}
+    if lhs.txs != rhs.txs {return false}
+    if lhs._localLastCommit != rhs._localLastCommit {return false}
+    if lhs.misbehavior != rhs.misbehavior {return false}
+    if lhs.height != rhs.height {return false}
+    if lhs._time != rhs._time {return false}
+    if lhs.nextValidatorsHash != rhs.nextValidatorsHash {return false}
+    if lhs.proposerAddress != rhs.proposerAddress {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Tendermint_Abci_RequestProcessProposal: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestProcessProposal"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "txs"),
+    2: .standard(proto: "proposed_last_commit"),
+    3: .same(proto: "misbehavior"),
+    4: .same(proto: "hash"),
+    5: .same(proto: "height"),
+    6: .same(proto: "time"),
+    7: .standard(proto: "next_validators_hash"),
+    8: .standard(proto: "proposer_address"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedBytesField(value: &self.txs) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._proposedLastCommit) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.misbehavior) }()
+      case 4: try { try decoder.decodeSingularBytesField(value: &self.hash) }()
+      case 5: try { try decoder.decodeSingularInt64Field(value: &self.height) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._time) }()
+      case 7: try { try decoder.decodeSingularBytesField(value: &self.nextValidatorsHash) }()
+      case 8: try { try decoder.decodeSingularBytesField(value: &self.proposerAddress) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.txs.isEmpty {
+      try visitor.visitRepeatedBytesField(value: self.txs, fieldNumber: 1)
+    }
+    try { if let v = self._proposedLastCommit {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.misbehavior.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.misbehavior, fieldNumber: 3)
+    }
+    if !self.hash.isEmpty {
+      try visitor.visitSingularBytesField(value: self.hash, fieldNumber: 4)
+    }
+    if self.height != 0 {
+      try visitor.visitSingularInt64Field(value: self.height, fieldNumber: 5)
+    }
+    try { if let v = self._time {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    if !self.nextValidatorsHash.isEmpty {
+      try visitor.visitSingularBytesField(value: self.nextValidatorsHash, fieldNumber: 7)
+    }
+    if !self.proposerAddress.isEmpty {
+      try visitor.visitSingularBytesField(value: self.proposerAddress, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Tendermint_Abci_RequestProcessProposal, rhs: Tendermint_Abci_RequestProcessProposal) -> Bool {
+    if lhs.txs != rhs.txs {return false}
+    if lhs._proposedLastCommit != rhs._proposedLastCommit {return false}
+    if lhs.misbehavior != rhs.misbehavior {return false}
+    if lhs.hash != rhs.hash {return false}
+    if lhs.height != rhs.height {return false}
+    if lhs._time != rhs._time {return false}
+    if lhs.nextValidatorsHash != rhs.nextValidatorsHash {return false}
+    if lhs.proposerAddress != rhs.proposerAddress {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Tendermint_Abci_Response: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Response"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -2505,7 +2778,6 @@ extension Tendermint_Abci_Response: SwiftProtobuf.Message, SwiftProtobuf._Messag
     2: .same(proto: "echo"),
     3: .same(proto: "flush"),
     4: .same(proto: "info"),
-    5: .standard(proto: "set_option"),
     6: .standard(proto: "init_chain"),
     7: .same(proto: "query"),
     8: .standard(proto: "begin_block"),
@@ -2517,6 +2789,8 @@ extension Tendermint_Abci_Response: SwiftProtobuf.Message, SwiftProtobuf._Messag
     14: .standard(proto: "offer_snapshot"),
     15: .standard(proto: "load_snapshot_chunk"),
     16: .standard(proto: "apply_snapshot_chunk"),
+    17: .standard(proto: "prepare_proposal"),
+    18: .standard(proto: "process_proposal"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2575,19 +2849,6 @@ extension Tendermint_Abci_Response: SwiftProtobuf.Message, SwiftProtobuf._Messag
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
           self.value = .info(v)
-        }
-      }()
-      case 5: try {
-        var v: Tendermint_Abci_ResponseSetOption?
-        var hadOneofValue = false
-        if let current = self.value {
-          hadOneofValue = true
-          if case .setOption(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.value = .setOption(v)
         }
       }()
       case 6: try {
@@ -2733,6 +2994,32 @@ extension Tendermint_Abci_Response: SwiftProtobuf.Message, SwiftProtobuf._Messag
           self.value = .applySnapshotChunk(v)
         }
       }()
+      case 17: try {
+        var v: Tendermint_Abci_ResponsePrepareProposal?
+        var hadOneofValue = false
+        if let current = self.value {
+          hadOneofValue = true
+          if case .prepareProposal(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .prepareProposal(v)
+        }
+      }()
+      case 18: try {
+        var v: Tendermint_Abci_ResponseProcessProposal?
+        var hadOneofValue = false
+        if let current = self.value {
+          hadOneofValue = true
+          if case .processProposal(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .processProposal(v)
+        }
+      }()
       default: break
       }
     }
@@ -2759,10 +3046,6 @@ extension Tendermint_Abci_Response: SwiftProtobuf.Message, SwiftProtobuf._Messag
     case .info?: try {
       guard case .info(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }()
-    case .setOption?: try {
-      guard case .setOption(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case .initChain?: try {
       guard case .initChain(let v)? = self.value else { preconditionFailure() }
@@ -2807,6 +3090,14 @@ extension Tendermint_Abci_Response: SwiftProtobuf.Message, SwiftProtobuf._Messag
     case .applySnapshotChunk?: try {
       guard case .applySnapshotChunk(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+    }()
+    case .prepareProposal?: try {
+      guard case .prepareProposal(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+    }()
+    case .processProposal?: try {
+      guard case .processProposal(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
     }()
     case nil: break
     }
@@ -2954,50 +3245,6 @@ extension Tendermint_Abci_ResponseInfo: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs.appVersion != rhs.appVersion {return false}
     if lhs.lastBlockHeight != rhs.lastBlockHeight {return false}
     if lhs.lastBlockAppHash != rhs.lastBlockAppHash {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Tendermint_Abci_ResponseSetOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ResponseSetOption"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "code"),
-    3: .same(proto: "log"),
-    4: .same(proto: "info"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularUInt32Field(value: &self.code) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.log) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.info) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.code != 0 {
-      try visitor.visitSingularUInt32Field(value: self.code, fieldNumber: 1)
-    }
-    if !self.log.isEmpty {
-      try visitor.visitSingularStringField(value: self.log, fieldNumber: 3)
-    }
-    if !self.info.isEmpty {
-      try visitor.visitSingularStringField(value: self.info, fieldNumber: 4)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Tendermint_Abci_ResponseSetOption, rhs: Tendermint_Abci_ResponseSetOption) -> Bool {
-    if lhs.code != rhs.code {return false}
-    if lhs.log != rhs.log {return false}
-    if lhs.info != rhs.info {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3581,13 +3828,10 @@ extension Tendermint_Abci_ResponseApplySnapshotChunk.Result: SwiftProtobuf._Prot
   ]
 }
 
-extension Tendermint_Abci_ConsensusParams: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ConsensusParams"
+extension Tendermint_Abci_ResponsePrepareProposal: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponsePrepareProposal"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "block"),
-    2: .same(proto: "evidence"),
-    3: .same(proto: "validator"),
-    4: .same(proto: "version"),
+    1: .same(proto: "txs"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3596,50 +3840,30 @@ extension Tendermint_Abci_ConsensusParams: SwiftProtobuf.Message, SwiftProtobuf.
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._block) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._evidence) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._validator) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._version) }()
+      case 1: try { try decoder.decodeRepeatedBytesField(value: &self.txs) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._block {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try { if let v = self._evidence {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
-    try { if let v = self._validator {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
-    try { if let v = self._version {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    } }()
+    if !self.txs.isEmpty {
+      try visitor.visitRepeatedBytesField(value: self.txs, fieldNumber: 1)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Tendermint_Abci_ConsensusParams, rhs: Tendermint_Abci_ConsensusParams) -> Bool {
-    if lhs._block != rhs._block {return false}
-    if lhs._evidence != rhs._evidence {return false}
-    if lhs._validator != rhs._validator {return false}
-    if lhs._version != rhs._version {return false}
+  public static func ==(lhs: Tendermint_Abci_ResponsePrepareProposal, rhs: Tendermint_Abci_ResponsePrepareProposal) -> Bool {
+    if lhs.txs != rhs.txs {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension Tendermint_Abci_BlockParams: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".BlockParams"
+extension Tendermint_Abci_ResponseProcessProposal: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseProcessProposal"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "max_bytes"),
-    2: .standard(proto: "max_gas"),
+    1: .same(proto: "status"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3648,33 +3872,36 @@ extension Tendermint_Abci_BlockParams: SwiftProtobuf.Message, SwiftProtobuf._Mes
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularInt64Field(value: &self.maxBytes) }()
-      case 2: try { try decoder.decodeSingularInt64Field(value: &self.maxGas) }()
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.status) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.maxBytes != 0 {
-      try visitor.visitSingularInt64Field(value: self.maxBytes, fieldNumber: 1)
-    }
-    if self.maxGas != 0 {
-      try visitor.visitSingularInt64Field(value: self.maxGas, fieldNumber: 2)
+    if self.status != .unknown {
+      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Tendermint_Abci_BlockParams, rhs: Tendermint_Abci_BlockParams) -> Bool {
-    if lhs.maxBytes != rhs.maxBytes {return false}
-    if lhs.maxGas != rhs.maxGas {return false}
+  public static func ==(lhs: Tendermint_Abci_ResponseProcessProposal, rhs: Tendermint_Abci_ResponseProcessProposal) -> Bool {
+    if lhs.status != rhs.status {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension Tendermint_Abci_LastCommitInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".LastCommitInfo"
+extension Tendermint_Abci_ResponseProcessProposal.ProposalStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "UNKNOWN"),
+    1: .same(proto: "ACCEPT"),
+    2: .same(proto: "REJECT"),
+  ]
+}
+
+extension Tendermint_Abci_CommitInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CommitInfo"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "round"),
     2: .same(proto: "votes"),
@@ -3703,7 +3930,45 @@ extension Tendermint_Abci_LastCommitInfo: SwiftProtobuf.Message, SwiftProtobuf._
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Tendermint_Abci_LastCommitInfo, rhs: Tendermint_Abci_LastCommitInfo) -> Bool {
+  public static func ==(lhs: Tendermint_Abci_CommitInfo, rhs: Tendermint_Abci_CommitInfo) -> Bool {
+    if lhs.round != rhs.round {return false}
+    if lhs.votes != rhs.votes {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Tendermint_Abci_ExtendedCommitInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ExtendedCommitInfo"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "round"),
+    2: .same(proto: "votes"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.round) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.votes) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.round != 0 {
+      try visitor.visitSingularInt32Field(value: self.round, fieldNumber: 1)
+    }
+    if !self.votes.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.votes, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Tendermint_Abci_ExtendedCommitInfo, rhs: Tendermint_Abci_ExtendedCommitInfo) -> Bool {
     if lhs.round != rhs.round {return false}
     if lhs.votes != rhs.votes {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -3763,8 +4028,8 @@ extension Tendermint_Abci_EventAttribute: SwiftProtobuf.Message, SwiftProtobuf._
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularBytesField(value: &self.key) }()
-      case 2: try { try decoder.decodeSingularBytesField(value: &self.value) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.key) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.value) }()
       case 3: try { try decoder.decodeSingularBoolField(value: &self.index) }()
       default: break
       }
@@ -3773,10 +4038,10 @@ extension Tendermint_Abci_EventAttribute: SwiftProtobuf.Message, SwiftProtobuf._
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.key.isEmpty {
-      try visitor.visitSingularBytesField(value: self.key, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.key, fieldNumber: 1)
     }
     if !self.value.isEmpty {
-      try visitor.visitSingularBytesField(value: self.value, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.value, fieldNumber: 2)
     }
     if self.index != false {
       try visitor.visitSingularBoolField(value: self.index, fieldNumber: 3)
@@ -3969,8 +4234,56 @@ extension Tendermint_Abci_VoteInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
   }
 }
 
-extension Tendermint_Abci_Evidence: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".Evidence"
+extension Tendermint_Abci_ExtendedVoteInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ExtendedVoteInfo"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "validator"),
+    2: .standard(proto: "signed_last_block"),
+    3: .standard(proto: "vote_extension"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._validator) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.signedLastBlock) }()
+      case 3: try { try decoder.decodeSingularBytesField(value: &self.voteExtension) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._validator {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if self.signedLastBlock != false {
+      try visitor.visitSingularBoolField(value: self.signedLastBlock, fieldNumber: 2)
+    }
+    if !self.voteExtension.isEmpty {
+      try visitor.visitSingularBytesField(value: self.voteExtension, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Tendermint_Abci_ExtendedVoteInfo, rhs: Tendermint_Abci_ExtendedVoteInfo) -> Bool {
+    if lhs._validator != rhs._validator {return false}
+    if lhs.signedLastBlock != rhs.signedLastBlock {return false}
+    if lhs.voteExtension != rhs.voteExtension {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Tendermint_Abci_Misbehavior: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Misbehavior"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "type"),
     2: .same(proto: "validator"),
@@ -4018,7 +4331,7 @@ extension Tendermint_Abci_Evidence: SwiftProtobuf.Message, SwiftProtobuf._Messag
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Tendermint_Abci_Evidence, rhs: Tendermint_Abci_Evidence) -> Bool {
+  public static func ==(lhs: Tendermint_Abci_Misbehavior, rhs: Tendermint_Abci_Misbehavior) -> Bool {
     if lhs.type != rhs.type {return false}
     if lhs._validator != rhs._validator {return false}
     if lhs.height != rhs.height {return false}

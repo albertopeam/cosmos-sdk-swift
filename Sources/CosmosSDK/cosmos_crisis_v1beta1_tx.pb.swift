@@ -26,10 +26,13 @@ public struct Cosmos_Crisis_V1beta1_MsgVerifyInvariant {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// sender is the account address of private key to send coins to fee collector account.
   public var sender: String = String()
 
+  /// name of the invariant module.
   public var invariantModuleName: String = String()
 
+  /// invariant_route is the msg's invariant route.
   public var invariantRoute: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -48,9 +51,53 @@ public struct Cosmos_Crisis_V1beta1_MsgVerifyInvariantResponse {
   public init() {}
 }
 
+/// MsgUpdateParams is the Msg/UpdateParams request type.
+///
+/// Since: cosmos-sdk 0.47
+public struct Cosmos_Crisis_V1beta1_MsgUpdateParams {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// authority is the address that controls the module (defaults to x/gov unless overwritten).
+  public var authority: String = String()
+
+  /// constant_fee defines the x/crisis parameter.
+  public var constantFee: Cosmos_Base_V1beta1_Coin {
+    get {return _constantFee ?? Cosmos_Base_V1beta1_Coin()}
+    set {_constantFee = newValue}
+  }
+  /// Returns true if `constantFee` has been explicitly set.
+  public var hasConstantFee: Bool {return self._constantFee != nil}
+  /// Clears the value of `constantFee`. Subsequent reads from it will return its default value.
+  public mutating func clearConstantFee() {self._constantFee = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _constantFee: Cosmos_Base_V1beta1_Coin? = nil
+}
+
+/// MsgUpdateParamsResponse defines the response structure for executing a
+/// MsgUpdateParams message.
+///
+/// Since: cosmos-sdk 0.47
+public struct Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Cosmos_Crisis_V1beta1_MsgVerifyInvariant: @unchecked Sendable {}
 extension Cosmos_Crisis_V1beta1_MsgVerifyInvariantResponse: @unchecked Sendable {}
+extension Cosmos_Crisis_V1beta1_MsgUpdateParams: @unchecked Sendable {}
+extension Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -115,6 +162,67 @@ extension Cosmos_Crisis_V1beta1_MsgVerifyInvariantResponse: SwiftProtobuf.Messag
   }
 
   public static func ==(lhs: Cosmos_Crisis_V1beta1_MsgVerifyInvariantResponse, rhs: Cosmos_Crisis_V1beta1_MsgVerifyInvariantResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Crisis_V1beta1_MsgUpdateParams: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MsgUpdateParams"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "authority"),
+    2: .standard(proto: "constant_fee"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.authority) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._constantFee) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.authority.isEmpty {
+      try visitor.visitSingularStringField(value: self.authority, fieldNumber: 1)
+    }
+    try { if let v = self._constantFee {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Crisis_V1beta1_MsgUpdateParams, rhs: Cosmos_Crisis_V1beta1_MsgUpdateParams) -> Bool {
+    if lhs.authority != rhs.authority {return false}
+    if lhs._constantFee != rhs._constantFee {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MsgUpdateParamsResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse, rhs: Cosmos_Crisis_V1beta1_MsgUpdateParamsResponse) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -186,7 +186,7 @@ public struct Tendermint_Types_BlockID {
   fileprivate var _partSetHeader: Tendermint_Types_PartSetHeader? = nil
 }
 
-/// Header defines the structure of a Tendermint block header.
+/// Header defines the structure of a block header.
 public struct Tendermint_Types_Header {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for

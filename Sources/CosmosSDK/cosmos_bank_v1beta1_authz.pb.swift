@@ -31,6 +31,12 @@ public struct Cosmos_Bank_V1beta1_SendAuthorization {
 
   public var spendLimit: [Cosmos_Base_V1beta1_Coin] = []
 
+  /// allow_list specifies an optional list of addresses to whom the grantee can send tokens on behalf of the
+  /// granter. If omitted, any recipient is allowed.
+  ///
+  /// Since: cosmos-sdk 0.47
+  public var allowList: [String] = []
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -48,6 +54,7 @@ extension Cosmos_Bank_V1beta1_SendAuthorization: SwiftProtobuf.Message, SwiftPro
   public static let protoMessageName: String = _protobuf_package + ".SendAuthorization"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "spend_limit"),
+    2: .standard(proto: "allow_list"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -57,6 +64,7 @@ extension Cosmos_Bank_V1beta1_SendAuthorization: SwiftProtobuf.Message, SwiftPro
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.spendLimit) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.allowList) }()
       default: break
       }
     }
@@ -66,11 +74,15 @@ extension Cosmos_Bank_V1beta1_SendAuthorization: SwiftProtobuf.Message, SwiftPro
     if !self.spendLimit.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.spendLimit, fieldNumber: 1)
     }
+    if !self.allowList.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.allowList, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Cosmos_Bank_V1beta1_SendAuthorization, rhs: Cosmos_Bank_V1beta1_SendAuthorization) -> Bool {
     if lhs.spendLimit != rhs.spendLimit {return false}
+    if lhs.allowList != rhs.allowList {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

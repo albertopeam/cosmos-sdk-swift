@@ -54,6 +54,40 @@ public struct Cosmos_Distribution_V1beta1_QueryParamsResponse {
   fileprivate var _params: Cosmos_Distribution_V1beta1_Params? = nil
 }
 
+/// QueryValidatorDistributionInfoRequest is the request type for the Query/ValidatorDistributionInfo RPC method.
+public struct Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// validator_address defines the validator address to query for.
+  public var validatorAddress: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// QueryValidatorDistributionInfoResponse is the response type for the Query/ValidatorDistributionInfo RPC method.
+public struct Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// operator_address defines the validator operator address.
+  public var operatorAddress: String = String()
+
+  /// self_bond_rewards defines the self delegations rewards.
+  public var selfBondRewards: [Cosmos_Base_V1beta1_DecCoin] = []
+
+  /// commission defines the commission the validator received.
+  public var commission: [Cosmos_Base_V1beta1_DecCoin] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 /// QueryValidatorOutstandingRewardsRequest is the request type for the
 /// Query/ValidatorOutstandingRewards RPC method.
 public struct Cosmos_Distribution_V1beta1_QueryValidatorOutstandingRewardsRequest {
@@ -114,7 +148,7 @@ public struct Cosmos_Distribution_V1beta1_QueryValidatorCommissionResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// commission defines the commision the validator received.
+  /// commission defines the commission the validator received.
   public var commission: Cosmos_Distribution_V1beta1_ValidatorAccumulatedCommission {
     get {return _commission ?? Cosmos_Distribution_V1beta1_ValidatorAccumulatedCommission()}
     set {_commission = newValue}
@@ -347,6 +381,8 @@ public struct Cosmos_Distribution_V1beta1_QueryCommunityPoolResponse {
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Cosmos_Distribution_V1beta1_QueryParamsRequest: @unchecked Sendable {}
 extension Cosmos_Distribution_V1beta1_QueryParamsResponse: @unchecked Sendable {}
+extension Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest: @unchecked Sendable {}
+extension Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse: @unchecked Sendable {}
 extension Cosmos_Distribution_V1beta1_QueryValidatorOutstandingRewardsRequest: @unchecked Sendable {}
 extension Cosmos_Distribution_V1beta1_QueryValidatorOutstandingRewardsResponse: @unchecked Sendable {}
 extension Cosmos_Distribution_V1beta1_QueryValidatorCommissionRequest: @unchecked Sendable {}
@@ -419,6 +455,82 @@ extension Cosmos_Distribution_V1beta1_QueryParamsResponse: SwiftProtobuf.Message
 
   public static func ==(lhs: Cosmos_Distribution_V1beta1_QueryParamsResponse, rhs: Cosmos_Distribution_V1beta1_QueryParamsResponse) -> Bool {
     if lhs._params != rhs._params {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryValidatorDistributionInfoRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "validator_address"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.validatorAddress) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.validatorAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.validatorAddress, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest, rhs: Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest) -> Bool {
+    if lhs.validatorAddress != rhs.validatorAddress {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryValidatorDistributionInfoResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "operator_address"),
+    2: .standard(proto: "self_bond_rewards"),
+    3: .same(proto: "commission"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.operatorAddress) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.selfBondRewards) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.commission) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.operatorAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.operatorAddress, fieldNumber: 1)
+    }
+    if !self.selfBondRewards.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.selfBondRewards, fieldNumber: 2)
+    }
+    if !self.commission.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.commission, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse, rhs: Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse) -> Bool {
+    if lhs.operatorAddress != rhs.operatorAddress {return false}
+    if lhs.selfBondRewards != rhs.selfBondRewards {return false}
+    if lhs.commission != rhs.commission {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

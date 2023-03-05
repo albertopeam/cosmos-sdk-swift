@@ -111,6 +111,9 @@ extension Cosmos_Staking_V1beta1_QueryClientProtocol {
 
   /// Validators queries all validators that match the given status.
   ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
+  ///
   /// - Parameters:
   ///   - request: Request to send to Validators.
   ///   - callOptions: Call options.
@@ -147,6 +150,9 @@ extension Cosmos_Staking_V1beta1_QueryClientProtocol {
 
   /// ValidatorDelegations queries delegate info for given validator.
   ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
+  ///
   /// - Parameters:
   ///   - request: Request to send to ValidatorDelegations.
   ///   - callOptions: Call options.
@@ -164,6 +170,9 @@ extension Cosmos_Staking_V1beta1_QueryClientProtocol {
   }
 
   /// ValidatorUnbondingDelegations queries unbonding delegations of a validator.
+  ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
   ///
   /// - Parameters:
   ///   - request: Request to send to ValidatorUnbondingDelegations.
@@ -220,6 +229,9 @@ extension Cosmos_Staking_V1beta1_QueryClientProtocol {
 
   /// DelegatorDelegations queries all delegations of a given delegator address.
   ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
+  ///
   /// - Parameters:
   ///   - request: Request to send to DelegatorDelegations.
   ///   - callOptions: Call options.
@@ -239,6 +251,9 @@ extension Cosmos_Staking_V1beta1_QueryClientProtocol {
   /// DelegatorUnbondingDelegations queries all unbonding delegations of a given
   /// delegator address.
   ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
+  ///
   /// - Parameters:
   ///   - request: Request to send to DelegatorUnbondingDelegations.
   ///   - callOptions: Call options.
@@ -256,6 +271,9 @@ extension Cosmos_Staking_V1beta1_QueryClientProtocol {
   }
 
   /// Redelegations queries redelegations of given address.
+  ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
   ///
   /// - Parameters:
   ///   - request: Request to send to Redelegations.
@@ -275,6 +293,9 @@ extension Cosmos_Staking_V1beta1_QueryClientProtocol {
 
   /// DelegatorValidators queries all validators info for given delegator
   /// address.
+  ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
   ///
   /// - Parameters:
   ///   - request: Request to send to DelegatorValidators.

@@ -62,6 +62,11 @@ public protocol Cosmos_Staking_V1beta1_MsgClientProtocol: GRPCClient {
     _ request: Cosmos_Staking_V1beta1_MsgCancelUnbondingDelegation,
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Staking_V1beta1_MsgCancelUnbondingDelegation, Cosmos_Staking_V1beta1_MsgCancelUnbondingDelegationResponse>
+
+  func updateParams(
+    _ request: Cosmos_Staking_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Staking_V1beta1_MsgUpdateParams, Cosmos_Staking_V1beta1_MsgUpdateParamsResponse>
 }
 
 extension Cosmos_Staking_V1beta1_MsgClientProtocol {
@@ -182,6 +187,26 @@ extension Cosmos_Staking_V1beta1_MsgClientProtocol {
       interceptors: self.interceptors?.makeCancelUnbondingDelegationInterceptors() ?? []
     )
   }
+
+  /// UpdateParams defines an operation for updating the x/staking module
+  /// parameters.
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to UpdateParams.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func updateParams(
+    _ request: Cosmos_Staking_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Staking_V1beta1_MsgUpdateParams, Cosmos_Staking_V1beta1_MsgUpdateParamsResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Staking_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
 }
 
 #if compiler(>=5.6)
@@ -279,6 +304,11 @@ public protocol Cosmos_Staking_V1beta1_MsgAsyncClientProtocol: GRPCClient {
     _ request: Cosmos_Staking_V1beta1_MsgCancelUnbondingDelegation,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Staking_V1beta1_MsgCancelUnbondingDelegation, Cosmos_Staking_V1beta1_MsgCancelUnbondingDelegationResponse>
+
+  func makeUpdateParamsCall(
+    _ request: Cosmos_Staking_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Staking_V1beta1_MsgUpdateParams, Cosmos_Staking_V1beta1_MsgUpdateParamsResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -362,6 +392,18 @@ extension Cosmos_Staking_V1beta1_MsgAsyncClientProtocol {
       interceptors: self.interceptors?.makeCancelUnbondingDelegationInterceptors() ?? []
     )
   }
+
+  public func makeUpdateParamsCall(
+    _ request: Cosmos_Staking_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Staking_V1beta1_MsgUpdateParams, Cosmos_Staking_V1beta1_MsgUpdateParamsResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Staking_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -437,6 +479,18 @@ extension Cosmos_Staking_V1beta1_MsgAsyncClientProtocol {
       interceptors: self.interceptors?.makeCancelUnbondingDelegationInterceptors() ?? []
     )
   }
+
+  public func updateParams(
+    _ request: Cosmos_Staking_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Staking_V1beta1_MsgUpdateParamsResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Staking_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -477,6 +531,9 @@ public protocol Cosmos_Staking_V1beta1_MsgClientInterceptorFactoryProtocol: GRPC
 
   /// - Returns: Interceptors to use when invoking 'cancelUnbondingDelegation'.
   func makeCancelUnbondingDelegationInterceptors() -> [ClientInterceptor<Cosmos_Staking_V1beta1_MsgCancelUnbondingDelegation, Cosmos_Staking_V1beta1_MsgCancelUnbondingDelegationResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'updateParams'.
+  func makeUpdateParamsInterceptors() -> [ClientInterceptor<Cosmos_Staking_V1beta1_MsgUpdateParams, Cosmos_Staking_V1beta1_MsgUpdateParamsResponse>]
 }
 
 public enum Cosmos_Staking_V1beta1_MsgClientMetadata {
@@ -490,6 +547,7 @@ public enum Cosmos_Staking_V1beta1_MsgClientMetadata {
       Cosmos_Staking_V1beta1_MsgClientMetadata.Methods.beginRedelegate,
       Cosmos_Staking_V1beta1_MsgClientMetadata.Methods.undelegate,
       Cosmos_Staking_V1beta1_MsgClientMetadata.Methods.cancelUnbondingDelegation,
+      Cosmos_Staking_V1beta1_MsgClientMetadata.Methods.updateParams,
     ]
   )
 
@@ -527,6 +585,12 @@ public enum Cosmos_Staking_V1beta1_MsgClientMetadata {
     public static let cancelUnbondingDelegation = GRPCMethodDescriptor(
       name: "CancelUnbondingDelegation",
       path: "/cosmos.staking.v1beta1.Msg/CancelUnbondingDelegation",
+      type: GRPCCallType.unary
+    )
+
+    public static let updateParams = GRPCMethodDescriptor(
+      name: "UpdateParams",
+      path: "/cosmos.staking.v1beta1.Msg/UpdateParams",
       type: GRPCCallType.unary
     )
   }
@@ -699,6 +763,30 @@ public final class Cosmos_Staking_V1beta1_MsgTestClient: Cosmos_Staking_V1beta1_
   /// Returns true if there are response streams enqueued for 'CancelUnbondingDelegation'
   public var hasCancelUnbondingDelegationResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Staking_V1beta1_MsgClientMetadata.Methods.cancelUnbondingDelegation.path)
+  }
+
+  /// Make a unary response for the UpdateParams RPC. This must be called
+  /// before calling 'updateParams'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeUpdateParamsResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Staking_V1beta1_MsgUpdateParams>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Staking_V1beta1_MsgUpdateParams, Cosmos_Staking_V1beta1_MsgUpdateParamsResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Staking_V1beta1_MsgClientMetadata.Methods.updateParams.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueUpdateParamsResponse(
+    _ response: Cosmos_Staking_V1beta1_MsgUpdateParamsResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Staking_V1beta1_MsgUpdateParams>) -> () = { _ in }
+  ) {
+    let stream = self.makeUpdateParamsResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'UpdateParams'
+  public var hasUpdateParamsResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Staking_V1beta1_MsgClientMetadata.Methods.updateParams.path)
   }
 }
 

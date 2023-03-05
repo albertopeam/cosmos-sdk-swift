@@ -30,7 +30,7 @@ public struct Cosmos_Upgrade_V1beta1_MsgSoftwareUpgrade {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// authority is the address of the governance account.
+  /// authority is the address that controls the module (defaults to x/gov unless overwritten).
   public var authority: String = String()
 
   /// plan is the upgrade plan.
@@ -71,7 +71,7 @@ public struct Cosmos_Upgrade_V1beta1_MsgCancelUpgrade {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// authority is the address of the governance account.
+  /// authority is the address that controls the module (defaults to x/gov unless overwritten).
   public var authority: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()

@@ -38,6 +38,11 @@ public protocol Cosmos_Distribution_V1beta1_QueryClientProtocol: GRPCClient {
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Distribution_V1beta1_QueryParamsRequest, Cosmos_Distribution_V1beta1_QueryParamsResponse>
 
+  func validatorDistributionInfo(
+    _ request: Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest, Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse>
+
   func validatorOutstandingRewards(
     _ request: Cosmos_Distribution_V1beta1_QueryValidatorOutstandingRewardsRequest,
     callOptions: CallOptions?
@@ -99,6 +104,24 @@ extension Cosmos_Distribution_V1beta1_QueryClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeParamsInterceptors() ?? []
+    )
+  }
+
+  /// ValidatorDistributionInfo queries validator commission and self-delegation rewards for validator
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to ValidatorDistributionInfo.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func validatorDistributionInfo(
+    _ request: Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest, Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.validatorDistributionInfo.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeValidatorDistributionInfoInterceptors() ?? []
     )
   }
 
@@ -174,7 +197,7 @@ extension Cosmos_Distribution_V1beta1_QueryClientProtocol {
     )
   }
 
-  /// DelegationTotalRewards queries the total rewards accrued by a each
+  /// DelegationTotalRewards queries the total rewards accrued by each
   /// validator.
   ///
   /// - Parameters:
@@ -319,6 +342,11 @@ public protocol Cosmos_Distribution_V1beta1_QueryAsyncClientProtocol: GRPCClient
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Distribution_V1beta1_QueryParamsRequest, Cosmos_Distribution_V1beta1_QueryParamsResponse>
 
+  func makeValidatorDistributionInfoCall(
+    _ request: Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest, Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse>
+
   func makeValidatorOutstandingRewardsCall(
     _ request: Cosmos_Distribution_V1beta1_QueryValidatorOutstandingRewardsRequest,
     callOptions: CallOptions?
@@ -379,6 +407,18 @@ extension Cosmos_Distribution_V1beta1_QueryAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeParamsInterceptors() ?? []
+    )
+  }
+
+  public func makeValidatorDistributionInfoCall(
+    _ request: Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest, Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.validatorDistributionInfo.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeValidatorDistributionInfoInterceptors() ?? []
     )
   }
 
@@ -490,6 +530,18 @@ extension Cosmos_Distribution_V1beta1_QueryAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeParamsInterceptors() ?? []
+    )
+  }
+
+  public func validatorDistributionInfo(
+    _ request: Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.validatorDistributionInfo.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeValidatorDistributionInfoInterceptors() ?? []
     )
   }
 
@@ -614,6 +666,9 @@ public protocol Cosmos_Distribution_V1beta1_QueryClientInterceptorFactoryProtoco
   /// - Returns: Interceptors to use when invoking 'params'.
   func makeParamsInterceptors() -> [ClientInterceptor<Cosmos_Distribution_V1beta1_QueryParamsRequest, Cosmos_Distribution_V1beta1_QueryParamsResponse>]
 
+  /// - Returns: Interceptors to use when invoking 'validatorDistributionInfo'.
+  func makeValidatorDistributionInfoInterceptors() -> [ClientInterceptor<Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest, Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse>]
+
   /// - Returns: Interceptors to use when invoking 'validatorOutstandingRewards'.
   func makeValidatorOutstandingRewardsInterceptors() -> [ClientInterceptor<Cosmos_Distribution_V1beta1_QueryValidatorOutstandingRewardsRequest, Cosmos_Distribution_V1beta1_QueryValidatorOutstandingRewardsResponse>]
 
@@ -645,6 +700,7 @@ public enum Cosmos_Distribution_V1beta1_QueryClientMetadata {
     fullName: "cosmos.distribution.v1beta1.Query",
     methods: [
       Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.params,
+      Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.validatorDistributionInfo,
       Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.validatorOutstandingRewards,
       Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.validatorCommission,
       Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.validatorSlashes,
@@ -660,6 +716,12 @@ public enum Cosmos_Distribution_V1beta1_QueryClientMetadata {
     public static let params = GRPCMethodDescriptor(
       name: "Params",
       path: "/cosmos.distribution.v1beta1.Query/Params",
+      type: GRPCCallType.unary
+    )
+
+    public static let validatorDistributionInfo = GRPCMethodDescriptor(
+      name: "ValidatorDistributionInfo",
+      path: "/cosmos.distribution.v1beta1.Query/ValidatorDistributionInfo",
       type: GRPCCallType.unary
     )
 
@@ -760,6 +822,30 @@ public final class Cosmos_Distribution_V1beta1_QueryTestClient: Cosmos_Distribut
   /// Returns true if there are response streams enqueued for 'Params'
   public var hasParamsResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.params.path)
+  }
+
+  /// Make a unary response for the ValidatorDistributionInfo RPC. This must be called
+  /// before calling 'validatorDistributionInfo'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeValidatorDistributionInfoResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest, Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.validatorDistributionInfo.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueValidatorDistributionInfoResponse(
+    _ response: Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Distribution_V1beta1_QueryValidatorDistributionInfoRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeValidatorDistributionInfoResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'ValidatorDistributionInfo'
+  public var hasValidatorDistributionInfoResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Distribution_V1beta1_QueryClientMetadata.Methods.validatorDistributionInfo.path)
   }
 
   /// Make a unary response for the ValidatorOutstandingRewards RPC. This must be called

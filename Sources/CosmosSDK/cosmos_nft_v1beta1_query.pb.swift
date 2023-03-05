@@ -26,8 +26,10 @@ public struct Cosmos_Nft_V1beta1_QueryBalanceRequest {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// class_id associated with the nft
   public var classID: String = String()
 
+  /// owner is the owner address of the nft
   public var owner: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -41,6 +43,7 @@ public struct Cosmos_Nft_V1beta1_QueryBalanceResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// amount is the number of all NFTs of a given class owned by the owner
   public var amount: UInt64 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -54,8 +57,10 @@ public struct Cosmos_Nft_V1beta1_QueryOwnerRequest {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// class_id associated with the nft
   public var classID: String = String()
 
+  /// id is a unique identifier of the NFT
   public var id: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -69,6 +74,7 @@ public struct Cosmos_Nft_V1beta1_QueryOwnerResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// owner is the owner address of the nft
   public var owner: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -82,6 +88,7 @@ public struct Cosmos_Nft_V1beta1_QuerySupplyRequest {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// class_id associated with the nft
   public var classID: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -95,6 +102,7 @@ public struct Cosmos_Nft_V1beta1_QuerySupplyResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// amount is the number of all NFTs from the given class
   public var amount: UInt64 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -108,10 +116,13 @@ public struct Cosmos_Nft_V1beta1_QueryNFTsRequest {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// class_id associated with the nft
   public var classID: String = String()
 
+  /// owner is the owner address of the nft
   public var owner: String = String()
 
+  /// pagination defines an optional pagination for the request.
   public var pagination: Cosmos_Base_Query_V1beta1_PageRequest {
     get {return _pagination ?? Cosmos_Base_Query_V1beta1_PageRequest()}
     set {_pagination = newValue}
@@ -134,8 +145,10 @@ public struct Cosmos_Nft_V1beta1_QueryNFTsResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// NFT defines the NFT
   public var nfts: [Cosmos_Nft_V1beta1_NFT] = []
 
+  /// pagination defines the pagination in the response.
   public var pagination: Cosmos_Base_Query_V1beta1_PageResponse {
     get {return _pagination ?? Cosmos_Base_Query_V1beta1_PageResponse()}
     set {_pagination = newValue}
@@ -158,8 +171,10 @@ public struct Cosmos_Nft_V1beta1_QueryNFTRequest {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// class_id associated with the nft
   public var classID: String = String()
 
+  /// id is a unique identifier of the NFT
   public var id: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -173,6 +188,7 @@ public struct Cosmos_Nft_V1beta1_QueryNFTResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// owner is the owner address of the nft
   public var nft: Cosmos_Nft_V1beta1_NFT {
     get {return _nft ?? Cosmos_Nft_V1beta1_NFT()}
     set {_nft = newValue}
@@ -195,6 +211,7 @@ public struct Cosmos_Nft_V1beta1_QueryClassRequest {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// class_id associated with the nft
   public var classID: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -208,6 +225,7 @@ public struct Cosmos_Nft_V1beta1_QueryClassResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// class defines the class of the nft type.
   public var `class`: Cosmos_Nft_V1beta1_Class {
     get {return _class ?? Cosmos_Nft_V1beta1_Class()}
     set {_class = newValue}
@@ -253,8 +271,10 @@ public struct Cosmos_Nft_V1beta1_QueryClassesResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// class defines the class of the nft type.
   public var classes: [Cosmos_Nft_V1beta1_Class] = []
 
+  /// pagination defines the pagination in the response.
   public var pagination: Cosmos_Base_Query_V1beta1_PageResponse {
     get {return _pagination ?? Cosmos_Base_Query_V1beta1_PageResponse()}
     set {_pagination = newValue}

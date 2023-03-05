@@ -40,7 +40,8 @@ public struct Cosmos_Gov_V1_GenesisState {
   /// proposals defines all the proposals present at genesis.
   public var proposals: [Cosmos_Gov_V1_Proposal] = []
 
-  /// params defines all the paramaters of related to deposit.
+  /// Deprecated: Prefer to use `params` instead.
+  /// deposit_params defines all the paramaters of related to deposit.
   public var depositParams: Cosmos_Gov_V1_DepositParams {
     get {return _depositParams ?? Cosmos_Gov_V1_DepositParams()}
     set {_depositParams = newValue}
@@ -50,7 +51,8 @@ public struct Cosmos_Gov_V1_GenesisState {
   /// Clears the value of `depositParams`. Subsequent reads from it will return its default value.
   public mutating func clearDepositParams() {self._depositParams = nil}
 
-  /// params defines all the paramaters of related to voting.
+  /// Deprecated: Prefer to use `params` instead.
+  /// voting_params defines all the paramaters of related to voting.
   public var votingParams: Cosmos_Gov_V1_VotingParams {
     get {return _votingParams ?? Cosmos_Gov_V1_VotingParams()}
     set {_votingParams = newValue}
@@ -60,7 +62,8 @@ public struct Cosmos_Gov_V1_GenesisState {
   /// Clears the value of `votingParams`. Subsequent reads from it will return its default value.
   public mutating func clearVotingParams() {self._votingParams = nil}
 
-  /// params defines all the paramaters of related to tally.
+  /// Deprecated: Prefer to use `params` instead.
+  /// tally_params defines all the paramaters of related to tally.
   public var tallyParams: Cosmos_Gov_V1_TallyParams {
     get {return _tallyParams ?? Cosmos_Gov_V1_TallyParams()}
     set {_tallyParams = newValue}
@@ -70,6 +73,26 @@ public struct Cosmos_Gov_V1_GenesisState {
   /// Clears the value of `tallyParams`. Subsequent reads from it will return its default value.
   public mutating func clearTallyParams() {self._tallyParams = nil}
 
+  /// params defines all the paramaters of x/gov module.
+  ///
+  /// Since: cosmos-sdk 0.47
+  public var params: Cosmos_Gov_V1_Params {
+    get {return _params ?? Cosmos_Gov_V1_Params()}
+    set {_params = newValue}
+  }
+  /// Returns true if `params` has been explicitly set.
+  public var hasParams: Bool {return self._params != nil}
+  /// Clears the value of `params`. Subsequent reads from it will return its default value.
+  public mutating func clearParams() {self._params = nil}
+
+  /// The constitution allows builders to lay a foundation and define purpose.
+  /// This is an immutable string set in genesis.
+  /// There are no amendments, to go outside of scope, just fork.
+  /// constitution is an immutable string in genesis for a chain builder to lay out their vision, ideas and ideals.
+  ///
+  /// Since: cosmos-sdk 0.48
+  public var constitution: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -77,6 +100,7 @@ public struct Cosmos_Gov_V1_GenesisState {
   fileprivate var _depositParams: Cosmos_Gov_V1_DepositParams? = nil
   fileprivate var _votingParams: Cosmos_Gov_V1_VotingParams? = nil
   fileprivate var _tallyParams: Cosmos_Gov_V1_TallyParams? = nil
+  fileprivate var _params: Cosmos_Gov_V1_Params? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
@@ -97,6 +121,8 @@ extension Cosmos_Gov_V1_GenesisState: SwiftProtobuf.Message, SwiftProtobuf._Mess
     5: .standard(proto: "deposit_params"),
     6: .standard(proto: "voting_params"),
     7: .standard(proto: "tally_params"),
+    8: .same(proto: "params"),
+    9: .same(proto: "constitution"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -112,6 +138,8 @@ extension Cosmos_Gov_V1_GenesisState: SwiftProtobuf.Message, SwiftProtobuf._Mess
       case 5: try { try decoder.decodeSingularMessageField(value: &self._depositParams) }()
       case 6: try { try decoder.decodeSingularMessageField(value: &self._votingParams) }()
       case 7: try { try decoder.decodeSingularMessageField(value: &self._tallyParams) }()
+      case 8: try { try decoder.decodeSingularMessageField(value: &self._params) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.constitution) }()
       default: break
       }
     }
@@ -143,6 +171,12 @@ extension Cosmos_Gov_V1_GenesisState: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try { if let v = self._tallyParams {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     } }()
+    try { if let v = self._params {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    } }()
+    if !self.constitution.isEmpty {
+      try visitor.visitSingularStringField(value: self.constitution, fieldNumber: 9)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -154,6 +188,8 @@ extension Cosmos_Gov_V1_GenesisState: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if lhs._depositParams != rhs._depositParams {return false}
     if lhs._votingParams != rhs._votingParams {return false}
     if lhs._tallyParams != rhs._tallyParams {return false}
+    if lhs._params != rhs._params {return false}
+    if lhs.constitution != rhs.constitution {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

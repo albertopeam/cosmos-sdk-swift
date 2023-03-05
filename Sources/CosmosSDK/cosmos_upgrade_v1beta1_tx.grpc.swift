@@ -70,7 +70,7 @@ extension Cosmos_Upgrade_V1beta1_MsgClientProtocol {
   }
 
   /// CancelUpgrade is a governance operation for cancelling a previously
-  /// approvid software upgrade.
+  /// approved software upgrade.
   ///
   /// Since: cosmos-sdk 0.46
   ///

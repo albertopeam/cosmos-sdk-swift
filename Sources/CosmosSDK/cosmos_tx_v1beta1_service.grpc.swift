@@ -57,6 +57,26 @@ public protocol Cosmos_Tx_V1beta1_ServiceClientProtocol: GRPCClient {
     _ request: Cosmos_Tx_V1beta1_GetBlockWithTxsRequest,
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Tx_V1beta1_GetBlockWithTxsRequest, Cosmos_Tx_V1beta1_GetBlockWithTxsResponse>
+
+  func txDecode(
+    _ request: Cosmos_Tx_V1beta1_TxDecodeRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Tx_V1beta1_TxDecodeRequest, Cosmos_Tx_V1beta1_TxDecodeResponse>
+
+  func txEncode(
+    _ request: Cosmos_Tx_V1beta1_TxEncodeRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Tx_V1beta1_TxEncodeRequest, Cosmos_Tx_V1beta1_TxEncodeResponse>
+
+  func txEncodeAmino(
+    _ request: Cosmos_Tx_V1beta1_TxEncodeAminoRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Tx_V1beta1_TxEncodeAminoRequest, Cosmos_Tx_V1beta1_TxEncodeAminoResponse>
+
+  func txDecodeAmino(
+    _ request: Cosmos_Tx_V1beta1_TxDecodeAminoRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Tx_V1beta1_TxDecodeAminoRequest, Cosmos_Tx_V1beta1_TxDecodeAminoResponse>
 }
 
 extension Cosmos_Tx_V1beta1_ServiceClientProtocol {
@@ -155,6 +175,86 @@ extension Cosmos_Tx_V1beta1_ServiceClientProtocol {
       interceptors: self.interceptors?.makeGetBlockWithTxsInterceptors() ?? []
     )
   }
+
+  /// TxDecode decodes the transaction.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to TxDecode.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func txDecode(
+    _ request: Cosmos_Tx_V1beta1_TxDecodeRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Tx_V1beta1_TxDecodeRequest, Cosmos_Tx_V1beta1_TxDecodeResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecode.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxDecodeInterceptors() ?? []
+    )
+  }
+
+  /// TxEncode encodes the transaction.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to TxEncode.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func txEncode(
+    _ request: Cosmos_Tx_V1beta1_TxEncodeRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Tx_V1beta1_TxEncodeRequest, Cosmos_Tx_V1beta1_TxEncodeResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncode.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxEncodeInterceptors() ?? []
+    )
+  }
+
+  /// TxEncodeAmino encodes an Amino transaction from JSON to encoded bytes.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to TxEncodeAmino.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func txEncodeAmino(
+    _ request: Cosmos_Tx_V1beta1_TxEncodeAminoRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Tx_V1beta1_TxEncodeAminoRequest, Cosmos_Tx_V1beta1_TxEncodeAminoResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncodeAmino.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxEncodeAminoInterceptors() ?? []
+    )
+  }
+
+  /// TxDecodeAmino decodes an Amino transaction from encoded bytes to JSON.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to TxDecodeAmino.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func txDecodeAmino(
+    _ request: Cosmos_Tx_V1beta1_TxDecodeAminoRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Tx_V1beta1_TxDecodeAminoRequest, Cosmos_Tx_V1beta1_TxDecodeAminoResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecodeAmino.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxDecodeAminoInterceptors() ?? []
+    )
+  }
 }
 
 #if compiler(>=5.6)
@@ -247,6 +347,26 @@ public protocol Cosmos_Tx_V1beta1_ServiceAsyncClientProtocol: GRPCClient {
     _ request: Cosmos_Tx_V1beta1_GetBlockWithTxsRequest,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Tx_V1beta1_GetBlockWithTxsRequest, Cosmos_Tx_V1beta1_GetBlockWithTxsResponse>
+
+  func makeTxDecodeCall(
+    _ request: Cosmos_Tx_V1beta1_TxDecodeRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Tx_V1beta1_TxDecodeRequest, Cosmos_Tx_V1beta1_TxDecodeResponse>
+
+  func makeTxEncodeCall(
+    _ request: Cosmos_Tx_V1beta1_TxEncodeRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Tx_V1beta1_TxEncodeRequest, Cosmos_Tx_V1beta1_TxEncodeResponse>
+
+  func makeTxEncodeAminoCall(
+    _ request: Cosmos_Tx_V1beta1_TxEncodeAminoRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Tx_V1beta1_TxEncodeAminoRequest, Cosmos_Tx_V1beta1_TxEncodeAminoResponse>
+
+  func makeTxDecodeAminoCall(
+    _ request: Cosmos_Tx_V1beta1_TxDecodeAminoRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Tx_V1beta1_TxDecodeAminoRequest, Cosmos_Tx_V1beta1_TxDecodeAminoResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -318,6 +438,54 @@ extension Cosmos_Tx_V1beta1_ServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeGetBlockWithTxsInterceptors() ?? []
     )
   }
+
+  public func makeTxDecodeCall(
+    _ request: Cosmos_Tx_V1beta1_TxDecodeRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Tx_V1beta1_TxDecodeRequest, Cosmos_Tx_V1beta1_TxDecodeResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecode.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxDecodeInterceptors() ?? []
+    )
+  }
+
+  public func makeTxEncodeCall(
+    _ request: Cosmos_Tx_V1beta1_TxEncodeRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Tx_V1beta1_TxEncodeRequest, Cosmos_Tx_V1beta1_TxEncodeResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncode.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxEncodeInterceptors() ?? []
+    )
+  }
+
+  public func makeTxEncodeAminoCall(
+    _ request: Cosmos_Tx_V1beta1_TxEncodeAminoRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Tx_V1beta1_TxEncodeAminoRequest, Cosmos_Tx_V1beta1_TxEncodeAminoResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncodeAmino.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxEncodeAminoInterceptors() ?? []
+    )
+  }
+
+  public func makeTxDecodeAminoCall(
+    _ request: Cosmos_Tx_V1beta1_TxDecodeAminoRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Tx_V1beta1_TxDecodeAminoRequest, Cosmos_Tx_V1beta1_TxDecodeAminoResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecodeAmino.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxDecodeAminoInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -381,6 +549,54 @@ extension Cosmos_Tx_V1beta1_ServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeGetBlockWithTxsInterceptors() ?? []
     )
   }
+
+  public func txDecode(
+    _ request: Cosmos_Tx_V1beta1_TxDecodeRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Tx_V1beta1_TxDecodeResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecode.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxDecodeInterceptors() ?? []
+    )
+  }
+
+  public func txEncode(
+    _ request: Cosmos_Tx_V1beta1_TxEncodeRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Tx_V1beta1_TxEncodeResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncode.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxEncodeInterceptors() ?? []
+    )
+  }
+
+  public func txEncodeAmino(
+    _ request: Cosmos_Tx_V1beta1_TxEncodeAminoRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Tx_V1beta1_TxEncodeAminoResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncodeAmino.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxEncodeAminoInterceptors() ?? []
+    )
+  }
+
+  public func txDecodeAmino(
+    _ request: Cosmos_Tx_V1beta1_TxDecodeAminoRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Tx_V1beta1_TxDecodeAminoResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecodeAmino.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeTxDecodeAminoInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -418,6 +634,18 @@ public protocol Cosmos_Tx_V1beta1_ServiceClientInterceptorFactoryProtocol: GRPCS
 
   /// - Returns: Interceptors to use when invoking 'getBlockWithTxs'.
   func makeGetBlockWithTxsInterceptors() -> [ClientInterceptor<Cosmos_Tx_V1beta1_GetBlockWithTxsRequest, Cosmos_Tx_V1beta1_GetBlockWithTxsResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'txDecode'.
+  func makeTxDecodeInterceptors() -> [ClientInterceptor<Cosmos_Tx_V1beta1_TxDecodeRequest, Cosmos_Tx_V1beta1_TxDecodeResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'txEncode'.
+  func makeTxEncodeInterceptors() -> [ClientInterceptor<Cosmos_Tx_V1beta1_TxEncodeRequest, Cosmos_Tx_V1beta1_TxEncodeResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'txEncodeAmino'.
+  func makeTxEncodeAminoInterceptors() -> [ClientInterceptor<Cosmos_Tx_V1beta1_TxEncodeAminoRequest, Cosmos_Tx_V1beta1_TxEncodeAminoResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'txDecodeAmino'.
+  func makeTxDecodeAminoInterceptors() -> [ClientInterceptor<Cosmos_Tx_V1beta1_TxDecodeAminoRequest, Cosmos_Tx_V1beta1_TxDecodeAminoResponse>]
 }
 
 public enum Cosmos_Tx_V1beta1_ServiceClientMetadata {
@@ -430,6 +658,10 @@ public enum Cosmos_Tx_V1beta1_ServiceClientMetadata {
       Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.broadcastTx,
       Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.getTxsEvent,
       Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.getBlockWithTxs,
+      Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecode,
+      Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncode,
+      Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncodeAmino,
+      Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecodeAmino,
     ]
   )
 
@@ -461,6 +693,30 @@ public enum Cosmos_Tx_V1beta1_ServiceClientMetadata {
     public static let getBlockWithTxs = GRPCMethodDescriptor(
       name: "GetBlockWithTxs",
       path: "/cosmos.tx.v1beta1.Service/GetBlockWithTxs",
+      type: GRPCCallType.unary
+    )
+
+    public static let txDecode = GRPCMethodDescriptor(
+      name: "TxDecode",
+      path: "/cosmos.tx.v1beta1.Service/TxDecode",
+      type: GRPCCallType.unary
+    )
+
+    public static let txEncode = GRPCMethodDescriptor(
+      name: "TxEncode",
+      path: "/cosmos.tx.v1beta1.Service/TxEncode",
+      type: GRPCCallType.unary
+    )
+
+    public static let txEncodeAmino = GRPCMethodDescriptor(
+      name: "TxEncodeAmino",
+      path: "/cosmos.tx.v1beta1.Service/TxEncodeAmino",
+      type: GRPCCallType.unary
+    )
+
+    public static let txDecodeAmino = GRPCMethodDescriptor(
+      name: "TxDecodeAmino",
+      path: "/cosmos.tx.v1beta1.Service/TxDecodeAmino",
       type: GRPCCallType.unary
     )
   }
@@ -609,6 +865,102 @@ public final class Cosmos_Tx_V1beta1_ServiceTestClient: Cosmos_Tx_V1beta1_Servic
   /// Returns true if there are response streams enqueued for 'GetBlockWithTxs'
   public var hasGetBlockWithTxsResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.getBlockWithTxs.path)
+  }
+
+  /// Make a unary response for the TxDecode RPC. This must be called
+  /// before calling 'txDecode'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeTxDecodeResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Tx_V1beta1_TxDecodeRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Tx_V1beta1_TxDecodeRequest, Cosmos_Tx_V1beta1_TxDecodeResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecode.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueTxDecodeResponse(
+    _ response: Cosmos_Tx_V1beta1_TxDecodeResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Tx_V1beta1_TxDecodeRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeTxDecodeResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'TxDecode'
+  public var hasTxDecodeResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecode.path)
+  }
+
+  /// Make a unary response for the TxEncode RPC. This must be called
+  /// before calling 'txEncode'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeTxEncodeResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Tx_V1beta1_TxEncodeRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Tx_V1beta1_TxEncodeRequest, Cosmos_Tx_V1beta1_TxEncodeResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncode.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueTxEncodeResponse(
+    _ response: Cosmos_Tx_V1beta1_TxEncodeResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Tx_V1beta1_TxEncodeRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeTxEncodeResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'TxEncode'
+  public var hasTxEncodeResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncode.path)
+  }
+
+  /// Make a unary response for the TxEncodeAmino RPC. This must be called
+  /// before calling 'txEncodeAmino'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeTxEncodeAminoResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Tx_V1beta1_TxEncodeAminoRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Tx_V1beta1_TxEncodeAminoRequest, Cosmos_Tx_V1beta1_TxEncodeAminoResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncodeAmino.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueTxEncodeAminoResponse(
+    _ response: Cosmos_Tx_V1beta1_TxEncodeAminoResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Tx_V1beta1_TxEncodeAminoRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeTxEncodeAminoResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'TxEncodeAmino'
+  public var hasTxEncodeAminoResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txEncodeAmino.path)
+  }
+
+  /// Make a unary response for the TxDecodeAmino RPC. This must be called
+  /// before calling 'txDecodeAmino'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeTxDecodeAminoResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Tx_V1beta1_TxDecodeAminoRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Tx_V1beta1_TxDecodeAminoRequest, Cosmos_Tx_V1beta1_TxDecodeAminoResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecodeAmino.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueTxDecodeAminoResponse(
+    _ response: Cosmos_Tx_V1beta1_TxDecodeAminoResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Tx_V1beta1_TxDecodeAminoRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeTxDecodeAminoResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'TxDecodeAmino'
+  public var hasTxDecodeAminoResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Tx_V1beta1_ServiceClientMetadata.Methods.txDecodeAmino.path)
   }
 }
 

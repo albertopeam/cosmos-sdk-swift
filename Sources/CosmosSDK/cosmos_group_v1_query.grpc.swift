@@ -97,6 +97,11 @@ public protocol Cosmos_Group_V1_QueryClientProtocol: GRPCClient {
     _ request: Cosmos_Group_V1_QueryTallyResultRequest,
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Group_V1_QueryTallyResultRequest, Cosmos_Group_V1_QueryTallyResultResponse>
+
+  func groups(
+    _ request: Cosmos_Group_V1_QueryGroupsRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Group_V1_QueryGroupsRequest, Cosmos_Group_V1_QueryGroupsResponse>
 }
 
 extension Cosmos_Group_V1_QueryClientProtocol {
@@ -140,7 +145,7 @@ extension Cosmos_Group_V1_QueryClientProtocol {
     )
   }
 
-  /// GroupMembers queries members of a group
+  /// GroupMembers queries members of a group by group id.
   ///
   /// - Parameters:
   ///   - request: Request to send to GroupMembers.
@@ -194,7 +199,7 @@ extension Cosmos_Group_V1_QueryClientProtocol {
     )
   }
 
-  /// GroupsByAdmin queries group policies by admin address.
+  /// GroupPoliciesByAdmin queries group policies by admin address.
   ///
   /// - Parameters:
   ///   - request: Request to send to GroupPoliciesByAdmin.
@@ -266,7 +271,7 @@ extension Cosmos_Group_V1_QueryClientProtocol {
     )
   }
 
-  /// VotesByProposal queries a vote by proposal.
+  /// VotesByProposal queries a vote by proposal id.
   ///
   /// - Parameters:
   ///   - request: Request to send to VotesByProposal.
@@ -339,6 +344,26 @@ extension Cosmos_Group_V1_QueryClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeTallyResultInterceptors() ?? []
+    )
+  }
+
+  /// Groups queries all groups in state.
+  /// 
+  /// Since: cosmos-sdk 0.47.1
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to Groups.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func groups(
+    _ request: Cosmos_Group_V1_QueryGroupsRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Group_V1_QueryGroupsRequest, Cosmos_Group_V1_QueryGroupsResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Group_V1_QueryClientMetadata.Methods.groups.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGroupsInterceptors() ?? []
     )
   }
 }
@@ -473,6 +498,11 @@ public protocol Cosmos_Group_V1_QueryAsyncClientProtocol: GRPCClient {
     _ request: Cosmos_Group_V1_QueryTallyResultRequest,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Group_V1_QueryTallyResultRequest, Cosmos_Group_V1_QueryTallyResultResponse>
+
+  func makeGroupsCall(
+    _ request: Cosmos_Group_V1_QueryGroupsRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Group_V1_QueryGroupsRequest, Cosmos_Group_V1_QueryGroupsResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -640,6 +670,18 @@ extension Cosmos_Group_V1_QueryAsyncClientProtocol {
       interceptors: self.interceptors?.makeTallyResultInterceptors() ?? []
     )
   }
+
+  public func makeGroupsCall(
+    _ request: Cosmos_Group_V1_QueryGroupsRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Group_V1_QueryGroupsRequest, Cosmos_Group_V1_QueryGroupsResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Group_V1_QueryClientMetadata.Methods.groups.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGroupsInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -799,6 +841,18 @@ extension Cosmos_Group_V1_QueryAsyncClientProtocol {
       interceptors: self.interceptors?.makeTallyResultInterceptors() ?? []
     )
   }
+
+  public func groups(
+    _ request: Cosmos_Group_V1_QueryGroupsRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Group_V1_QueryGroupsResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Group_V1_QueryClientMetadata.Methods.groups.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGroupsInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -860,6 +914,9 @@ public protocol Cosmos_Group_V1_QueryClientInterceptorFactoryProtocol: GRPCSenda
 
   /// - Returns: Interceptors to use when invoking 'tallyResult'.
   func makeTallyResultInterceptors() -> [ClientInterceptor<Cosmos_Group_V1_QueryTallyResultRequest, Cosmos_Group_V1_QueryTallyResultResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'groups'.
+  func makeGroupsInterceptors() -> [ClientInterceptor<Cosmos_Group_V1_QueryGroupsRequest, Cosmos_Group_V1_QueryGroupsResponse>]
 }
 
 public enum Cosmos_Group_V1_QueryClientMetadata {
@@ -880,6 +937,7 @@ public enum Cosmos_Group_V1_QueryClientMetadata {
       Cosmos_Group_V1_QueryClientMetadata.Methods.votesByVoter,
       Cosmos_Group_V1_QueryClientMetadata.Methods.groupsByMember,
       Cosmos_Group_V1_QueryClientMetadata.Methods.tallyResult,
+      Cosmos_Group_V1_QueryClientMetadata.Methods.groups,
     ]
   )
 
@@ -959,6 +1017,12 @@ public enum Cosmos_Group_V1_QueryClientMetadata {
     public static let tallyResult = GRPCMethodDescriptor(
       name: "TallyResult",
       path: "/cosmos.group.v1.Query/TallyResult",
+      type: GRPCCallType.unary
+    )
+
+    public static let groups = GRPCMethodDescriptor(
+      name: "Groups",
+      path: "/cosmos.group.v1.Query/Groups",
       type: GRPCCallType.unary
     )
   }
@@ -1299,6 +1363,30 @@ public final class Cosmos_Group_V1_QueryTestClient: Cosmos_Group_V1_QueryClientP
   /// Returns true if there are response streams enqueued for 'TallyResult'
   public var hasTallyResultResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Group_V1_QueryClientMetadata.Methods.tallyResult.path)
+  }
+
+  /// Make a unary response for the Groups RPC. This must be called
+  /// before calling 'groups'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeGroupsResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Group_V1_QueryGroupsRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Group_V1_QueryGroupsRequest, Cosmos_Group_V1_QueryGroupsResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Group_V1_QueryClientMetadata.Methods.groups.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueGroupsResponse(
+    _ response: Cosmos_Group_V1_QueryGroupsResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Group_V1_QueryGroupsRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeGroupsResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'Groups'
+  public var hasGroupsResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Group_V1_QueryClientMetadata.Methods.groups.path)
   }
 }
 

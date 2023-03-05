@@ -22,6 +22,30 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+/// QueryConstitutionRequest is the request type for the Query/Constitution RPC method
+public struct Cosmos_Gov_V1_QueryConstitutionRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// QueryConstitutionResponse is the response type for the Query/Constitution RPC method
+public struct Cosmos_Gov_V1_QueryConstitutionResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var constitution: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 /// QueryProposalRequest is the request type for the Query/Proposal RPC method.
 public struct Cosmos_Gov_V1_QueryProposalRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -42,6 +66,7 @@ public struct Cosmos_Gov_V1_QueryProposalResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// proposal is the requested governance proposal.
   public var proposal: Cosmos_Gov_V1_Proposal {
     get {return _proposal ?? Cosmos_Gov_V1_Proposal()}
     set {_proposal = newValue}
@@ -97,6 +122,7 @@ public struct Cosmos_Gov_V1_QueryProposalsResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// proposals defines all the requested governance proposals.
   public var proposals: [Cosmos_Gov_V1_Proposal] = []
 
   /// pagination defines the pagination in the response.
@@ -139,7 +165,7 @@ public struct Cosmos_Gov_V1_QueryVoteResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// vote defined the queried vote.
+  /// vote defines the queried vote.
   public var vote: Cosmos_Gov_V1_Vote {
     get {return _vote ?? Cosmos_Gov_V1_Vote()}
     set {_vote = newValue}
@@ -188,7 +214,7 @@ public struct Cosmos_Gov_V1_QueryVotesResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// votes defined the queried votes.
+  /// votes defines the queried votes.
   public var votes: [Cosmos_Gov_V1_Vote] = []
 
   /// pagination defines the pagination in the response.
@@ -229,6 +255,7 @@ public struct Cosmos_Gov_V1_QueryParamsResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Deprecated: Prefer to use `params` instead.
   /// voting_params defines the parameters related to voting.
   public var votingParams: Cosmos_Gov_V1_VotingParams {
     get {return _votingParams ?? Cosmos_Gov_V1_VotingParams()}
@@ -239,6 +266,7 @@ public struct Cosmos_Gov_V1_QueryParamsResponse {
   /// Clears the value of `votingParams`. Subsequent reads from it will return its default value.
   public mutating func clearVotingParams() {self._votingParams = nil}
 
+  /// Deprecated: Prefer to use `params` instead.
   /// deposit_params defines the parameters related to deposit.
   public var depositParams: Cosmos_Gov_V1_DepositParams {
     get {return _depositParams ?? Cosmos_Gov_V1_DepositParams()}
@@ -249,6 +277,7 @@ public struct Cosmos_Gov_V1_QueryParamsResponse {
   /// Clears the value of `depositParams`. Subsequent reads from it will return its default value.
   public mutating func clearDepositParams() {self._depositParams = nil}
 
+  /// Deprecated: Prefer to use `params` instead.
   /// tally_params defines the parameters related to tally.
   public var tallyParams: Cosmos_Gov_V1_TallyParams {
     get {return _tallyParams ?? Cosmos_Gov_V1_TallyParams()}
@@ -259,6 +288,18 @@ public struct Cosmos_Gov_V1_QueryParamsResponse {
   /// Clears the value of `tallyParams`. Subsequent reads from it will return its default value.
   public mutating func clearTallyParams() {self._tallyParams = nil}
 
+  /// params defines all the paramaters of x/gov module.
+  ///
+  /// Since: cosmos-sdk 0.47
+  public var params: Cosmos_Gov_V1_Params {
+    get {return _params ?? Cosmos_Gov_V1_Params()}
+    set {_params = newValue}
+  }
+  /// Returns true if `params` has been explicitly set.
+  public var hasParams: Bool {return self._params != nil}
+  /// Clears the value of `params`. Subsequent reads from it will return its default value.
+  public mutating func clearParams() {self._params = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -266,6 +307,7 @@ public struct Cosmos_Gov_V1_QueryParamsResponse {
   fileprivate var _votingParams: Cosmos_Gov_V1_VotingParams? = nil
   fileprivate var _depositParams: Cosmos_Gov_V1_DepositParams? = nil
   fileprivate var _tallyParams: Cosmos_Gov_V1_TallyParams? = nil
+  fileprivate var _params: Cosmos_Gov_V1_Params? = nil
 }
 
 /// QueryDepositRequest is the request type for the Query/Deposit RPC method.
@@ -340,6 +382,7 @@ public struct Cosmos_Gov_V1_QueryDepositsResponse {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// deposits defines the requested deposits.
   public var deposits: [Cosmos_Gov_V1_Deposit] = []
 
   /// pagination defines the pagination in the response.
@@ -397,6 +440,8 @@ public struct Cosmos_Gov_V1_QueryTallyResultResponse {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
+extension Cosmos_Gov_V1_QueryConstitutionRequest: @unchecked Sendable {}
+extension Cosmos_Gov_V1_QueryConstitutionResponse: @unchecked Sendable {}
 extension Cosmos_Gov_V1_QueryProposalRequest: @unchecked Sendable {}
 extension Cosmos_Gov_V1_QueryProposalResponse: @unchecked Sendable {}
 extension Cosmos_Gov_V1_QueryProposalsRequest: @unchecked Sendable {}
@@ -418,6 +463,57 @@ extension Cosmos_Gov_V1_QueryTallyResultResponse: @unchecked Sendable {}
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "cosmos.gov.v1"
+
+extension Cosmos_Gov_V1_QueryConstitutionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryConstitutionRequest"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Gov_V1_QueryConstitutionRequest, rhs: Cosmos_Gov_V1_QueryConstitutionRequest) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Gov_V1_QueryConstitutionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QueryConstitutionResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "constitution"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.constitution) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.constitution.isEmpty {
+      try visitor.visitSingularStringField(value: self.constitution, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Gov_V1_QueryConstitutionResponse, rhs: Cosmos_Gov_V1_QueryConstitutionResponse) -> Bool {
+    if lhs.constitution != rhs.constitution {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
 
 extension Cosmos_Gov_V1_QueryProposalRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".QueryProposalRequest"
@@ -779,6 +875,7 @@ extension Cosmos_Gov_V1_QueryParamsResponse: SwiftProtobuf.Message, SwiftProtobu
     1: .standard(proto: "voting_params"),
     2: .standard(proto: "deposit_params"),
     3: .standard(proto: "tally_params"),
+    4: .same(proto: "params"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -790,6 +887,7 @@ extension Cosmos_Gov_V1_QueryParamsResponse: SwiftProtobuf.Message, SwiftProtobu
       case 1: try { try decoder.decodeSingularMessageField(value: &self._votingParams) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._depositParams) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._tallyParams) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._params) }()
       default: break
       }
     }
@@ -809,6 +907,9 @@ extension Cosmos_Gov_V1_QueryParamsResponse: SwiftProtobuf.Message, SwiftProtobu
     try { if let v = self._tallyParams {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
+    try { if let v = self._params {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -816,6 +917,7 @@ extension Cosmos_Gov_V1_QueryParamsResponse: SwiftProtobuf.Message, SwiftProtobu
     if lhs._votingParams != rhs._votingParams {return false}
     if lhs._depositParams != rhs._depositParams {return false}
     if lhs._tallyParams != rhs._tallyParams {return false}
+    if lhs._params != rhs._params {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

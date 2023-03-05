@@ -52,6 +52,21 @@ public protocol Cosmos_Distribution_V1beta1_MsgClientProtocol: GRPCClient {
     _ request: Cosmos_Distribution_V1beta1_MsgFundCommunityPool,
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Distribution_V1beta1_MsgFundCommunityPool, Cosmos_Distribution_V1beta1_MsgFundCommunityPoolResponse>
+
+  func updateParams(
+    _ request: Cosmos_Distribution_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Distribution_V1beta1_MsgUpdateParams, Cosmos_Distribution_V1beta1_MsgUpdateParamsResponse>
+
+  func communityPoolSpend(
+    _ request: Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend, Cosmos_Distribution_V1beta1_MsgCommunityPoolSpendResponse>
+
+  func depositValidatorRewardsPool(
+    _ request: Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool, Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPoolResponse>
 }
 
 extension Cosmos_Distribution_V1beta1_MsgClientProtocol {
@@ -132,6 +147,71 @@ extension Cosmos_Distribution_V1beta1_MsgClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeFundCommunityPoolInterceptors() ?? []
+    )
+  }
+
+  /// UpdateParams defines a governance operation for updating the x/distribution
+  /// module parameters. The authority is defined in the keeper.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to UpdateParams.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func updateParams(
+    _ request: Cosmos_Distribution_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Distribution_V1beta1_MsgUpdateParams, Cosmos_Distribution_V1beta1_MsgUpdateParamsResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
+
+  /// CommunityPoolSpend defines a governance operation for sending tokens from
+  /// the community pool in the x/distribution module to another account, which
+  /// could be the governance module itself. The authority is defined in the
+  /// keeper.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to CommunityPoolSpend.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func communityPoolSpend(
+    _ request: Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend, Cosmos_Distribution_V1beta1_MsgCommunityPoolSpendResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.communityPoolSpend.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeCommunityPoolSpendInterceptors() ?? []
+    )
+  }
+
+  /// DepositValidatorRewardsPool defines a method to provide additional rewards
+  /// to delegators to a specific validator.
+  ///
+  /// Since: cosmos-sdk 0.48
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to DepositValidatorRewardsPool.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func depositValidatorRewardsPool(
+    _ request: Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool, Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPoolResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.depositValidatorRewardsPool.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDepositValidatorRewardsPoolInterceptors() ?? []
     )
   }
 }
@@ -221,6 +301,21 @@ public protocol Cosmos_Distribution_V1beta1_MsgAsyncClientProtocol: GRPCClient {
     _ request: Cosmos_Distribution_V1beta1_MsgFundCommunityPool,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Distribution_V1beta1_MsgFundCommunityPool, Cosmos_Distribution_V1beta1_MsgFundCommunityPoolResponse>
+
+  func makeUpdateParamsCall(
+    _ request: Cosmos_Distribution_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Distribution_V1beta1_MsgUpdateParams, Cosmos_Distribution_V1beta1_MsgUpdateParamsResponse>
+
+  func makeCommunityPoolSpendCall(
+    _ request: Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend, Cosmos_Distribution_V1beta1_MsgCommunityPoolSpendResponse>
+
+  func makeDepositValidatorRewardsPoolCall(
+    _ request: Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool, Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPoolResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -280,6 +375,42 @@ extension Cosmos_Distribution_V1beta1_MsgAsyncClientProtocol {
       interceptors: self.interceptors?.makeFundCommunityPoolInterceptors() ?? []
     )
   }
+
+  public func makeUpdateParamsCall(
+    _ request: Cosmos_Distribution_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Distribution_V1beta1_MsgUpdateParams, Cosmos_Distribution_V1beta1_MsgUpdateParamsResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
+
+  public func makeCommunityPoolSpendCall(
+    _ request: Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend, Cosmos_Distribution_V1beta1_MsgCommunityPoolSpendResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.communityPoolSpend.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeCommunityPoolSpendInterceptors() ?? []
+    )
+  }
+
+  public func makeDepositValidatorRewardsPoolCall(
+    _ request: Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool, Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPoolResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.depositValidatorRewardsPool.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDepositValidatorRewardsPoolInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -331,6 +462,42 @@ extension Cosmos_Distribution_V1beta1_MsgAsyncClientProtocol {
       interceptors: self.interceptors?.makeFundCommunityPoolInterceptors() ?? []
     )
   }
+
+  public func updateParams(
+    _ request: Cosmos_Distribution_V1beta1_MsgUpdateParams,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Distribution_V1beta1_MsgUpdateParamsResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.updateParams.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateParamsInterceptors() ?? []
+    )
+  }
+
+  public func communityPoolSpend(
+    _ request: Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Distribution_V1beta1_MsgCommunityPoolSpendResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.communityPoolSpend.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeCommunityPoolSpendInterceptors() ?? []
+    )
+  }
+
+  public func depositValidatorRewardsPool(
+    _ request: Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPoolResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.depositValidatorRewardsPool.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDepositValidatorRewardsPoolInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -365,6 +532,15 @@ public protocol Cosmos_Distribution_V1beta1_MsgClientInterceptorFactoryProtocol:
 
   /// - Returns: Interceptors to use when invoking 'fundCommunityPool'.
   func makeFundCommunityPoolInterceptors() -> [ClientInterceptor<Cosmos_Distribution_V1beta1_MsgFundCommunityPool, Cosmos_Distribution_V1beta1_MsgFundCommunityPoolResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'updateParams'.
+  func makeUpdateParamsInterceptors() -> [ClientInterceptor<Cosmos_Distribution_V1beta1_MsgUpdateParams, Cosmos_Distribution_V1beta1_MsgUpdateParamsResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'communityPoolSpend'.
+  func makeCommunityPoolSpendInterceptors() -> [ClientInterceptor<Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend, Cosmos_Distribution_V1beta1_MsgCommunityPoolSpendResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'depositValidatorRewardsPool'.
+  func makeDepositValidatorRewardsPoolInterceptors() -> [ClientInterceptor<Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool, Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPoolResponse>]
 }
 
 public enum Cosmos_Distribution_V1beta1_MsgClientMetadata {
@@ -376,6 +552,9 @@ public enum Cosmos_Distribution_V1beta1_MsgClientMetadata {
       Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.withdrawDelegatorReward,
       Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.withdrawValidatorCommission,
       Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.fundCommunityPool,
+      Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.updateParams,
+      Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.communityPoolSpend,
+      Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.depositValidatorRewardsPool,
     ]
   )
 
@@ -401,6 +580,24 @@ public enum Cosmos_Distribution_V1beta1_MsgClientMetadata {
     public static let fundCommunityPool = GRPCMethodDescriptor(
       name: "FundCommunityPool",
       path: "/cosmos.distribution.v1beta1.Msg/FundCommunityPool",
+      type: GRPCCallType.unary
+    )
+
+    public static let updateParams = GRPCMethodDescriptor(
+      name: "UpdateParams",
+      path: "/cosmos.distribution.v1beta1.Msg/UpdateParams",
+      type: GRPCCallType.unary
+    )
+
+    public static let communityPoolSpend = GRPCMethodDescriptor(
+      name: "CommunityPoolSpend",
+      path: "/cosmos.distribution.v1beta1.Msg/CommunityPoolSpend",
+      type: GRPCCallType.unary
+    )
+
+    public static let depositValidatorRewardsPool = GRPCMethodDescriptor(
+      name: "DepositValidatorRewardsPool",
+      path: "/cosmos.distribution.v1beta1.Msg/DepositValidatorRewardsPool",
       type: GRPCCallType.unary
     )
   }
@@ -525,6 +722,78 @@ public final class Cosmos_Distribution_V1beta1_MsgTestClient: Cosmos_Distributio
   /// Returns true if there are response streams enqueued for 'FundCommunityPool'
   public var hasFundCommunityPoolResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.fundCommunityPool.path)
+  }
+
+  /// Make a unary response for the UpdateParams RPC. This must be called
+  /// before calling 'updateParams'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeUpdateParamsResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Distribution_V1beta1_MsgUpdateParams>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Distribution_V1beta1_MsgUpdateParams, Cosmos_Distribution_V1beta1_MsgUpdateParamsResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.updateParams.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueUpdateParamsResponse(
+    _ response: Cosmos_Distribution_V1beta1_MsgUpdateParamsResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Distribution_V1beta1_MsgUpdateParams>) -> () = { _ in }
+  ) {
+    let stream = self.makeUpdateParamsResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'UpdateParams'
+  public var hasUpdateParamsResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.updateParams.path)
+  }
+
+  /// Make a unary response for the CommunityPoolSpend RPC. This must be called
+  /// before calling 'communityPoolSpend'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeCommunityPoolSpendResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend, Cosmos_Distribution_V1beta1_MsgCommunityPoolSpendResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.communityPoolSpend.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueCommunityPoolSpendResponse(
+    _ response: Cosmos_Distribution_V1beta1_MsgCommunityPoolSpendResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Distribution_V1beta1_MsgCommunityPoolSpend>) -> () = { _ in }
+  ) {
+    let stream = self.makeCommunityPoolSpendResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'CommunityPoolSpend'
+  public var hasCommunityPoolSpendResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.communityPoolSpend.path)
+  }
+
+  /// Make a unary response for the DepositValidatorRewardsPool RPC. This must be called
+  /// before calling 'depositValidatorRewardsPool'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeDepositValidatorRewardsPoolResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool, Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPoolResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.depositValidatorRewardsPool.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueDepositValidatorRewardsPoolResponse(
+    _ response: Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPoolResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Distribution_V1beta1_MsgDepositValidatorRewardsPool>) -> () = { _ in }
+  ) {
+    let stream = self.makeDepositValidatorRewardsPoolResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'DepositValidatorRewardsPool'
+  public var hasDepositValidatorRewardsPoolResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Distribution_V1beta1_MsgClientMetadata.Methods.depositValidatorRewardsPool.path)
   }
 }
 

@@ -29,6 +29,7 @@ public struct Cosmos_Nft_V1beta1_GenesisState {
   /// class defines the class of the nft type.
   public var classes: [Cosmos_Nft_V1beta1_Class] = []
 
+  /// entry defines all nft owned by a person.
   public var entries: [Cosmos_Nft_V1beta1_Entry] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()

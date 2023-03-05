@@ -36,7 +36,7 @@ public struct Cosmos_Mint_V1beta1_GenesisState {
   /// Clears the value of `minter`. Subsequent reads from it will return its default value.
   public mutating func clearMinter() {self._minter = nil}
 
-  /// params defines all the paramaters of the module.
+  /// params defines all the parameters of the module.
   public var params: Cosmos_Mint_V1beta1_Params {
     get {return _params ?? Cosmos_Mint_V1beta1_Params()}
     set {_params = newValue}

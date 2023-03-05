@@ -58,6 +58,11 @@ public protocol Cosmos_Auth_V1beta1_QueryClientProtocol: GRPCClient {
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Auth_V1beta1_QueryModuleAccountsRequest, Cosmos_Auth_V1beta1_QueryModuleAccountsResponse>
 
+  func moduleAccountByName(
+    _ request: Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest, Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse>
+
   func bech32Prefix(
     _ request: Cosmos_Auth_V1beta1_Bech32PrefixRequest,
     callOptions: CallOptions?
@@ -72,6 +77,11 @@ public protocol Cosmos_Auth_V1beta1_QueryClientProtocol: GRPCClient {
     _ request: Cosmos_Auth_V1beta1_AddressStringToBytesRequest,
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Auth_V1beta1_AddressStringToBytesRequest, Cosmos_Auth_V1beta1_AddressStringToBytesResponse>
+
+  func accountInfo(
+    _ request: Cosmos_Auth_V1beta1_QueryAccountInfoRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Auth_V1beta1_QueryAccountInfoRequest, Cosmos_Auth_V1beta1_QueryAccountInfoResponse>
 }
 
 extension Cosmos_Auth_V1beta1_QueryClientProtocol {
@@ -79,7 +89,10 @@ extension Cosmos_Auth_V1beta1_QueryClientProtocol {
     return "cosmos.auth.v1beta1.Query"
   }
 
-  /// Accounts returns all the existing accounts
+  /// Accounts returns all the existing accounts.
+  ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
   ///
   /// Since: cosmos-sdk 0.43
   ///
@@ -117,7 +130,9 @@ extension Cosmos_Auth_V1beta1_QueryClientProtocol {
     )
   }
 
-  /// AccountAddressByID returns account address based on account id 
+  /// AccountAddressByID returns account address based on account number.
+  ///
+  /// Since: cosmos-sdk 0.46.2
   ///
   /// - Parameters:
   ///   - request: Request to send to AccountAddressByID.
@@ -170,6 +185,24 @@ extension Cosmos_Auth_V1beta1_QueryClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeModuleAccountsInterceptors() ?? []
+    )
+  }
+
+  /// ModuleAccountByName returns the module account info by module name
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to ModuleAccountByName.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func moduleAccountByName(
+    _ request: Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest, Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.moduleAccountByName.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeModuleAccountByNameInterceptors() ?? []
     )
   }
 
@@ -230,6 +263,26 @@ extension Cosmos_Auth_V1beta1_QueryClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeAddressStringToBytesInterceptors() ?? []
+    )
+  }
+
+  /// AccountInfo queries account info which is common to all account types.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to AccountInfo.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func accountInfo(
+    _ request: Cosmos_Auth_V1beta1_QueryAccountInfoRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Auth_V1beta1_QueryAccountInfoRequest, Cosmos_Auth_V1beta1_QueryAccountInfoResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.accountInfo.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeAccountInfoInterceptors() ?? []
     )
   }
 }
@@ -325,6 +378,11 @@ public protocol Cosmos_Auth_V1beta1_QueryAsyncClientProtocol: GRPCClient {
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Auth_V1beta1_QueryModuleAccountsRequest, Cosmos_Auth_V1beta1_QueryModuleAccountsResponse>
 
+  func makeModuleAccountByNameCall(
+    _ request: Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest, Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse>
+
   func makeBech32PrefixCall(
     _ request: Cosmos_Auth_V1beta1_Bech32PrefixRequest,
     callOptions: CallOptions?
@@ -339,6 +397,11 @@ public protocol Cosmos_Auth_V1beta1_QueryAsyncClientProtocol: GRPCClient {
     _ request: Cosmos_Auth_V1beta1_AddressStringToBytesRequest,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Auth_V1beta1_AddressStringToBytesRequest, Cosmos_Auth_V1beta1_AddressStringToBytesResponse>
+
+  func makeAccountInfoCall(
+    _ request: Cosmos_Auth_V1beta1_QueryAccountInfoRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Auth_V1beta1_QueryAccountInfoRequest, Cosmos_Auth_V1beta1_QueryAccountInfoResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -411,6 +474,18 @@ extension Cosmos_Auth_V1beta1_QueryAsyncClientProtocol {
     )
   }
 
+  public func makeModuleAccountByNameCall(
+    _ request: Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest, Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.moduleAccountByName.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeModuleAccountByNameInterceptors() ?? []
+    )
+  }
+
   public func makeBech32PrefixCall(
     _ request: Cosmos_Auth_V1beta1_Bech32PrefixRequest,
     callOptions: CallOptions? = nil
@@ -444,6 +519,18 @@ extension Cosmos_Auth_V1beta1_QueryAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeAddressStringToBytesInterceptors() ?? []
+    )
+  }
+
+  public func makeAccountInfoCall(
+    _ request: Cosmos_Auth_V1beta1_QueryAccountInfoRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Auth_V1beta1_QueryAccountInfoRequest, Cosmos_Auth_V1beta1_QueryAccountInfoResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.accountInfo.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeAccountInfoInterceptors() ?? []
     )
   }
 }
@@ -510,6 +597,18 @@ extension Cosmos_Auth_V1beta1_QueryAsyncClientProtocol {
     )
   }
 
+  public func moduleAccountByName(
+    _ request: Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.moduleAccountByName.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeModuleAccountByNameInterceptors() ?? []
+    )
+  }
+
   public func bech32Prefix(
     _ request: Cosmos_Auth_V1beta1_Bech32PrefixRequest,
     callOptions: CallOptions? = nil
@@ -543,6 +642,18 @@ extension Cosmos_Auth_V1beta1_QueryAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeAddressStringToBytesInterceptors() ?? []
+    )
+  }
+
+  public func accountInfo(
+    _ request: Cosmos_Auth_V1beta1_QueryAccountInfoRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Auth_V1beta1_QueryAccountInfoResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.accountInfo.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeAccountInfoInterceptors() ?? []
     )
   }
 }
@@ -583,6 +694,9 @@ public protocol Cosmos_Auth_V1beta1_QueryClientInterceptorFactoryProtocol: GRPCS
   /// - Returns: Interceptors to use when invoking 'moduleAccounts'.
   func makeModuleAccountsInterceptors() -> [ClientInterceptor<Cosmos_Auth_V1beta1_QueryModuleAccountsRequest, Cosmos_Auth_V1beta1_QueryModuleAccountsResponse>]
 
+  /// - Returns: Interceptors to use when invoking 'moduleAccountByName'.
+  func makeModuleAccountByNameInterceptors() -> [ClientInterceptor<Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest, Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse>]
+
   /// - Returns: Interceptors to use when invoking 'bech32Prefix'.
   func makeBech32PrefixInterceptors() -> [ClientInterceptor<Cosmos_Auth_V1beta1_Bech32PrefixRequest, Cosmos_Auth_V1beta1_Bech32PrefixResponse>]
 
@@ -591,6 +705,9 @@ public protocol Cosmos_Auth_V1beta1_QueryClientInterceptorFactoryProtocol: GRPCS
 
   /// - Returns: Interceptors to use when invoking 'addressStringToBytes'.
   func makeAddressStringToBytesInterceptors() -> [ClientInterceptor<Cosmos_Auth_V1beta1_AddressStringToBytesRequest, Cosmos_Auth_V1beta1_AddressStringToBytesResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'accountInfo'.
+  func makeAccountInfoInterceptors() -> [ClientInterceptor<Cosmos_Auth_V1beta1_QueryAccountInfoRequest, Cosmos_Auth_V1beta1_QueryAccountInfoResponse>]
 }
 
 public enum Cosmos_Auth_V1beta1_QueryClientMetadata {
@@ -603,9 +720,11 @@ public enum Cosmos_Auth_V1beta1_QueryClientMetadata {
       Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.accountAddressByID,
       Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.params,
       Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.moduleAccounts,
+      Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.moduleAccountByName,
       Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.bech32Prefix,
       Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.addressBytesToString,
       Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.addressStringToBytes,
+      Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.accountInfo,
     ]
   )
 
@@ -640,6 +759,12 @@ public enum Cosmos_Auth_V1beta1_QueryClientMetadata {
       type: GRPCCallType.unary
     )
 
+    public static let moduleAccountByName = GRPCMethodDescriptor(
+      name: "ModuleAccountByName",
+      path: "/cosmos.auth.v1beta1.Query/ModuleAccountByName",
+      type: GRPCCallType.unary
+    )
+
     public static let bech32Prefix = GRPCMethodDescriptor(
       name: "Bech32Prefix",
       path: "/cosmos.auth.v1beta1.Query/Bech32Prefix",
@@ -655,6 +780,12 @@ public enum Cosmos_Auth_V1beta1_QueryClientMetadata {
     public static let addressStringToBytes = GRPCMethodDescriptor(
       name: "AddressStringToBytes",
       path: "/cosmos.auth.v1beta1.Query/AddressStringToBytes",
+      type: GRPCCallType.unary
+    )
+
+    public static let accountInfo = GRPCMethodDescriptor(
+      name: "AccountInfo",
+      path: "/cosmos.auth.v1beta1.Query/AccountInfo",
       type: GRPCCallType.unary
     )
   }
@@ -805,6 +936,30 @@ public final class Cosmos_Auth_V1beta1_QueryTestClient: Cosmos_Auth_V1beta1_Quer
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.moduleAccounts.path)
   }
 
+  /// Make a unary response for the ModuleAccountByName RPC. This must be called
+  /// before calling 'moduleAccountByName'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeModuleAccountByNameResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest, Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.moduleAccountByName.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueModuleAccountByNameResponse(
+    _ response: Cosmos_Auth_V1beta1_QueryModuleAccountByNameResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Auth_V1beta1_QueryModuleAccountByNameRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeModuleAccountByNameResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'ModuleAccountByName'
+  public var hasModuleAccountByNameResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.moduleAccountByName.path)
+  }
+
   /// Make a unary response for the Bech32Prefix RPC. This must be called
   /// before calling 'bech32Prefix'. See also 'FakeUnaryResponse'.
   ///
@@ -875,6 +1030,30 @@ public final class Cosmos_Auth_V1beta1_QueryTestClient: Cosmos_Auth_V1beta1_Quer
   /// Returns true if there are response streams enqueued for 'AddressStringToBytes'
   public var hasAddressStringToBytesResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.addressStringToBytes.path)
+  }
+
+  /// Make a unary response for the AccountInfo RPC. This must be called
+  /// before calling 'accountInfo'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeAccountInfoResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Auth_V1beta1_QueryAccountInfoRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Auth_V1beta1_QueryAccountInfoRequest, Cosmos_Auth_V1beta1_QueryAccountInfoResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.accountInfo.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueAccountInfoResponse(
+    _ response: Cosmos_Auth_V1beta1_QueryAccountInfoResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Auth_V1beta1_QueryAccountInfoRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeAccountInfoResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'AccountInfo'
+  public var hasAccountInfoResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Auth_V1beta1_QueryClientMetadata.Methods.accountInfo.path)
   }
 }
 

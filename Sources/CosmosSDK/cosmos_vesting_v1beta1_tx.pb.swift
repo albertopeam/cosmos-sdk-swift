@@ -33,6 +33,7 @@ public struct Cosmos_Vesting_V1beta1_MsgCreateVestingAccount {
 
   public var amount: [Cosmos_Base_V1beta1_Coin] = []
 
+  /// end of vesting as unix time
   public var endTime: Int64 = 0
 
   public var delayed: Bool = false
@@ -99,6 +100,7 @@ public struct Cosmos_Vesting_V1beta1_MsgCreatePeriodicVestingAccount {
 
   public var toAddress: String = String()
 
+  /// start of vesting as unix time
   public var startTime: Int64 = 0
 
   public var vestingPeriods: [Cosmos_Vesting_V1beta1_Period] = []

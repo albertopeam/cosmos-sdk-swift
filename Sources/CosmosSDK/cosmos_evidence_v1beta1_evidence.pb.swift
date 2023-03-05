@@ -27,8 +27,10 @@ public struct Cosmos_Evidence_V1beta1_Equivocation {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// height is the equivocation height.
   public var height: Int64 = 0
 
+  /// time is the equivocation time.
   public var time: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _time ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_time = newValue}
@@ -38,8 +40,10 @@ public struct Cosmos_Evidence_V1beta1_Equivocation {
   /// Clears the value of `time`. Subsequent reads from it will return its default value.
   public mutating func clearTime() {self._time = nil}
 
+  /// power is the equivocation validator power.
   public var power: Int64 = 0
 
+  /// consensus_address is the equivocation validator consensus address.
   public var consensusAddress: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()

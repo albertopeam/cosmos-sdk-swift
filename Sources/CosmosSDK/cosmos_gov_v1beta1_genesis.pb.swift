@@ -38,7 +38,7 @@ public struct Cosmos_Gov_V1beta1_GenesisState {
   /// proposals defines all the proposals present at genesis.
   public var proposals: [Cosmos_Gov_V1beta1_Proposal] = []
 
-  /// params defines all the paramaters of related to deposit.
+  /// params defines all the parameters of related to deposit.
   public var depositParams: Cosmos_Gov_V1beta1_DepositParams {
     get {return _depositParams ?? Cosmos_Gov_V1beta1_DepositParams()}
     set {_depositParams = newValue}
@@ -48,7 +48,7 @@ public struct Cosmos_Gov_V1beta1_GenesisState {
   /// Clears the value of `depositParams`. Subsequent reads from it will return its default value.
   public mutating func clearDepositParams() {self._depositParams = nil}
 
-  /// params defines all the paramaters of related to voting.
+  /// params defines all the parameters of related to voting.
   public var votingParams: Cosmos_Gov_V1beta1_VotingParams {
     get {return _votingParams ?? Cosmos_Gov_V1beta1_VotingParams()}
     set {_votingParams = newValue}
@@ -58,7 +58,7 @@ public struct Cosmos_Gov_V1beta1_GenesisState {
   /// Clears the value of `votingParams`. Subsequent reads from it will return its default value.
   public mutating func clearVotingParams() {self._votingParams = nil}
 
-  /// params defines all the paramaters of related to tally.
+  /// params defines all the parameters of related to tally.
   public var tallyParams: Cosmos_Gov_V1beta1_TallyParams {
     get {return _tallyParams ?? Cosmos_Gov_V1beta1_TallyParams()}
     set {_tallyParams = newValue}

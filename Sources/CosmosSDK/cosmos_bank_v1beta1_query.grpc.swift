@@ -48,6 +48,11 @@ public protocol Cosmos_Bank_V1beta1_QueryClientProtocol: GRPCClient {
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Bank_V1beta1_QuerySpendableBalancesRequest, Cosmos_Bank_V1beta1_QuerySpendableBalancesResponse>
 
+  func spendableBalanceByDenom(
+    _ request: Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest, Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomResponse>
+
   func totalSupply(
     _ request: Cosmos_Bank_V1beta1_QueryTotalSupplyRequest,
     callOptions: CallOptions?
@@ -77,6 +82,11 @@ public protocol Cosmos_Bank_V1beta1_QueryClientProtocol: GRPCClient {
     _ request: Cosmos_Bank_V1beta1_QueryDenomOwnersRequest,
     callOptions: CallOptions?
   ) -> UnaryCall<Cosmos_Bank_V1beta1_QueryDenomOwnersRequest, Cosmos_Bank_V1beta1_QueryDenomOwnersResponse>
+
+  func sendEnabled(
+    _ request: Cosmos_Bank_V1beta1_QuerySendEnabledRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cosmos_Bank_V1beta1_QuerySendEnabledRequest, Cosmos_Bank_V1beta1_QuerySendEnabledResponse>
 }
 
 extension Cosmos_Bank_V1beta1_QueryClientProtocol {
@@ -104,6 +114,9 @@ extension Cosmos_Bank_V1beta1_QueryClientProtocol {
 
   /// AllBalances queries the balance of all coins for a single account.
   ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
+  ///
   /// - Parameters:
   ///   - request: Request to send to AllBalances.
   ///   - callOptions: Call options.
@@ -120,8 +133,11 @@ extension Cosmos_Bank_V1beta1_QueryClientProtocol {
     )
   }
 
-  /// SpendableBalances queries the spenable balance of all coins for a single
+  /// SpendableBalances queries the spendable balance of all coins for a single
   /// account.
+  ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
   ///
   /// Since: cosmos-sdk 0.46
   ///
@@ -141,7 +157,34 @@ extension Cosmos_Bank_V1beta1_QueryClientProtocol {
     )
   }
 
+  /// SpendableBalanceByDenom queries the spendable balance of a single denom for
+  /// a single account.
+  ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to SpendableBalanceByDenom.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func spendableBalanceByDenom(
+    _ request: Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest, Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.spendableBalanceByDenom.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeSpendableBalanceByDenomInterceptors() ?? []
+    )
+  }
+
   /// TotalSupply queries the total supply of all coins.
+  ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
   ///
   /// - Parameters:
   ///   - request: Request to send to TotalSupply.
@@ -160,6 +203,9 @@ extension Cosmos_Bank_V1beta1_QueryClientProtocol {
   }
 
   /// SupplyOf queries the supply of a single coin.
+  ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
   ///
   /// - Parameters:
   ///   - request: Request to send to SupplyOf.
@@ -235,6 +281,9 @@ extension Cosmos_Bank_V1beta1_QueryClientProtocol {
   /// DenomOwners queries for all account addresses that own a particular token
   /// denomination.
   ///
+  /// When called from another module, this query might consume a high amount of
+  /// gas if the pagination field is incorrectly set.
+  ///
   /// Since: cosmos-sdk 0.46
   ///
   /// - Parameters:
@@ -250,6 +299,30 @@ extension Cosmos_Bank_V1beta1_QueryClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeDenomOwnersInterceptors() ?? []
+    )
+  }
+
+  /// SendEnabled queries for SendEnabled entries.
+  ///
+  /// This query only returns denominations that have specific SendEnabled settings.
+  /// Any denomination that does not have a specific setting will use the default
+  /// params.default_send_enabled, and will not be returned by this query.
+  ///
+  /// Since: cosmos-sdk 0.47
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to SendEnabled.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func sendEnabled(
+    _ request: Cosmos_Bank_V1beta1_QuerySendEnabledRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cosmos_Bank_V1beta1_QuerySendEnabledRequest, Cosmos_Bank_V1beta1_QuerySendEnabledResponse> {
+    return self.makeUnaryCall(
+      path: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.sendEnabled.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeSendEnabledInterceptors() ?? []
     )
   }
 }
@@ -335,6 +408,11 @@ public protocol Cosmos_Bank_V1beta1_QueryAsyncClientProtocol: GRPCClient {
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_QuerySpendableBalancesRequest, Cosmos_Bank_V1beta1_QuerySpendableBalancesResponse>
 
+  func makeSpendableBalanceByDenomCall(
+    _ request: Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest, Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomResponse>
+
   func makeTotalSupplyCall(
     _ request: Cosmos_Bank_V1beta1_QueryTotalSupplyRequest,
     callOptions: CallOptions?
@@ -364,6 +442,11 @@ public protocol Cosmos_Bank_V1beta1_QueryAsyncClientProtocol: GRPCClient {
     _ request: Cosmos_Bank_V1beta1_QueryDenomOwnersRequest,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_QueryDenomOwnersRequest, Cosmos_Bank_V1beta1_QueryDenomOwnersResponse>
+
+  func makeSendEnabledCall(
+    _ request: Cosmos_Bank_V1beta1_QuerySendEnabledRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_QuerySendEnabledRequest, Cosmos_Bank_V1beta1_QuerySendEnabledResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -409,6 +492,18 @@ extension Cosmos_Bank_V1beta1_QueryAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeSpendableBalancesInterceptors() ?? []
+    )
+  }
+
+  public func makeSpendableBalanceByDenomCall(
+    _ request: Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest, Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.spendableBalanceByDenom.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeSpendableBalanceByDenomInterceptors() ?? []
     )
   }
 
@@ -483,6 +578,18 @@ extension Cosmos_Bank_V1beta1_QueryAsyncClientProtocol {
       interceptors: self.interceptors?.makeDenomOwnersInterceptors() ?? []
     )
   }
+
+  public func makeSendEnabledCall(
+    _ request: Cosmos_Bank_V1beta1_QuerySendEnabledRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cosmos_Bank_V1beta1_QuerySendEnabledRequest, Cosmos_Bank_V1beta1_QuerySendEnabledResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.sendEnabled.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeSendEnabledInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -520,6 +627,18 @@ extension Cosmos_Bank_V1beta1_QueryAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeSpendableBalancesInterceptors() ?? []
+    )
+  }
+
+  public func spendableBalanceByDenom(
+    _ request: Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.spendableBalanceByDenom.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeSpendableBalanceByDenomInterceptors() ?? []
     )
   }
 
@@ -594,6 +713,18 @@ extension Cosmos_Bank_V1beta1_QueryAsyncClientProtocol {
       interceptors: self.interceptors?.makeDenomOwnersInterceptors() ?? []
     )
   }
+
+  public func sendEnabled(
+    _ request: Cosmos_Bank_V1beta1_QuerySendEnabledRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cosmos_Bank_V1beta1_QuerySendEnabledResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.sendEnabled.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeSendEnabledInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -626,6 +757,9 @@ public protocol Cosmos_Bank_V1beta1_QueryClientInterceptorFactoryProtocol: GRPCS
   /// - Returns: Interceptors to use when invoking 'spendableBalances'.
   func makeSpendableBalancesInterceptors() -> [ClientInterceptor<Cosmos_Bank_V1beta1_QuerySpendableBalancesRequest, Cosmos_Bank_V1beta1_QuerySpendableBalancesResponse>]
 
+  /// - Returns: Interceptors to use when invoking 'spendableBalanceByDenom'.
+  func makeSpendableBalanceByDenomInterceptors() -> [ClientInterceptor<Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest, Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomResponse>]
+
   /// - Returns: Interceptors to use when invoking 'totalSupply'.
   func makeTotalSupplyInterceptors() -> [ClientInterceptor<Cosmos_Bank_V1beta1_QueryTotalSupplyRequest, Cosmos_Bank_V1beta1_QueryTotalSupplyResponse>]
 
@@ -643,6 +777,9 @@ public protocol Cosmos_Bank_V1beta1_QueryClientInterceptorFactoryProtocol: GRPCS
 
   /// - Returns: Interceptors to use when invoking 'denomOwners'.
   func makeDenomOwnersInterceptors() -> [ClientInterceptor<Cosmos_Bank_V1beta1_QueryDenomOwnersRequest, Cosmos_Bank_V1beta1_QueryDenomOwnersResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'sendEnabled'.
+  func makeSendEnabledInterceptors() -> [ClientInterceptor<Cosmos_Bank_V1beta1_QuerySendEnabledRequest, Cosmos_Bank_V1beta1_QuerySendEnabledResponse>]
 }
 
 public enum Cosmos_Bank_V1beta1_QueryClientMetadata {
@@ -653,12 +790,14 @@ public enum Cosmos_Bank_V1beta1_QueryClientMetadata {
       Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.balance,
       Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.allBalances,
       Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.spendableBalances,
+      Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.spendableBalanceByDenom,
       Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.totalSupply,
       Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.supplyOf,
       Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.params,
       Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.denomMetadata,
       Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.denomsMetadata,
       Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.denomOwners,
+      Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.sendEnabled,
     ]
   )
 
@@ -678,6 +817,12 @@ public enum Cosmos_Bank_V1beta1_QueryClientMetadata {
     public static let spendableBalances = GRPCMethodDescriptor(
       name: "SpendableBalances",
       path: "/cosmos.bank.v1beta1.Query/SpendableBalances",
+      type: GRPCCallType.unary
+    )
+
+    public static let spendableBalanceByDenom = GRPCMethodDescriptor(
+      name: "SpendableBalanceByDenom",
+      path: "/cosmos.bank.v1beta1.Query/SpendableBalanceByDenom",
       type: GRPCCallType.unary
     )
 
@@ -714,6 +859,12 @@ public enum Cosmos_Bank_V1beta1_QueryClientMetadata {
     public static let denomOwners = GRPCMethodDescriptor(
       name: "DenomOwners",
       path: "/cosmos.bank.v1beta1.Query/DenomOwners",
+      type: GRPCCallType.unary
+    )
+
+    public static let sendEnabled = GRPCMethodDescriptor(
+      name: "SendEnabled",
+      path: "/cosmos.bank.v1beta1.Query/SendEnabled",
       type: GRPCCallType.unary
     )
   }
@@ -814,6 +965,30 @@ public final class Cosmos_Bank_V1beta1_QueryTestClient: Cosmos_Bank_V1beta1_Quer
   /// Returns true if there are response streams enqueued for 'SpendableBalances'
   public var hasSpendableBalancesResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.spendableBalances.path)
+  }
+
+  /// Make a unary response for the SpendableBalanceByDenom RPC. This must be called
+  /// before calling 'spendableBalanceByDenom'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeSpendableBalanceByDenomResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest, Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.spendableBalanceByDenom.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueSpendableBalanceByDenomResponse(
+    _ response: Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Bank_V1beta1_QuerySpendableBalanceByDenomRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeSpendableBalanceByDenomResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'SpendableBalanceByDenom'
+  public var hasSpendableBalanceByDenomResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.spendableBalanceByDenom.path)
   }
 
   /// Make a unary response for the TotalSupply RPC. This must be called
@@ -958,6 +1133,30 @@ public final class Cosmos_Bank_V1beta1_QueryTestClient: Cosmos_Bank_V1beta1_Quer
   /// Returns true if there are response streams enqueued for 'DenomOwners'
   public var hasDenomOwnersResponsesRemaining: Bool {
     return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.denomOwners.path)
+  }
+
+  /// Make a unary response for the SendEnabled RPC. This must be called
+  /// before calling 'sendEnabled'. See also 'FakeUnaryResponse'.
+  ///
+  /// - Parameter requestHandler: a handler for request parts sent by the RPC.
+  public func makeSendEnabledResponseStream(
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Bank_V1beta1_QuerySendEnabledRequest>) -> () = { _ in }
+  ) -> FakeUnaryResponse<Cosmos_Bank_V1beta1_QuerySendEnabledRequest, Cosmos_Bank_V1beta1_QuerySendEnabledResponse> {
+    return self.fakeChannel.makeFakeUnaryResponse(path: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.sendEnabled.path, requestHandler: requestHandler)
+  }
+
+  public func enqueueSendEnabledResponse(
+    _ response: Cosmos_Bank_V1beta1_QuerySendEnabledResponse,
+    _ requestHandler: @escaping (FakeRequestPart<Cosmos_Bank_V1beta1_QuerySendEnabledRequest>) -> () = { _ in }
+  ) {
+    let stream = self.makeSendEnabledResponseStream(requestHandler)
+    // This is the only operation on the stream; try! is fine.
+    try! stream.sendMessage(response)
+  }
+
+  /// Returns true if there are response streams enqueued for 'SendEnabled'
+  public var hasSendEnabledResponsesRemaining: Bool {
+    return self.fakeChannel.hasFakeResponseEnqueued(forPath: Cosmos_Bank_V1beta1_QueryClientMetadata.Methods.sendEnabled.path)
   }
 }
 

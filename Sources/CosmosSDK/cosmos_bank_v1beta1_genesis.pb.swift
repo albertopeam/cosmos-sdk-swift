@@ -26,7 +26,7 @@ public struct Cosmos_Bank_V1beta1_GenesisState {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// params defines all the paramaters of the module.
+  /// params defines all the parameters of the module.
   public var params: Cosmos_Bank_V1beta1_Params {
     get {return _params ?? Cosmos_Bank_V1beta1_Params()}
     set {_params = newValue}
@@ -43,8 +43,13 @@ public struct Cosmos_Bank_V1beta1_GenesisState {
   /// balances. Otherwise, it will be used to validate that the sum of the balances equals this amount.
   public var supply: [Cosmos_Base_V1beta1_Coin] = []
 
-  /// denom_metadata defines the metadata of the differents coins.
+  /// denom_metadata defines the metadata of the different coins.
   public var denomMetadata: [Cosmos_Bank_V1beta1_Metadata] = []
+
+  /// send_enabled defines the denoms where send is enabled or disabled.
+  ///
+  /// Since: cosmos-sdk 0.47
+  public var sendEnabled: [Cosmos_Bank_V1beta1_SendEnabled] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -87,6 +92,7 @@ extension Cosmos_Bank_V1beta1_GenesisState: SwiftProtobuf.Message, SwiftProtobuf
     2: .same(proto: "balances"),
     3: .same(proto: "supply"),
     4: .standard(proto: "denom_metadata"),
+    5: .standard(proto: "send_enabled"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -99,6 +105,7 @@ extension Cosmos_Bank_V1beta1_GenesisState: SwiftProtobuf.Message, SwiftProtobuf
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.balances) }()
       case 3: try { try decoder.decodeRepeatedMessageField(value: &self.supply) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.denomMetadata) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.sendEnabled) }()
       default: break
       }
     }
@@ -121,6 +128,9 @@ extension Cosmos_Bank_V1beta1_GenesisState: SwiftProtobuf.Message, SwiftProtobuf
     if !self.denomMetadata.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.denomMetadata, fieldNumber: 4)
     }
+    if !self.sendEnabled.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.sendEnabled, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -129,6 +139,7 @@ extension Cosmos_Bank_V1beta1_GenesisState: SwiftProtobuf.Message, SwiftProtobuf
     if lhs.balances != rhs.balances {return false}
     if lhs.supply != rhs.supply {return false}
     if lhs.denomMetadata != rhs.denomMetadata {return false}
+    if lhs.sendEnabled != rhs.sendEnabled {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

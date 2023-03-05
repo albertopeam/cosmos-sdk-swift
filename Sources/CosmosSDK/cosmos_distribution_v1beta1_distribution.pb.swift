@@ -28,8 +28,12 @@ public struct Cosmos_Distribution_V1beta1_Params {
 
   public var communityTax: String = String()
 
+  /// Deprecated: The base_proposer_reward field is deprecated and is no longer used
+  /// in the x/distribution module's reward mechanism.
   public var baseProposerReward: String = String()
 
+  /// Deprecated: The bonus_proposer_reward field is deprecated and is no longer used
+  /// in the x/distribution module's reward mechanism.
   public var bonusProposerReward: String = String()
 
   public var withdrawAddrEnabled: Bool = false
@@ -157,6 +161,11 @@ public struct Cosmos_Distribution_V1beta1_FeePool {
 /// CommunityPoolSpendProposal details a proposal for use of community funds,
 /// together with how many coins are proposed to be spent, and to which
 /// recipient account.
+///
+/// Deprecated: Do not use. As of the Cosmos SDK release v0.47.x, there is no
+/// longer a need for an explicit CommunityPoolSpendProposal. To spend community
+/// pool funds, a simple MsgCommunityPoolSpend can be invoked from the x/gov
+/// module via a v1 governance proposal.
 public struct Cosmos_Distribution_V1beta1_CommunityPoolSpendProposal {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for

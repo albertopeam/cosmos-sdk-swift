@@ -48,7 +48,7 @@ public struct Cosmos_Distribution_V1beta1_ValidatorOutstandingRewardsRecord {
   /// validator_address is the address of the validator.
   public var validatorAddress: String = String()
 
-  /// outstanding_rewards represents the oustanding rewards of a validator.
+  /// outstanding_rewards represents the outstanding rewards of a validator.
   public var outstandingRewards: [Cosmos_Base_V1beta1_DecCoin] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -177,7 +177,7 @@ public struct Cosmos_Distribution_V1beta1_ValidatorSlashEventRecord {
   /// validator_address is the address of the validator.
   public var validatorAddress: String = String()
 
-  /// height defines the block height at which the slash event occured.
+  /// height defines the block height at which the slash event occurred.
   public var height: UInt64 = 0
 
   /// period is the period of the slash event.
@@ -206,7 +206,7 @@ public struct Cosmos_Distribution_V1beta1_GenesisState {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// params defines all the paramaters of the module.
+  /// params defines all the parameters of the module.
   public var params: Cosmos_Distribution_V1beta1_Params {
     get {return _params ?? Cosmos_Distribution_V1beta1_Params()}
     set {_params = newValue}
@@ -235,7 +235,7 @@ public struct Cosmos_Distribution_V1beta1_GenesisState {
   /// fee_pool defines the outstanding rewards of all validators at genesis.
   public var outstandingRewards: [Cosmos_Distribution_V1beta1_ValidatorOutstandingRewardsRecord] = []
 
-  /// fee_pool defines the accumulated commisions of all validators at genesis.
+  /// fee_pool defines the accumulated commissions of all validators at genesis.
   public var validatorAccumulatedCommissions: [Cosmos_Distribution_V1beta1_ValidatorAccumulatedCommissionRecord] = []
 
   /// fee_pool defines the historical rewards of all validators at genesis.

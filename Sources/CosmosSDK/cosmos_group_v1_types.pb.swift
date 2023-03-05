@@ -273,7 +273,7 @@ public struct Cosmos_Group_V1_MemberRequest {
 
 /// ThresholdDecisionPolicy is a decision policy where a proposal passes when it
 /// satisfies the two following conditions:
-/// 1. The sum of all `YES` voters' weights is greater or equal than the defined
+/// 1. The sum of all `YES` voter's weights is greater or equal than the defined
 ///    `threshold`.
 /// 2. The voting and execution periods of the proposal respect the parameters
 ///    given by `windows`.
@@ -314,7 +314,7 @@ public struct Cosmos_Group_V1_PercentageDecisionPolicy {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// percentage is the minimum percentage the weighted sum of `YES` votes must
+  /// percentage is the minimum percentage of the weighted sum of `YES` votes must
   /// meet for a proposal to succeed.
   public var percentage: String = String()
 
@@ -462,7 +462,7 @@ public struct Cosmos_Group_V1_GroupPolicyInfo {
   /// admin is the account address of the group admin.
   public var admin: String = String()
 
-  /// metadata is any arbitrary metadata to attached to the group policy.
+  /// metadata is any arbitrary metadata attached to the group policy.
   public var metadata: String = String()
 
   /// version is used to track changes to a group's GroupPolicyInfo structure that
@@ -518,7 +518,7 @@ public struct Cosmos_Group_V1_Proposal {
     set {_uniqueStorage()._groupPolicyAddress = newValue}
   }
 
-  /// metadata is any arbitrary metadata to attached to the proposal.
+  /// metadata is any arbitrary metadata attached to the proposal.
   public var metadata: String {
     get {return _storage._metadata}
     set {_uniqueStorage()._metadata = newValue}
@@ -576,7 +576,7 @@ public struct Cosmos_Group_V1_Proposal {
   public mutating func clearFinalTallyResult() {_uniqueStorage()._finalTallyResult = nil}
 
   /// voting_period_end is the timestamp before which voting must be done.
-  /// Unless a successfull MsgExec is called before (to execute a proposal whose
+  /// Unless a successful MsgExec is called before (to execute a proposal whose
   /// tally is successful before the voting period ends), tallying will be done
   /// at this point, and the `final_tally_result`and `status` fields will be
   /// accordingly updated.
@@ -599,6 +599,22 @@ public struct Cosmos_Group_V1_Proposal {
   public var messages: [SwiftProtobuf.Google_Protobuf_Any] {
     get {return _storage._messages}
     set {_uniqueStorage()._messages = newValue}
+  }
+
+  /// title is the title of the proposal
+  ///
+  /// Since: cosmos-sdk 0.47
+  public var title: String {
+    get {return _storage._title}
+    set {_uniqueStorage()._title = newValue}
+  }
+
+  /// summary is a short summary of the proposal
+  ///
+  /// Since: cosmos-sdk 0.47
+  public var summary: String {
+    get {return _storage._summary}
+    set {_uniqueStorage()._summary = newValue}
   }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -646,7 +662,7 @@ public struct Cosmos_Group_V1_Vote {
   /// option is the voter's choice on the proposal.
   public var option: Cosmos_Group_V1_VoteOption = .unspecified
 
-  /// metadata is any arbitrary metadata to attached to the vote.
+  /// metadata is any arbitrary metadata attached to the vote.
   public var metadata: String = String()
 
   /// submit_time is the timestamp when the vote was submitted.
@@ -1136,6 +1152,8 @@ extension Cosmos_Group_V1_Proposal: SwiftProtobuf.Message, SwiftProtobuf._Messag
     10: .standard(proto: "voting_period_end"),
     11: .standard(proto: "executor_result"),
     12: .same(proto: "messages"),
+    13: .same(proto: "title"),
+    14: .same(proto: "summary"),
   ]
 
   fileprivate class _StorageClass {
@@ -1151,6 +1169,8 @@ extension Cosmos_Group_V1_Proposal: SwiftProtobuf.Message, SwiftProtobuf._Messag
     var _votingPeriodEnd: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _executorResult: Cosmos_Group_V1_ProposalExecutorResult = .unspecified
     var _messages: [SwiftProtobuf.Google_Protobuf_Any] = []
+    var _title: String = String()
+    var _summary: String = String()
 
     static let defaultInstance = _StorageClass()
 
@@ -1169,6 +1189,8 @@ extension Cosmos_Group_V1_Proposal: SwiftProtobuf.Message, SwiftProtobuf._Messag
       _votingPeriodEnd = source._votingPeriodEnd
       _executorResult = source._executorResult
       _messages = source._messages
+      _title = source._title
+      _summary = source._summary
     }
   }
 
@@ -1199,6 +1221,8 @@ extension Cosmos_Group_V1_Proposal: SwiftProtobuf.Message, SwiftProtobuf._Messag
         case 10: try { try decoder.decodeSingularMessageField(value: &_storage._votingPeriodEnd) }()
         case 11: try { try decoder.decodeSingularEnumField(value: &_storage._executorResult) }()
         case 12: try { try decoder.decodeRepeatedMessageField(value: &_storage._messages) }()
+        case 13: try { try decoder.decodeSingularStringField(value: &_storage._title) }()
+        case 14: try { try decoder.decodeSingularStringField(value: &_storage._summary) }()
         default: break
         }
       }
@@ -1247,6 +1271,12 @@ extension Cosmos_Group_V1_Proposal: SwiftProtobuf.Message, SwiftProtobuf._Messag
       if !_storage._messages.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._messages, fieldNumber: 12)
       }
+      if !_storage._title.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._title, fieldNumber: 13)
+      }
+      if !_storage._summary.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._summary, fieldNumber: 14)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1268,6 +1298,8 @@ extension Cosmos_Group_V1_Proposal: SwiftProtobuf.Message, SwiftProtobuf._Messag
         if _storage._votingPeriodEnd != rhs_storage._votingPeriodEnd {return false}
         if _storage._executorResult != rhs_storage._executorResult {return false}
         if _storage._messages != rhs_storage._messages {return false}
+        if _storage._title != rhs_storage._title {return false}
+        if _storage._summary != rhs_storage._summary {return false}
         return true
       }
       if !storagesAreEqual {return false}

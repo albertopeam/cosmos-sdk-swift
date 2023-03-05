@@ -76,6 +76,26 @@ public struct Cosmos_Auth_V1beta1_ModuleAccount {
   fileprivate var _baseAccount: Cosmos_Auth_V1beta1_BaseAccount? = nil
 }
 
+/// ModuleCredential represents a unclaimable pubkey for base accounts controlled by modules.
+///
+/// Since: cosmos-sdk 0.47
+public struct Cosmos_Auth_V1beta1_ModuleCredential {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// module_name is the name of the module used for address derivation (passed into address.Module).
+  public var moduleName: String = String()
+
+  /// derivation_keys is for deriving a module account address (passed into address.Module)
+  /// adding more keys creates sub-account addresses (passed into address.Derive)
+  public var derivationKeys: [Data] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 /// Params defines the parameters for the auth module.
 public struct Cosmos_Auth_V1beta1_Params {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -100,6 +120,7 @@ public struct Cosmos_Auth_V1beta1_Params {
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Cosmos_Auth_V1beta1_BaseAccount: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_ModuleAccount: @unchecked Sendable {}
+extension Cosmos_Auth_V1beta1_ModuleCredential: @unchecked Sendable {}
 extension Cosmos_Auth_V1beta1_Params: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
@@ -204,6 +225,44 @@ extension Cosmos_Auth_V1beta1_ModuleAccount: SwiftProtobuf.Message, SwiftProtobu
     if lhs._baseAccount != rhs._baseAccount {return false}
     if lhs.name != rhs.name {return false}
     if lhs.permissions != rhs.permissions {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cosmos_Auth_V1beta1_ModuleCredential: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ModuleCredential"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "module_name"),
+    2: .standard(proto: "derivation_keys"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.moduleName) }()
+      case 2: try { try decoder.decodeRepeatedBytesField(value: &self.derivationKeys) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.moduleName.isEmpty {
+      try visitor.visitSingularStringField(value: self.moduleName, fieldNumber: 1)
+    }
+    if !self.derivationKeys.isEmpty {
+      try visitor.visitRepeatedBytesField(value: self.derivationKeys, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cosmos_Auth_V1beta1_ModuleCredential, rhs: Cosmos_Auth_V1beta1_ModuleCredential) -> Bool {
+    if lhs.moduleName != rhs.moduleName {return false}
+    if lhs.derivationKeys != rhs.derivationKeys {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
