@@ -64,6 +64,9 @@ This step is optional and depends if you want to use remote plugins(Check Remote
                         * [BSR swift plugin doc](https://buf.build/apple/swift)
                 * Generate code with remote plugins `buf generate --template buf-remote.gen.yaml buf.build/cosmos/cosmos-sdk:8cb30a2c4de74dc9bd8d260b1e75e176` 
 
+## gCurl
+* List available grpc enpoints `grpcurl -plaintext cosmos-grpc.polkachu.com:14990 list`
+
 --------------------------------------------------------------------------------
 4. TODO: CREATE SWIFT PACKAGE    
     min iOS/macOS/tvOS/watchOS versions?
@@ -73,4 +76,5 @@ This step is optional and depends if you want to use remote plugins(Check Remote
     PACKAGE Version 0.46.0 how to set it? TAG
 5. TODO: GITHUB ACTIONS? to run tests
 6. TODO: recipes
-7. TODO: review input params for the plugins. async+callback? another tool but maybe useful https://connect.build/docs/swift/getting-started/#generate-code
+7. TODO: swiftlint, precommit
+8. TODO: review input params for the plugins. async+callback? another tool but maybe useful https://connect.build/docs/swift/getting-started/#generate-code
