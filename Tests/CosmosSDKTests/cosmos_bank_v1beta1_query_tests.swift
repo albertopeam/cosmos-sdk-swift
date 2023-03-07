@@ -25,10 +25,10 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
         request.denom = Constants.atomDenom
         request.address = Constants.mainNetAddr
         
-        let result = try await sut.balance(request)
+        let response = try await sut.balance(request)
         
-        XCTAssertEqual(result.balance.denom, Constants.atomDenom)
-        XCTAssertGreaterThanOrEqual(result.balance.amount, "0")
+        XCTAssertEqual(response.balance.denom, Constants.atomDenom)
+        XCTAssertGreaterThanOrEqual(response.balance.amount, "0")
     }
     
     func testBalances() async throws {
@@ -38,9 +38,19 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
         request.address = Constants.mainNetAddr
         request.pagination = pageRequest
         
-        let result = try await sut.allBalances(request)
+        let response = try await sut.allBalances(request)
         
-        let atomBalance = try XCTUnwrap(result.balances.filter { $0.denom == Constants.atomDenom }.first)
+        let atomBalance = try XCTUnwrap(response.balances.filter { $0.denom == Constants.atomDenom }.first)
+        XCTAssertGreaterThanOrEqual(atomBalance.amount, "0")
+    }
+    
+    func testSpendableBalances() async throws {
+        var request = Cosmos_Bank_V1beta1_QuerySpendableBalancesRequest()
+        request.address = Constants.mainNetAddr
+        
+        let response = try await sut.spendableBalances(request)
+        
+        let atomBalance = try XCTUnwrap(response.balances.filter { $0.denom == Constants.atomDenom }.first)
         XCTAssertGreaterThanOrEqual(atomBalance.amount, "0")
     }
 }

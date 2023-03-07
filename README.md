@@ -68,15 +68,19 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 * List available grpc enpoints `grpcurl -plaintext cosmos-grpc.polkachu.com:14990 list`
 
 --------------------------------------------------------------------------------
+0. cosmostation integration
+   test network connection!
 1. TODO:   
     extra example https://github.com/albertopeam/cosmos-sdk-swift in readme
-    document where to find the tags
+    document where to find the tags, otherwise I will forget, bsr latest commit and verify protos
+    how to be sure of the tag? github doesn't contain it
     https://buf.build/cosmos/cosmos-sdk/tags/4074ba39c09e4b4799271a56a053227c
     https://buf.build/cosmos/cosmos-sdk/tags
     PACKAGE Version 0.46.0 how to set it? TAG 
     doc chain registry in tests https://github.com/cosmos/chain-registry/blob/master/cosmoshub/chain.json
 2. TODO: GITHUB ACTIONS? to run tests
 3. TODO: recipes
+    test network
 4. TODO: buf studio. like postman 
     https://studio.buf.build/cosmos/cosmos-sdk?serviceDialog=open
     https://docs.buf.build/bsr/studio
