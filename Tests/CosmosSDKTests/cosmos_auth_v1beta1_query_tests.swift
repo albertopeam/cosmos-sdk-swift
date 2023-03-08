@@ -14,8 +14,9 @@ class cosmos_auth_v1beta1_query_tests: XCTestCase {
         request.address = Constants.mainNetAddr
         
         let response = try await client.account(request)
-        
+                
+        let account = try Cosmos_Auth_V1beta1_BaseAccount(unpackingAny: response.account)
         XCTAssertEqual(response.account.typeURL, "/cosmos.auth.v1beta1.BaseAccount")
-        //TODO: unmarshall
+        XCTAssertEqual(account.address, Constants.mainNetAddr)        
     }
 }
