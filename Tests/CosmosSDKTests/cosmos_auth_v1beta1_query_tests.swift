@@ -33,12 +33,28 @@ class cosmos_auth_v1beta1_query_tests: XCTestCase {
         XCTAssertEqual(account.address, Constants.mainNetAddr)
     }
     
-    func testAccountByID() async throws {
-        var request = Cosmos_Auth_V1beta1_QueryAccountAddressByIDRequest()
-        request.accountID = Constants.mainNetAccountNumber
+    func testAccounts() async throws {
+        var request = Cosmos_Auth_V1beta1_QueryAccountsRequest()
+        var pageRequest = Cosmos_Base_Query_V1beta1_PageRequest()
+        pageRequest.limit = 2
+        request.pagination = pageRequest
         
-        let response = try await sut.accountAddressByID(request)
+        var responses: [Cosmos_Auth_V1beta1_QueryAccountsResponse] = .init()
+        for _ in [0, 1] {
+            let response = try await sut.accounts(request)
+            responses.append(response)
+            pageRequest.key = response.pagination.nextKey
+        }
         
-        XCTAssertEqual(response.accountAddress, Constants.mainNetAddr)
+        let accounts = try responses
+            .flatMap { $0.accounts }
+            .compactMap { try Cosmos_Auth_V1beta1_BaseAccount(unpackingAny: $0) }
+        XCTAssertEqual(accounts.count, 4)
+    }
+    
+    
+    func testAccountAddressByID() async throws {
+        // not implemented. use grpcurl to check auth services
+        // grpcurl -plaintext cosmos-grpc.polkachu.com:14990 describe cosmos.auth.v1beta1.Query
     }
 }

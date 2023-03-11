@@ -66,6 +66,8 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 
 ## gCurl
 * List available grpc enpoints `grpcurl -plaintext cosmos-grpc.polkachu.com:14990 list`
+* List available grpc methods for a service `grpcurl -plaintext cosmos-grpc.polkachu.com:14990 list cosmos.auth.v1beta1.Query`
+* Describe available grpc methods for a service `grpcurl -plaintext cosmos-grpc.polkachu.com:14990 describe cosmos.auth.v1beta1.Query`
 
 --------------------------------------------------------------------------------
 0. cosmostation integration
