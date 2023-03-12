@@ -57,4 +57,18 @@ class cosmos_auth_v1beta1_query_tests: XCTestCase {
         // not implemented. use grpcurl to check auth services
         // grpcurl -plaintext cosmos-grpc.polkachu.com:14990 describe cosmos.auth.v1beta1.Query
     }
+    
+    func testAccountInfo() async throws {
+        // not implemented. use grpcurl to check auth services
+        // grpcurl -plaintext cosmos-grpc.polkachu.com:14990 describe cosmos.auth.v1beta1.Query
+    }
+    
+    func testParams() async throws {
+        let request = Cosmos_Auth_V1beta1_QueryParamsRequest()
+        
+        let response = try await sut.params(request)
+        
+        XCTAssertGreaterThan(response.params.maxMemoCharacters, 0)
+        
+    }
 }
