@@ -11,6 +11,9 @@ Package | cosmos-sdk | Commit hash                      | protoc-gen-swift| prot
 --------|------------|----------------------------------|-----------------|-----------------------
 0.46.11 | 0.46.11    | 4074ba39c09e4b4799271a56a053227c | 1.21.0          | 1.14.0
 
+## Cosmos endpoints
+* [Mintscan](https://www.mintscan.io/cosmos/info) provides info about the public grpc endpoints available. 
+
 ## Code generation
 
 ### Custom generation

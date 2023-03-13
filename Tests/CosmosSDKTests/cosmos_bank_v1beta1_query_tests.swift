@@ -23,7 +23,7 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
     func testBalance() async throws {
         var request = Cosmos_Bank_V1beta1_QueryBalanceRequest()
         request.denom = Constants.atomDenom
-        request.address = Constants.mainNetAddr
+        request.address = Constants.sg1MainNetAddr
         
         let response = try await sut.balance(request)
         
@@ -35,7 +35,7 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
         var request = Cosmos_Bank_V1beta1_QueryAllBalancesRequest()
         var pageRequest = Cosmos_Base_Query_V1beta1_PageRequest()
         pageRequest.limit = 100
-        request.address = Constants.mainNetAddr
+        request.address = Constants.sg1MainNetAddr
         request.pagination = pageRequest
         
         let response = try await sut.allBalances(request)
@@ -46,7 +46,7 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
     
     func testSpendableBalances() async throws {
         var request = Cosmos_Bank_V1beta1_QuerySpendableBalancesRequest()
-        request.address = Constants.mainNetAddr
+        request.address = Constants.sg1MainNetAddr
         
         let response = try await sut.spendableBalances(request)
         

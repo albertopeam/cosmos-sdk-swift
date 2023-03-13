@@ -24,13 +24,13 @@ class cosmos_auth_v1beta1_query_tests: XCTestCase {
     
     func testAccount() async throws {
         var request = Cosmos_Auth_V1beta1_QueryAccountRequest()
-        request.address = Constants.mainNetAddr
+        request.address = Constants.sg1MainNetAddr
         
         let response = try await sut.account(request)
                 
         let account = try Cosmos_Auth_V1beta1_BaseAccount(unpackingAny: response.account)
         XCTAssertEqual(response.account.typeURL, "/cosmos.auth.v1beta1.BaseAccount")
-        XCTAssertEqual(account.address, Constants.mainNetAddr)
+        XCTAssertEqual(account.address, Constants.sg1MainNetAddr)
     }
     
     func testAccounts() async throws {
