@@ -29,7 +29,7 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 3. Swift gRPC plugin `brew install grpc-swift`. [Github](https://github.com/grpc/grpc-swift)
     * Make sure that gRPC swift protobuf plugin is on the system path `protoc-gen-grpc-swift --version`
 
-#### Code generation procedure
+#### Cosmos code generation procedure
 1. [COSMOS-SDK PROTO DOC](https://github.com/cosmos/cosmos-sdk/tree/main/proto). Cosmos uses BSR to manage their API.
 2. BSR: Buf Schema Registry
     * [INTRODUCTION](https://docs.buf.build/bsr/introduction)
@@ -65,28 +65,31 @@ This step is optional and depends if you want to use remote plugins(Check Remote
                     * Use [Remote BSR Plugins](https://buf.build/plugins) to avoid install local tools.
                         * [BSR gRPC swift plugin doc](https://buf.build/grpc/swift)
                         * [BSR swift plugin doc](https://buf.build/apple/swift)
-                * Generate code with remote plugins `buf generate --template buf-remote.gen.yaml buf.build/cosmos/cosmos-sdk:8cb30a2c4de74dc9bd8d260b1e75e176` 
+                * Generate code with remote plugins `buf generate --template buf-remote.gen.yaml buf.build/cosmos/cosmos-sdk:8cb30a2c4de74dc9bd8d260b1e75e176`
+    * Code generation script. Using the `generate-cosmos-buf-local.sh` script the cosmos sdk will be generated using local tools and bsr
+        * Change the property `cosmos_commit_hash` in the script to update the commit from where the code is being generated.
+        * Run the script and the code will be generated on `Sources/CosmosSDK` 
+                
+#### Osmosis code generation procedure
+1. Search osmosis labs on (bsr registry)[https://buf.build/osmosis-labs/osmosis].
+2. Pick a commit (bsr registry commits)[https://buf.build/osmosis-labs/osmosis/commits/], `81ded5dc0f8f46d8b93b42b66f8b5fdf`
+3. 
+ 
 
 ## gCurl
 * List available grpc enpoints `grpcurl -plaintext cosmos-grpc.polkachu.com:14990 list`
 * List available grpc methods for a service `grpcurl -plaintext cosmos-grpc.polkachu.com:14990 list cosmos.auth.v1beta1.Query`
-* Describe available grpc methods for a service `grpcurl -plaintext cosmos-grpc.polkachu.com:14990 describe cosmos.auth.v1beta1.Query`
+* Describe available grpc methods for a service`grpcurl -plaintext cosmos-grpc.polkachu.com:14990 describe cosmos.auth.v1beta1.Query`
 
---------------------------------------------------------------------------------
-0. cosmostation integration
-   test network connection!
-1. TODO:   
-    extra example https://github.com/albertopeam/cosmos-sdk-swift in readme
-    document where to find the tags, otherwise I will forget, bsr latest commit and verify protos
-    how to be sure of the tag? github doesn't contain it
-    https://buf.build/cosmos/cosmos-sdk/tags/4074ba39c09e4b4799271a56a053227c
-    https://buf.build/cosmos/cosmos-sdk/tags
-    PACKAGE Version 0.46.0 how to set it? TAG 
-    doc chain registry in tests https://github.com/cosmos/chain-registry/blob/master/cosmoshub/chain.json
-2. TODO: GITHUB ACTIONS? to run tests
-3. TODO: recipes
-    test network
-4. TODO: buf studio. like postman 
-    https://studio.buf.build/cosmos/cosmos-sdk?serviceDialog=open
-    https://docs.buf.build/bsr/studio
-
+## WIP 
+* Test/Showcase SDK API's
+* Create multiple frameworks
+    * Osmosis
+    * Cosmos
+    * All
+* How to set package version? via TAG
+* Document where to find the bsr tags. How to verify them regarding github protos?
+* Github actions - tests
+* Doc chain registry
+    * doc chain registry in tests https://github.com/cosmos/chain-registry/blob/master/cosmoshub/chain.json
+    * or other ways to find prod/test urls

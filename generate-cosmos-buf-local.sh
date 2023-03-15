@@ -26,17 +26,16 @@ echo "$(protoc-gen-grpc-swift --version)"
 
 echo "Code generation started..."
 cosmos_commit_hash=4074ba39c09e4b4799271a56a053227c # 0.46.11 -> https://buf.build/cosmos/cosmos-sdk/tags
-cosmos_code=./Sources/CosmosSDK/
-cosmos_code_output=./Sources/CosmosSDK/protobufs
-swift_code_output=./Sources/CosmosSDK/
-rm -r $cosmos_code*
-echo "Deleted swift code from directory: $swift_code_output"
-buf export buf.build/cosmos/cosmos-sdk:$cosmos_commit_hash --output $cosmos_code_output
-echo "Downloaded cosmos-sdk with hash: $cosmos_commit_hash to directory: $cosmos_code_output"
-cd $cosmos_code_output
-buf generate --template ../../../buf-local.gen.yaml --output . --verbose
+code=./Sources/CosmosSDK/Cosmos
+protos_output=./Sources/CosmosSDK/Cosmos/protobufs
+rm -r $code*
+echo "Deleted swift code from directory: $code"
+buf export buf.build/cosmos/cosmos-sdk:$cosmos_commit_hash --output $protos_output
+echo "Downloaded cosmos-sdk with hash: $cosmos_commit_hash to directory: $protos_output"
+cd $protos_output
+buf generate --template ../../../../buf-local.gen.yaml --output . --verbose
 cp -R gen/. ../.
-echo "Generated swift code and copied to directory: $swift_code_output"
+echo "Generated swift code and copied to directory: $code"
 cd ..
 rm -r ./protobufs
-echo "Deleted cosmos-sdk download directory: $cosmos_code_output"
+echo "Deleted cosmos-sdk download directory: $protos_output"
