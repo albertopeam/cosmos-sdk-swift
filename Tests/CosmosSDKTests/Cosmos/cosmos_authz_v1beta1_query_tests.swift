@@ -24,16 +24,16 @@ final class cosmos_authz_v1beta1_query_tests: XCTestCase {
         sut = nil
     }
 
-    //MARK: - Authz https://docs.cosmos.network/v0.47/modules/authz#built-in-authorizations
+    // MARK: - Authz https://docs.cosmos.network/v0.47/modules/authz#built-in-authorizations
     
     func testGranterGrants() async throws {
         var request = Cosmos_Authz_V1beta1_QueryGranterGrantsRequest()
-        request.granter = Constants.swissStakingMainNetAddr // Granted by this addr
+        request.granter = CosmosConstants.swissStakingMainNetAddr // Granted by me
         
         let response = try await sut.granterGrants(request)
         
         XCTAssertGreaterThanOrEqual(response.grants.count, 0)
-        XCTAssertEqual(response.grants.first?.granter, Constants.swissStakingMainNetAddr)
+        XCTAssertEqual(response.grants.first?.granter, CosmosConstants.swissStakingMainNetAddr)
         var authzs: [Any] = .init()
         try response.grants.forEach { grant in
             if grant.authorization.isA(Cosmos_Authz_V1beta1_GenericAuthorization.self) {
@@ -45,5 +45,14 @@ final class cosmos_authz_v1beta1_query_tests: XCTestCase {
             }
         }
         XCTAssertGreaterThanOrEqual(authzs.count, 0)
+    }
+    
+    func testGranteeGrants() async throws {
+        var request = Cosmos_Authz_V1beta1_QueryGranteeGrantsRequest()
+        request.grantee = CosmosConstants.swissStakingMainNetAddr // Granted to me
+        
+        let response = try await sut.granteeGrants(request)
+        
+        XCTAssertGreaterThanOrEqual(response.grants.count, 0)
     }
 }

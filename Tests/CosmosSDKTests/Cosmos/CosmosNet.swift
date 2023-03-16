@@ -1,5 +1,5 @@
 //
-//  Constants.swift
+//  CosmosNet.swift
 //  Created by albertopeam on 5/3/23.
 //
 
@@ -8,7 +8,7 @@ import Foundation
 /**
  Cosmos network connection details
  */
-enum Net {
+enum CosmosNet {
     /// mainnet
     case main
     /// testnet

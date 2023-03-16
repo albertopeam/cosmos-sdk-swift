@@ -15,7 +15,7 @@ enum GRPCChannelHelper {
      - Parameter net: ``Net`` to create the channel
      - Returns: a new GRPCChannel
      */
-    static func create(for net: Net) throws -> GRPCChannel {
+    static func create(for net: CosmosNet) throws -> GRPCChannel {
         let group = PlatformSupport.makeEventLoopGroup(loopCount: 1)
         return try GRPCChannelPool.with(
             target: .host(net.host, port: net.port),

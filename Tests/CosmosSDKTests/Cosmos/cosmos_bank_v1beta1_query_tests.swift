@@ -22,12 +22,12 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
     
     func testBalance() async throws {
         var request = Cosmos_Bank_V1beta1_QueryBalanceRequest()
-        request.denom = Constants.atomDenom
-        request.address = Constants.sg1MainNetAddr
+        request.denom = CosmosConstants.atomDenom
+        request.address = CosmosConstants.sg1MainNetAddr
         
         let response = try await sut.balance(request)
         
-        XCTAssertEqual(response.balance.denom, Constants.atomDenom)
+        XCTAssertEqual(response.balance.denom, CosmosConstants.atomDenom)
         XCTAssertGreaterThanOrEqual(response.balance.amount, "0")
     }
     
@@ -35,22 +35,22 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
         var request = Cosmos_Bank_V1beta1_QueryAllBalancesRequest()
         var pageRequest = Cosmos_Base_Query_V1beta1_PageRequest()
         pageRequest.limit = 100
-        request.address = Constants.sg1MainNetAddr
+        request.address = CosmosConstants.sg1MainNetAddr
         request.pagination = pageRequest
         
         let response = try await sut.allBalances(request)
         
-        let atomBalance = try XCTUnwrap(response.balances.filter { $0.denom == Constants.atomDenom }.first)
+        let atomBalance = try XCTUnwrap(response.balances.filter { $0.denom == CosmosConstants.atomDenom }.first)
         XCTAssertGreaterThanOrEqual(atomBalance.amount, "0")
     }
     
     func testSpendableBalances() async throws {
         var request = Cosmos_Bank_V1beta1_QuerySpendableBalancesRequest()
-        request.address = Constants.sg1MainNetAddr
+        request.address = CosmosConstants.sg1MainNetAddr
         
         let response = try await sut.spendableBalances(request)
         
-        let atomBalance = try XCTUnwrap(response.balances.filter { $0.denom == Constants.atomDenom }.first)
+        let atomBalance = try XCTUnwrap(response.balances.filter { $0.denom == CosmosConstants.atomDenom }.first)
         XCTAssertGreaterThanOrEqual(atomBalance.amount, "0")
     }
 }
