@@ -93,3 +93,16 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 * Doc chain registry
     * doc chain registry in tests https://github.com/cosmos/chain-registry/blob/master/cosmoshub/chain.json
     * or other ways to find prod/test urls
+* Add support for:
+    * Crescent
+    * Evmos
+    * Band Oracle
+    * Confio
+    * Crypto.org
+    * Desmos
+    * Gravity
+    * Iris
+    * Kava
+    * Sifchain
+    * Starname
+    * Stride
