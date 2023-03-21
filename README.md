@@ -96,7 +96,7 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 * Add support for:
     * Crescent
     * Evmos
-    * Band Oracle
+    * Band Oracle: https://github.com/bandprotocol/chain/tree/master/proto/oracle/v1
     * Confio
     * Crypto.org
     * Desmos
