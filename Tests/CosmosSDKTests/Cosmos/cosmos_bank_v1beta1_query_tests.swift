@@ -51,11 +51,26 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
         
         let response = try await sut.denomMetadata(request)
         
-        XCTAssertEqual(response.metadata.base, "uatom")
-        XCTAssertEqual(response.metadata.display, "atom")
-        XCTAssertEqual(response.metadata.symbol, "ATOM")
-        XCTAssertEqual(response.metadata.name, "Cosmos Hub Atom")
+        assertMetadata(response.metadata)
         XCTAssertGreaterThanOrEqual(response.metadata.denomUnits.count, 0)
+    }
+    
+    func testDenomsMetadata() async throws {
+        let request = Cosmos_Bank_V1beta1_QueryDenomsMetadataRequest()
+        
+        let response = try await sut.denomsMetadata(request)
+        
+        let metadata = try XCTUnwrap(response.metadatas.first)
+        assertMetadata(metadata)
+        let denomUnits = metadata.denomUnits
+        XCTAssertEqual(denomUnits.count, 3)
+        let uAtom = try XCTUnwrap(denomUnits.first{ $0.denom == "uatom" })
+        let mAtom = try XCTUnwrap(denomUnits.first{ $0.denom == "matom" })
+        let atom = try XCTUnwrap(denomUnits.first{ $0.denom == "atom" })
+        XCTAssertEqual(uAtom.exponent, 0)
+        XCTAssertEqual(mAtom.exponent, 3)
+        XCTAssertEqual(atom.exponent, 6)
+        
     }
     
     func testSpendableBalances() async throws {
@@ -66,5 +81,16 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
         
         let atomBalance = try XCTUnwrap(response.balances.filter { $0.denom == CosmosConstants.atomDenom }.first)
         XCTAssertGreaterThanOrEqual(atomBalance.amount, "0")
+    }
+}
+
+// MARK: - private
+
+private extension cosmos_bank_v1beta1_query_tests {
+    func assertMetadata(_ metadata: Cosmos_Bank_V1beta1_Metadata) {
+        XCTAssertEqual(metadata.base, "uatom")
+        XCTAssertEqual(metadata.display, "atom")
+        XCTAssertEqual(metadata.symbol, "ATOM")
+        XCTAssertEqual(metadata.name, "Cosmos Hub Atom")
     }
 }
