@@ -73,7 +73,7 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 #### Osmosis code generation procedure
 1. Search osmosis labs on (bsr registry)[https://buf.build/osmosis-labs/osmosis].
 2. Pick a commit (bsr registry commits)[https://buf.build/osmosis-labs/osmosis/commits/], `81ded5dc0f8f46d8b93b42b66f8b5fdf`
-3. 
+3. Replace commit hash on `generate-osmosis-buf-local.sh` and run it
  
 
 ## gCurl
@@ -81,7 +81,8 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 * List available grpc methods for a service `grpcurl -plaintext cosmos-grpc.polkachu.com:14990 list cosmos.auth.v1beta1.Query`
 * Describe available grpc methods for a service`grpcurl -plaintext cosmos-grpc.polkachu.com:14990 describe cosmos.auth.v1beta1.Query`
 
-## WIP 
+## WIP
+* Improve sdk's table. make usage of semantic versioning instead of use cosmos tag
 * Test/Showcase SDK API's
 * Create multiple frameworks
     * Osmosis
@@ -95,14 +96,14 @@ This step is optional and depends if you want to use remote plugins(Check Remote
     * or other ways to find prod/test urls
 * Add support for:
     * Crescent
-    * Evmos
+    * Evmos 
     * Band Oracle: https://github.com/bandprotocol/chain/tree/master/proto/oracle/v1
-    * Confio
-    * Crypto.org
-    * Desmos
-    * Gravity
-    * Iris
-    * Kava
-    * Sifchain
-    * Starname
-    * Stride
+    * Confio https://github.com/confio/tgrade?
+    * Crypto.org https://github.com/crypto-org-chain/chain-main
+    * Desmos https://github.com/crypto-org-chain/chain-main/blob/master/proto/buf.yaml
+    * Gravity https://github.com/cosmos/gravity-bridge/tree/main/module
+    * Iris https://github.com/irisnet/irishub/tree/master/proto
+    * Kava https://github.com/Kava-Labs/kava/tree/master/proto
+    * Sifchain https://github.com/Sifchain/sifnode/tree/master/proto/sifnode
+    * Starname https://github.com/iov-one/starnamed/tree/main/proto
+    * Stride https://github.com/Stride-Labs/stride/tree/main/proto
