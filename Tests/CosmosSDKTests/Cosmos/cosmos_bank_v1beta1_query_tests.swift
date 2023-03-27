@@ -70,7 +70,14 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
         XCTAssertEqual(uAtom.exponent, 0)
         XCTAssertEqual(mAtom.exponent, 3)
         XCTAssertEqual(atom.exponent, 6)
+    }
+    
+    func testParams() async throws {
+        let request = Cosmos_Bank_V1beta1_QueryParamsRequest()
         
+        let response = try await sut.params(request)
+        
+        XCTAssertTrue(response.params.defaultSendEnabled)
     }
     
     func testSpendableBalances() async throws {
