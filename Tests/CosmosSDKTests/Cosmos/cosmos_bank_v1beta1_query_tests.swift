@@ -89,6 +89,17 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
         let atomBalance = try XCTUnwrap(response.balances.filter { $0.denom == CosmosConstants.atomDenom }.first)
         XCTAssertGreaterThanOrEqual(atomBalance.amount, "0")
     }
+    
+    func testSupplyOf() async throws {
+        let request = Cosmos_Bank_V1beta1_QuerySupplyOfRequest.with {
+            $0.denom = CosmosConstants.atomDenom
+        }
+        
+        let response = try await sut.supplyOf(request)
+        
+        XCTAssertGreaterThanOrEqual(response.amount.amount, "0")
+        XCTAssertGreaterThanOrEqual(response.amount.denom, CosmosConstants.atomDenom)
+    }
 }
 
 // MARK: - private
