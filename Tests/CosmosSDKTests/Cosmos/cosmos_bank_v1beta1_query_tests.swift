@@ -100,6 +100,15 @@ class cosmos_bank_v1beta1_query_tests: XCTestCase {
         XCTAssertGreaterThanOrEqual(response.amount.amount, "0")
         XCTAssertGreaterThanOrEqual(response.amount.denom, CosmosConstants.atomDenom)
     }
+    
+    // https://pkg.go.dev/github.com/cosmos/cosmos-sdk/x/bank/types#QueryClient
+    func testTotalSupply() async throws {
+        let request = Cosmos_Bank_V1beta1_QueryTotalSupplyRequest()
+        
+        let response = try await sut.totalSupply(request)
+        
+        XCTAssertGreaterThan(response.supply.count, 0)
+    }
 }
 
 // MARK: - private
