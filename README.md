@@ -7,9 +7,12 @@ This repository contains only generated code.
 
 ## Versions
 
-Package | cosmos-sdk | Commit hash                      | protoc-gen-swift| protoc-gen-grpc-swift
---------|------------|----------------------------------|-----------------|-----------------------
-0.46.11 | 0.46.11    | 4074ba39c09e4b4799271a56a053227c | 1.21.0          | 1.14.0
+| Package | protoc-gen-swift| protoc-gen-grpc-swift | name       | version | Commit hash                      |
+| --------|-----------------|-----------------------|------------|---------|----------------------------------|
+| 1.0.0   | 1.21.0          | 1.14.0                | cosmos     | 0.46.11 | 4074ba39c09e4b4799271a56a053227c |
+|         |                 |                       | osmosis    |  12.1.0 | 81ded5dc0f8f46d8b93b42b66f8b5fdf |
+|         |                 |                       | evmos      |  11.0.2 | c66c6f141d044e31a4ae77f5b852bcb5 |
+
 
 ## Cosmos endpoints
 * [Mintscan](https://www.mintscan.io/cosmos/info) provides info about the public grpc endpoints available. 
@@ -82,7 +85,6 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 * Describe available grpc methods for a service`grpcurl -plaintext cosmos-grpc.polkachu.com:14990 describe cosmos.auth.v1beta1.Query`
 
 ## WIP
-* Improve sdk's table. make usage of semantic versioning instead of use cosmos tag
 * Test/Showcase SDK API's
 * Create multiple frameworks
     * Osmosis
