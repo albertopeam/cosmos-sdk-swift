@@ -86,20 +86,14 @@ This step is optional and depends if you want to use remote plugins(Check Remote
 
 ## WIP
 * Test/Showcase SDK API's
-* Create multiple frameworks
-    * Osmosis
-    * Cosmos
-    * All
-* How to set package version? via TAG
 * Document where to find the bsr tags. How to verify them regarding github protos?
 * Github actions - tests
 * Doc chain registry
     * doc chain registry in tests https://github.com/cosmos/chain-registry/blob/master/cosmoshub/chain.json
     * or other ways to find prod/test urls
 * Add support for:
-    * Crescent
-    * Evmos 
-    * Band Oracle: https://github.com/bandprotocol/chain/tree/master/proto/oracle/v1
+    * Crescent ?
+    * TODO: clone and generate the code locally -> Band Oracle https://github.com/bandprotocol/chain/tree/master/proto/oracle/v1
     * Confio https://github.com/confio/tgrade?
     * Crypto.org https://github.com/crypto-org-chain/chain-main
     * Desmos https://github.com/crypto-org-chain/chain-main/blob/master/proto/buf.yaml
