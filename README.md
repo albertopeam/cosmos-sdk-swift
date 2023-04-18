@@ -7,11 +7,12 @@ This repository contains only generated code.
 
 ## Versions
 
-| Package | protoc-gen-swift| protoc-gen-grpc-swift | name       | version | Commit hash                      |
-| --------|-----------------|-----------------------|------------|---------|----------------------------------|
-| 1.0.0   | 1.21.0          | 1.14.0                | cosmos     | 0.46.11 | 4074ba39c09e4b4799271a56a053227c |
-|         |                 |                       | osmosis    |  12.1.0 | 81ded5dc0f8f46d8b93b42b66f8b5fdf |
-|         |                 |                       | evmos      |  11.0.2 | c66c6f141d044e31a4ae77f5b852bcb5 |
+| Package | protoc-gen-swift| protoc-gen-grpc-swift | name          | version | Commit hash                      |
+| --------|-----------------|-----------------------|---------------|---------|----------------------------------|
+| 1.0.0   | 1.21.0          | 1.14.0                | cosmos        | 0.46.11 | [4074ba39c09e4b4799271a56a053227c](https://buf.build/cosmos/cosmos-sdk/docs/4074ba39c09e4b4799271a56a053227c) |
+|         |                 |                       | osmosis       |  12.1.0 | [81ded5dc0f8f46d8b93b42b66f8b5fdf](https://buf.build/osmosis-labs/osmosis/commits/main) |
+|         |                 |                       | evmos         |  11.0.2 | [c66c6f141d044e31a4ae77f5b852bcb5](https://buf.build/evmos/evmos/docs/c66c6f141d044e31a4ae77f5b852bcb5) |
+|         |                 |                       | band protocol |   2.4.1 | [2d59c56](https://github.com/bandprotocol/chain/releases/tag/v2.4.1) |
 
 
 ## Cosmos endpoints
